@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_ecommerce/auth/presentations/screens/splash_screen.dart';
+import 'package:flutter_ecommerce/features/auth/presentations/screens/splash_screen.dart';
 
 class AppRoutes {
   static Route<dynamic> appRoutes(RouteSettings settings) {

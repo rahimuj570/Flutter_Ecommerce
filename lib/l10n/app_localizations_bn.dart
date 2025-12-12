@@ -10,4 +10,7 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get hello => 'ওহে';
+
+  @override
+  String get changeLaguage => 'ভাষা পরিবর্তন';
 }

@@ -100,6 +100,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'hello'**
   String get hello;
+
+  /// No description provided for @changeLaguage.
+  ///
+  /// In en, this message translates to:
+  /// **'Change Language'**
+  String get changeLaguage;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
