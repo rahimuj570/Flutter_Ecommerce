@@ -26,7 +26,10 @@ class _SplashScreenState extends State<SplashScreen> {
               onSelected: (value) => context
                   .read<LanguageProvider>()
                   .changeLocale(Locale(value.toString())),
-              initialSelection: 'en',
+              initialSelection: context
+                  .read<LanguageProvider>()
+                  .getLocal
+                  .languageCode,
               dropdownMenuEntries: [
                 DropdownMenuEntry(enabled: true, value: 'en', label: 'English'),
                 DropdownMenuEntry(value: 'bn', label: 'Bengali'),
