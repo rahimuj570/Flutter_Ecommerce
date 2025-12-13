@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ecommerce/app/extensions/localization_extension.dart';
 import 'package:flutter_ecommerce/app/state_management/language_provider.dart';
-import 'package:flutter_ecommerce/l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -19,8 +19,8 @@ class _SplashScreenState extends State<SplashScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(AppLocalizations.of(context)!.hello),
-            Text(AppLocalizations.of(context)!.changeLaguage),
+            Text(context.localization.hello),
+            Text(context.localization.changeLaguage),
 
             DropdownMenu(
               onSelected: (value) => context
