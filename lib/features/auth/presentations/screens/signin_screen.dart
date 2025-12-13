@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce/app/app_colors.dart';
+import 'package:flutter_ecommerce/features/auth/presentations/screens/signup_screen.dart';
 import 'package:flutter_ecommerce/features/auth/presentations/widgets/app_logo_widget.dart';
 
 class SigninScreen extends StatefulWidget {
@@ -13,7 +14,7 @@ class SigninScreen extends StatefulWidget {
 
 class _SigninScreenState extends State<SigninScreen> {
   final _formKey = GlobalKey<FormState>();
-
+  bool isObsecure = true;
   @override
   Widget build(BuildContext context) {
     final TextTheme textTheme = TextTheme.of(context);
@@ -27,13 +28,13 @@ class _SigninScreenState extends State<SigninScreen> {
                 AppLogoWidget(width: 100),
                 SizedBox(height: 5),
                 Text(
-                  "Signup Profile",
+                  "Sigin Profile",
                   style: textTheme.headlineMedium!.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 Text(
-                  "Get started with us with profile details",
+                  "Wellcome back. Let's shopping",
                   style: textTheme.bodyMedium,
                 ),
                 SizedBox(height: 25),
@@ -45,21 +46,6 @@ class _SigninScreenState extends State<SigninScreen> {
                       spacing: 15,
                       children: [
                         TextFormField(
-                          decoration: InputDecoration(hintText: "First Name"),
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          textInputAction: TextInputAction.next,
-                          validator: (value) =>
-                              value!.isEmpty ? 'Insert First Name' : null,
-                        ),
-                        TextFormField(
-                          decoration: InputDecoration(hintText: 'Last Name'),
-
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          textInputAction: TextInputAction.next,
-                          validator: (value) =>
-                              value!.isEmpty ? 'Insert Last Name' : null,
-                        ),
-                        TextFormField(
                           decoration: InputDecoration(hintText: 'Email'),
 
                           autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -68,45 +54,44 @@ class _SigninScreenState extends State<SigninScreen> {
                               value!.isEmpty ? 'Insert Email' : null,
                         ),
                         TextFormField(
-                          decoration: InputDecoration(hintText: 'Pasword'),
+                          decoration: InputDecoration(
+                            hintText: 'Pasword',
+
+                            suffixIcon: IconButton(
+                              onPressed: () {
+                                isObsecure = !isObsecure;
+                                setState(() {});
+                              },
+                              icon: Icon(Icons.remove_red_eye_outlined),
+                            ),
+                          ),
 
                           autovalidateMode: AutovalidateMode.onUserInteraction,
-                          obscureText: true,
-                          textInputAction: TextInputAction.next,
+                          obscureText: isObsecure,
+                          textInputAction: TextInputAction.done,
                           validator: (value) =>
                               value!.isEmpty ? 'Insert Password' : null,
                         ),
 
-                        TextFormField(
-                          maxLines: 3,
-                          decoration: InputDecoration(
-                            hintText: 'Shipping Address',
-                          ),
-
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          textInputAction: TextInputAction.done,
-                          validator: (value) =>
-                              value!.isEmpty ? 'Insert Shipping Address' : null,
-                        ),
                         FilledButton(
                           onPressed: () {
                             if (_formKey.currentState!.validate()) {}
                           },
-                          child: Text("SIGN UP"),
+                          child: Text("SIGN IN"),
                         ),
                         RichText(
                           text: TextSpan(
                             style: textTheme.bodyMedium,
-                            text: 'Already have an account? ',
+                            text: 'Don\'t have an account? ',
                             children: [
                               TextSpan(
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: AppColors.themeColor,
                                 ),
-                                text: 'Signin',
+                                text: 'Sign up',
                                 recognizer: TapGestureRecognizer()
-                                  ..onTap = _gotoSignin,
+                                  ..onTap = _gotoSignup,
                               ),
                             ],
                           ),
@@ -123,7 +108,7 @@ class _SigninScreenState extends State<SigninScreen> {
     );
   }
 
-  void _gotoSignin() {
-    print('object');
+  void _gotoSignup() {
+    Navigator.pushReplacementNamed(context, SignupScreen.name);
   }
 }

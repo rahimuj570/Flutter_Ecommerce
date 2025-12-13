@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ecommerce/features/auth/presentations/screens/signin_screen.dart';
 import 'package:flutter_ecommerce/features/auth/presentations/screens/signup_screen.dart';
 import 'package:flutter_ecommerce/features/auth/presentations/screens/splash_screen.dart';
 
@@ -10,6 +11,8 @@ class AppRoutes {
       widget = SplashScreen();
     } else if (settings.name == SignupScreen.name) {
       widget = SignupScreen();
+    } else if (settings.name == SigninScreen.name) {
+      widget = SigninScreen();
     }
 
     return MaterialPageRoute(builder: (context) => widget);
