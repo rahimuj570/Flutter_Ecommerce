@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce/app/app_routes.dart';
 import 'package:flutter_ecommerce/app/app_themes.dart';
 import 'package:flutter_ecommerce/app/state_management/language_provider.dart';
+import 'package:flutter_ecommerce/app/state_management/theme_provider.dart';
 import 'package:flutter_ecommerce/l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
@@ -19,14 +20,15 @@ class _FlutterEcommerceState extends State<FlutterEcommerce> {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => LanguageProvider()),
+        ChangeNotifierProvider(create: (context) => ThemeProvider()),
       ],
-      child: Consumer<LanguageProvider>(
-        builder: (context, value, child) => MaterialApp(
+      child: Consumer2<LanguageProvider, ThemeProvider>(
+        builder: (context, langProvider, themeProvider, child) => MaterialApp(
           initialRoute: '/',
           onGenerateRoute: AppRoutes.appRoutes,
           theme: AppThemes.light,
           darkTheme: AppThemes.dark,
-          themeMode: ThemeMode.light,
+          themeMode: themeProvider.getThemeMode,
           localizationsDelegates: [
             AppLocalizations.delegate,
             GlobalMaterialLocalizations.delegate,
@@ -37,7 +39,7 @@ class _FlutterEcommerceState extends State<FlutterEcommerce> {
             Locale('en'), // English
             Locale('bn'), // Bangla
           ],
-          locale: value.getLocal,
+          locale: langProvider.getLocal,
         ),
       ),
     );
