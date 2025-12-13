@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce/app/app_assets_path.dart';
 import 'package:flutter_ecommerce/features/auth/presentations/screens/signup_screen.dart';
+import 'package:flutter_ecommerce/features/auth/presentations/widgets/app_logo_widget.dart';
 import 'package:flutter_svg/svg.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -31,7 +32,7 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       body: Stack(
         children: [
-          Center(child: SvgPicture.asset(AppAssetsPath.logo)),
+          Center(child: AppLogoWidget()),
           Positioned(
             bottom: 30,
             right: 0,
