@@ -5,14 +5,21 @@ class AppThemes {
   static ThemeData get light {
     return ThemeData(
       brightness: Brightness.light,
-      primaryColor: AppColors.themeColor,
+      scaffoldBackgroundColor: Colors.white,
+      colorSchemeSeed: AppColors.themeColor,
+      progressIndicatorTheme: ProgressIndicatorThemeData(
+        color: AppColors.themeColor,
+      ),
     );
   }
 
   static ThemeData get dark {
     return ThemeData(
       brightness: Brightness.dark,
-      primaryColor: AppColors.themeColor,
+      colorSchemeSeed: AppColors.themeColor,
+      progressIndicatorTheme: ProgressIndicatorThemeData(
+        color: AppColors.themeColor,
+      ),
     );
   }
 }
