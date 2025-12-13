@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce/app/app_assets_path.dart';
-import 'package:flutter_ecommerce/app/extensions/localization_extension.dart';
-import 'package:flutter_ecommerce/app/state_management/language_provider.dart';
-import 'package:flutter_ecommerce/app/state_management/theme_provider.dart';
+import 'package:flutter_ecommerce/features/auth/presentations/screens/signup_screen.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:provider/provider.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -16,9 +13,21 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _gotoNext();
+  }
+
+  Future<void> _gotoNext() async {
+    await Future.delayed(Duration(seconds: 2));
+    if (mounted) {
+      Navigator.pushReplacementNamed(context, SignupScreen.name);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    ThemeProvider themeProvider = context.watch<ThemeProvider>();
-    bool isDark = themeProvider.getThemeMode.name == 'dark';
     return Scaffold(
       body: Stack(
         children: [
