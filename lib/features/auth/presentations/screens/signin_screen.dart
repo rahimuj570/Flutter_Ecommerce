@@ -3,15 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce/app/app_colors.dart';
 import 'package:flutter_ecommerce/features/auth/presentations/widgets/app_logo_widget.dart';
 
-class SignupScreen extends StatefulWidget {
-  const SignupScreen({super.key});
-  static String name = '/signup';
+class SigninScreen extends StatefulWidget {
+  const SigninScreen({super.key});
+  static String name = '/signin';
 
   @override
-  State<SignupScreen> createState() => _SignupScreenState();
+  State<SigninScreen> createState() => _SigninScreenState();
 }
 
-class _SignupScreenState extends State<SignupScreen> {
+class _SigninScreenState extends State<SigninScreen> {
   final _formKey = GlobalKey<FormState>();
 
   @override
