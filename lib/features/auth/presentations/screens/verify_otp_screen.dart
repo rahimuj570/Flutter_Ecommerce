@@ -16,6 +16,24 @@ class VerifyOtpScreen extends StatefulWidget {
 class _ForgotPasswordScreenState extends State<VerifyOtpScreen> {
   final _formKey = GlobalKey<FormState>();
   bool isObsecure = true;
+
+  int remainTime = 300;
+  Future<void> _updateTime() async {
+    while (remainTime > 0) {
+      await Future.delayed(Duration(seconds: 1));
+      setState(() {
+        remainTime--;
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _updateTime();
+  }
+
   @override
   Widget build(BuildContext context) {
     final defaultPinTheme = PinTheme(
@@ -90,19 +108,28 @@ class _ForgotPasswordScreenState extends State<VerifyOtpScreen> {
                         RichText(
                           text: TextSpan(
                             style: textTheme.bodyMedium,
-                            text: 'Don\'t have an account? ',
+                            text: 'This code ill expire in ',
                             children: [
                               TextSpan(
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: AppColors.themeColor,
                                 ),
-                                text: 'Sign up',
+                                text: '${remainTime}s',
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = _gotoSignup,
                               ),
                             ],
                           ),
+                        ),
+
+                        TextButton(
+                          style: TextButton.styleFrom(
+                            minimumSize: Size.zero,
+                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                          ),
+                          onPressed: () {},
+                          child: Text('Resend Code'),
                         ),
                       ],
                     ),
