@@ -3,6 +3,7 @@ import 'package:flutter_ecommerce/features/auth/presentations/screens/forgot_pas
 import 'package:flutter_ecommerce/features/auth/presentations/screens/signin_screen.dart';
 import 'package:flutter_ecommerce/features/auth/presentations/screens/signup_screen.dart';
 import 'package:flutter_ecommerce/features/auth/presentations/screens/splash_screen.dart';
+import 'package:flutter_ecommerce/features/auth/presentations/screens/verify_otp_screen.dart';
 
 class AppRoutes {
   static Route<dynamic> appRoutes(RouteSettings settings) {
@@ -16,6 +17,8 @@ class AppRoutes {
       widget = SigninScreen();
     } else if (settings.name == ForgotPasswordScreen.name) {
       widget = ForgotPasswordScreen();
+    } else if (settings.name == VerifyOtpScreen.name) {
+      widget = VerifyOtpScreen();
     }
 
     return MaterialPageRoute(builder: (context) => widget);

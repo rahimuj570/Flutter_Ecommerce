@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce/app/app_colors.dart';
 import 'package:flutter_ecommerce/features/auth/presentations/screens/signin_screen.dart';
+import 'package:flutter_ecommerce/features/auth/presentations/screens/verify_otp_screen.dart';
 import 'package:flutter_ecommerce/features/auth/presentations/widgets/app_logo_widget.dart';
 
 class SignupScreen extends StatefulWidget {
@@ -91,6 +92,10 @@ class _SignupScreenState extends State<SignupScreen> {
                         ),
                         FilledButton(
                           onPressed: () {
+                            Navigator.pushReplacementNamed(
+                              context,
+                              VerifyOtpScreen.name,
+                            );
                             if (_formKey.currentState!.validate()) {}
                           },
                           child: Text("SIGN UP"),
