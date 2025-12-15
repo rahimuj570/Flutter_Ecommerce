@@ -1,19 +1,18 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce/app/app_colors.dart';
-import 'package:flutter_ecommerce/features/auth/presentations/screens/forgot_password_screen.dart';
 import 'package:flutter_ecommerce/features/auth/presentations/screens/signup_screen.dart';
 import 'package:flutter_ecommerce/features/auth/presentations/widgets/app_logo_widget.dart';
 
-class SigninScreen extends StatefulWidget {
-  const SigninScreen({super.key});
-  static String name = '/signin';
+class ForgotPasswordScreen extends StatefulWidget {
+  const ForgotPasswordScreen({super.key});
+  static String name = '/forgot_password';
 
   @override
-  State<SigninScreen> createState() => _SigninScreenState();
+  State<ForgotPasswordScreen> createState() => _ForgotPasswordScreenState();
 }
 
-class _SigninScreenState extends State<SigninScreen> {
+class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   final _formKey = GlobalKey<FormState>();
   bool isObsecure = true;
   @override
@@ -29,15 +28,12 @@ class _SigninScreenState extends State<SigninScreen> {
                 AppLogoWidget(width: 100),
                 SizedBox(height: 5),
                 Text(
-                  "Sigin Profile",
+                  "Forgot Password",
                   style: textTheme.headlineMedium!.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                Text(
-                  "Wellcome back. Let's shopping",
-                  style: textTheme.bodyMedium,
-                ),
+                Text("Enter your email", style: textTheme.bodyMedium),
                 SizedBox(height: 25),
                 Form(
                   key: _formKey,
@@ -54,50 +50,11 @@ class _SigninScreenState extends State<SigninScreen> {
                           validator: (value) =>
                               value!.isEmpty ? 'Insert Email' : null,
                         ),
-                        TextFormField(
-                          decoration: InputDecoration(
-                            hintText: 'Pasword',
-
-                            suffixIcon: IconButton(
-                              onPressed: () {
-                                isObsecure = !isObsecure;
-                                setState(() {});
-                              },
-                              icon: Icon(Icons.remove_red_eye_outlined),
-                            ),
-                          ),
-
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          obscureText: isObsecure,
-                          textInputAction: TextInputAction.done,
-                          validator: (value) =>
-                              value!.isEmpty ? 'Insert Password' : null,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            TextButton(
-                              style: TextButton.styleFrom(
-                                padding: EdgeInsets.all(1),
-                                minimumSize: Size.zero,
-                                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                              ),
-                              onPressed: () {
-                                Navigator.pushReplacementNamed(
-                                  context,
-                                  ForgotPasswordScreen.name,
-                                );
-                              },
-                              child: Text('Forgot Password?'),
-                            ),
-                          ],
-                        ),
-
                         FilledButton(
                           onPressed: () {
                             if (_formKey.currentState!.validate()) {}
                           },
-                          child: Text("SIGN IN"),
+                          child: Text("NEXT"),
                         ),
                         RichText(
                           text: TextSpan(

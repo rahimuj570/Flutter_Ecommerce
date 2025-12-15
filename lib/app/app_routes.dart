@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ecommerce/features/auth/presentations/screens/forgot_password_screen.dart';
 import 'package:flutter_ecommerce/features/auth/presentations/screens/signin_screen.dart';
 import 'package:flutter_ecommerce/features/auth/presentations/screens/signup_screen.dart';
 import 'package:flutter_ecommerce/features/auth/presentations/screens/splash_screen.dart';
@@ -13,6 +14,8 @@ class AppRoutes {
       widget = SignupScreen();
     } else if (settings.name == SigninScreen.name) {
       widget = SigninScreen();
+    } else if (settings.name == ForgotPasswordScreen.name) {
+      widget = ForgotPasswordScreen();
     }
 
     return MaterialPageRoute(builder: (context) => widget);
