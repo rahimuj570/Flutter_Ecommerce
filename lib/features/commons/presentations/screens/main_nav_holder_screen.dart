@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce/app/app_assets_path.dart';
 import 'package:flutter_ecommerce/app/app_colors.dart';
+import 'package:flutter_ecommerce/features/commons/state_management/main_nav_bar_provider.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 class MainNavHolderScreen extends StatefulWidget {
   const MainNavHolderScreen({super.key});
@@ -14,9 +16,11 @@ class MainNavHolderScreen extends StatefulWidget {
 class _MainNavHolderScreenState extends State<MainNavHolderScreen> {
   @override
   Widget build(BuildContext context) {
+    final MainNavBarProvider _mainNavBarProvider = context.watch();
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
+          backgroundColor: Colors.white,
           actionsPadding: EdgeInsets.all(5),
           toolbarHeight: 60,
           title: SvgPicture.asset(AppAssetsPath.appbarLogo, width: 130),
@@ -59,10 +63,13 @@ class _MainNavHolderScreenState extends State<MainNavHolderScreen> {
             ),
           ),
           child: BottomNavigationBar(
+            onTap: (value) {
+              _mainNavBarProvider.changeIndex(value);
+            },
             type: BottomNavigationBarType.fixed,
             backgroundColor: Colors.white,
             elevation: 0,
-            currentIndex: 2, // Cart selected
+            currentIndex: _mainNavBarProvider.getSelectedIndex,
             selectedItemColor: AppColors.themeColor,
             unselectedItemColor: Colors.grey,
             unselectedFontSize: 11,

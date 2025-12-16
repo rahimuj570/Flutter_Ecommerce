@@ -3,6 +3,7 @@ import 'package:flutter_ecommerce/app/app_routes.dart';
 import 'package:flutter_ecommerce/app/app_themes.dart';
 import 'package:flutter_ecommerce/app/state_management/language_provider.dart';
 import 'package:flutter_ecommerce/app/state_management/theme_provider.dart';
+import 'package:flutter_ecommerce/features/commons/state_management/main_nav_bar_provider.dart';
 import 'package:flutter_ecommerce/l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
@@ -21,26 +22,29 @@ class _FlutterEcommerceState extends State<FlutterEcommerce> {
       providers: [
         ChangeNotifierProvider(create: (context) => LanguageProvider()),
         ChangeNotifierProvider(create: (context) => ThemeProvider()),
+        ChangeNotifierProvider(create: (context) => MainNavBarProvider()),
       ],
-      child: Consumer2<LanguageProvider, ThemeProvider>(
-        builder: (context, langProvider, themeProvider, child) => MaterialApp(
-          initialRoute: '/',
-          onGenerateRoute: AppRoutes.appRoutes,
-          theme: AppThemes.light,
-          darkTheme: AppThemes.dark,
-          themeMode: themeProvider.getThemeMode,
-          localizationsDelegates: [
-            AppLocalizations.delegate,
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-          ],
-          supportedLocales: [
-            Locale('en'), // English
-            Locale('bn'), // Bangla
-          ],
-          locale: langProvider.getLocal,
-        ),
+      child: Consumer3<LanguageProvider, ThemeProvider, MainNavBarProvider>(
+        builder:
+            (context, langProvider, themeProvider, mainNavBarProvider, child) =>
+                MaterialApp(
+                  initialRoute: '/',
+                  onGenerateRoute: AppRoutes.appRoutes,
+                  theme: AppThemes.light,
+                  darkTheme: AppThemes.dark,
+                  themeMode: themeProvider.getThemeMode,
+                  localizationsDelegates: [
+                    AppLocalizations.delegate,
+                    GlobalMaterialLocalizations.delegate,
+                    GlobalWidgetsLocalizations.delegate,
+                    GlobalCupertinoLocalizations.delegate,
+                  ],
+                  supportedLocales: [
+                    Locale('en'), // English
+                    Locale('bn'), // Bangla
+                  ],
+                  locale: langProvider.getLocal,
+                ),
       ),
     );
   }
