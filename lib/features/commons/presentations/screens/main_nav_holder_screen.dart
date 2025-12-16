@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce/app/app_assets_path.dart';
+import 'package:flutter_ecommerce/app/app_colors.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class MainNavHolderScreen extends StatefulWidget {
@@ -46,6 +47,46 @@ class _MainNavHolderScreenState extends State<MainNavHolderScreen> {
               icon: Icon(Icons.notifications_outlined),
             ),
           ],
+        ),
+        bottomNavigationBar: Container(
+          decoration: const BoxDecoration(
+            color: Colors.white,
+            border: Border(
+              top: BorderSide(
+                color: Color(0xFFE0E0E0), // light grey top border
+                width: 1,
+              ),
+            ),
+          ),
+          child: BottomNavigationBar(
+            type: BottomNavigationBarType.fixed,
+            backgroundColor: Colors.white,
+            elevation: 0,
+            currentIndex: 2, // Cart selected
+            selectedItemColor: AppColors.themeColor,
+            unselectedItemColor: Colors.grey,
+            unselectedFontSize: 11,
+            showUnselectedLabels: true,
+            iconSize: 28,
+            items: const [
+              BottomNavigationBarItem(
+                icon: Icon(Icons.home_outlined),
+                label: 'Home',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.grid_view_outlined),
+                label: 'Categories',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.shopping_cart_outlined),
+                label: 'Cart',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.card_giftcard_outlined),
+                label: 'Wish',
+              ),
+            ],
+          ),
         ),
       ),
     );
