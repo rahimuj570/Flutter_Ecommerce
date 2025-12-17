@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_ecommerce/app/app_assets_path.dart';
 import 'package:flutter_ecommerce/app/app_colors.dart';
 import 'package:flutter_ecommerce/features/commons/state_management/main_nav_bar_provider.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_ecommerce/features/home/presentations/screens/home_screen.dart';
 import 'package:provider/provider.dart';
 
 class MainNavHolderScreen extends StatefulWidget {
@@ -14,44 +13,14 @@ class MainNavHolderScreen extends StatefulWidget {
 }
 
 class _MainNavHolderScreenState extends State<MainNavHolderScreen> {
+  List<Widget> _screens = [HomeScreen()];
+
   @override
   Widget build(BuildContext context) {
     final MainNavBarProvider _mainNavBarProvider = context.watch();
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          actionsPadding: EdgeInsets.all(5),
-          toolbarHeight: 60,
-          title: SvgPicture.asset(AppAssetsPath.appbarLogo, width: 130),
-          actions: [
-            IconButton(
-              style: IconButton.styleFrom(
-                backgroundColor: Colors.grey.shade200,
-                foregroundColor: Colors.grey,
-              ),
-              onPressed: () {},
-              icon: Icon(Icons.person_2_outlined),
-            ),
-
-            IconButton(
-              style: IconButton.styleFrom(
-                foregroundColor: Colors.grey,
-                backgroundColor: Colors.grey.shade200,
-              ),
-              onPressed: () {},
-              icon: Icon(Icons.call_outlined),
-            ),
-            IconButton(
-              style: IconButton.styleFrom(
-                foregroundColor: Colors.grey,
-                backgroundColor: Colors.grey.shade200,
-              ),
-              onPressed: () {},
-              icon: Icon(Icons.notifications_outlined),
-            ),
-          ],
-        ),
+        body: _screens[_mainNavBarProvider.getSelectedIndex],
         bottomNavigationBar: Container(
           decoration: const BoxDecoration(
             color: Colors.white,
