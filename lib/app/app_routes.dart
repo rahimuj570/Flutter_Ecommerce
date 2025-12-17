@@ -4,6 +4,7 @@ import 'package:flutter_ecommerce/features/auth/presentations/screens/signin_scr
 import 'package:flutter_ecommerce/features/auth/presentations/screens/signup_screen.dart';
 import 'package:flutter_ecommerce/features/auth/presentations/screens/splash_screen.dart';
 import 'package:flutter_ecommerce/features/auth/presentations/screens/verify_otp_screen.dart';
+import 'package:flutter_ecommerce/features/categories/presentations/screens/categories_screen.dart';
 import 'package:flutter_ecommerce/features/commons/presentations/screens/main_nav_holder_screen.dart';
 
 class AppRoutes {
@@ -22,6 +23,8 @@ class AppRoutes {
       widget = VerifyOtpScreen();
     } else if (settings.name == MainNavHolderScreen.name) {
       widget = MainNavHolderScreen();
+    } else if (settings.name == CategoriesScreen.name) {
+      widget = CategoriesScreen();
     }
 
     return MaterialPageRoute(builder: (context) => widget);

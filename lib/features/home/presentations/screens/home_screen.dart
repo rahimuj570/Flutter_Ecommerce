@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter_ecommerce/app/app_colors.dart';
 import 'package:flutter_ecommerce/app/app_units.dart';
+import 'package:flutter_ecommerce/features/categories/presentations/screens/categories_screen.dart';
+import 'package:flutter_ecommerce/features/categories/presentations/widgets/category_card_widget.dart';
 import 'package:flutter_ecommerce/features/commons/presentations/widgets/appbar_widgets.dart';
 import 'package:flutter_ecommerce/features/home/presentations/widgets/home_carousel_widget.dart';
+import 'package:flutter_ecommerce/features/home/presentations/widgets/section_separator_head.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -47,6 +52,28 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               SizedBox(height: 15),
               HomeCarouselWidget(),
+              const SizedBox(height: 14),
+              SectionSeparatorHead(
+                title: 'All Categories',
+                onTapSeeAll: () {
+                  Navigator.pushNamed(context, CategoriesScreen.name);
+                },
+              ),
+              SizedBox(
+                height: 100,
+                child: LayoutBuilder(
+                  builder: (context, constraints) {
+                    return ListView.builder(
+                      scrollDirection: Axis.horizontal,
+
+                      itemCount: 4,
+                      itemBuilder: (context, index) {
+                        return CategoryCardWidget(constraints: constraints);
+                      },
+                    );
+                  },
+                ),
+              ),
             ],
           ),
         ),
