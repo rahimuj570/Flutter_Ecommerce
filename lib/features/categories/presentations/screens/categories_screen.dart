@@ -10,37 +10,43 @@ class CategoriesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          elevation: 1,
-          shadowColor: Colors.grey,
-          surfaceTintColor: Colors.transparent,
-          leading: IconButton(
-            onPressed: () {
-              context.read<MainNavBarProvider>().changeIndex(0);
-            },
-            icon: Icon(Icons.chevron_left_rounded, size: 40),
+    return PopScope(
+      onPopInvokedWithResult: (didPop, result) {
+        context.read<MainNavBarProvider>().changeIndex(0);
+      },
+      canPop: false,
+      child: SafeArea(
+        child: Scaffold(
+          appBar: AppBar(
+            backgroundColor: Colors.white,
+            elevation: 1,
+            shadowColor: Colors.grey,
+            surfaceTintColor: Colors.transparent,
+            leading: IconButton(
+              onPressed: () {
+                context.read<MainNavBarProvider>().changeIndex(0);
+              },
+              icon: Icon(Icons.chevron_left_rounded, size: 40),
+            ),
+            title: Text('Categories'),
           ),
-          title: Text('Categories'),
-        ),
-        body: Padding(
-          padding: EdgeInsets.symmetric(
-            vertical: 20,
-            horizontal: AppUnits.horizontalMainPadding,
-          ),
-          child: LayoutBuilder(
-            builder: (context, constraints) => GridView.builder(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 4,
-                mainAxisSpacing: 10,
-                crossAxisSpacing: 8,
-              ),
+          body: Padding(
+            padding: EdgeInsets.symmetric(
+              vertical: 20,
+              horizontal: AppUnits.horizontalMainPadding,
+            ),
+            child: LayoutBuilder(
+              builder: (context, constraints) => GridView.builder(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 4,
+                  mainAxisSpacing: 10,
+                  crossAxisSpacing: 8,
+                ),
 
-              itemCount: 10,
-              itemBuilder: (context, index) =>
-                  CategoryCardWidget(constraints: constraints),
+                itemCount: 10,
+                itemBuilder: (context, index) =>
+                    CategoryCardWidget(constraints: constraints),
+              ),
             ),
           ),
         ),
