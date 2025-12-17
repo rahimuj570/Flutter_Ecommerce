@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce/app/app_colors.dart';
+import 'package:flutter_ecommerce/features/categories/presentations/screens/categories_screen.dart';
 import 'package:flutter_ecommerce/features/commons/state_management/main_nav_bar_provider.dart';
 import 'package:flutter_ecommerce/features/home/presentations/screens/home_screen.dart';
 import 'package:provider/provider.dart';
@@ -13,7 +14,7 @@ class MainNavHolderScreen extends StatefulWidget {
 }
 
 class _MainNavHolderScreenState extends State<MainNavHolderScreen> {
-  List<Widget> _screens = [HomeScreen()];
+  final List<Widget> _screens = [HomeScreen(), CategoriesScreen()];
 
   @override
   Widget build(BuildContext context) {

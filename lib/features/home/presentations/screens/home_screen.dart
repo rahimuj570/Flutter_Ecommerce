@@ -5,8 +5,10 @@ import 'package:flutter_ecommerce/app/app_units.dart';
 import 'package:flutter_ecommerce/features/categories/presentations/screens/categories_screen.dart';
 import 'package:flutter_ecommerce/features/categories/presentations/widgets/category_card_widget.dart';
 import 'package:flutter_ecommerce/features/commons/presentations/widgets/appbar_widgets.dart';
+import 'package:flutter_ecommerce/features/commons/state_management/main_nav_bar_provider.dart';
 import 'package:flutter_ecommerce/features/home/presentations/widgets/home_carousel_widget.dart';
 import 'package:flutter_ecommerce/features/home/presentations/widgets/section_separator_head.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -56,7 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
               SectionSeparatorHead(
                 title: 'All Categories',
                 onTapSeeAll: () {
-                  Navigator.pushNamed(context, CategoriesScreen.name);
+                  context.read<MainNavBarProvider>().changeIndex(1);
                 },
               ),
               SizedBox(
