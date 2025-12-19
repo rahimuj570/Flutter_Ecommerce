@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
+import 'package:flutter_ecommerce/app/app_assets_path.dart';
 import 'package:flutter_ecommerce/app/app_colors.dart';
 import 'package:flutter_ecommerce/app/app_units.dart';
-import 'package:flutter_ecommerce/features/categories/presentations/screens/categories_screen.dart';
 import 'package:flutter_ecommerce/features/categories/presentations/widgets/category_card_widget.dart';
 import 'package:flutter_ecommerce/features/commons/presentations/widgets/appbar_widgets.dart';
+import 'package:flutter_ecommerce/features/commons/presentations/widgets/product_card.dart';
 import 'package:flutter_ecommerce/features/commons/state_management/main_nav_bar_provider.dart';
 import 'package:flutter_ecommerce/features/home/presentations/widgets/home_carousel_widget.dart';
 import 'package:flutter_ecommerce/features/home/presentations/widgets/section_separator_head.dart';
@@ -27,56 +27,75 @@ class _HomeScreenState extends State<HomeScreen> {
           padding: EdgeInsets.symmetric(
             horizontal: AppUnits.horizontalMainPadding,
           ),
-          child: Column(
-            children: [
-              TextField(
-                decoration: InputDecoration(
-                  hintText: 'Search',
-                  prefixIcon: Icon(Icons.search),
-                  fillColor: const Color.fromRGBO(238, 238, 238, 1),
-                  filled: true,
-                  contentPadding: const EdgeInsets.symmetric(
-                    vertical: 12,
-                    horizontal: 8,
-                  ),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                TextField(
+                  decoration: InputDecoration(
+                    hintText: 'Search',
+                    prefixIcon: Icon(Icons.search),
+                    fillColor: const Color.fromRGBO(238, 238, 238, 1),
+                    filled: true,
+                    contentPadding: const EdgeInsets.symmetric(
+                      vertical: 12,
+                      horizontal: 8,
+                    ),
 
-                  prefixIconConstraints: BoxConstraints(
-                    minWidth: 40,
-                    maxWidth: 40,
-                  ),
-                  prefixStyle: TextStyle(),
-                  border: OutlineInputBorder(borderSide: BorderSide.none),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(AppUnits.round),
-                    borderSide: BorderSide.none,
+                    prefixIconConstraints: BoxConstraints(
+                      minWidth: 40,
+                      maxWidth: 40,
+                    ),
+                    prefixStyle: TextStyle(),
+                    border: OutlineInputBorder(borderSide: BorderSide.none),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(AppUnits.round),
+                      borderSide: BorderSide.none,
+                    ),
                   ),
                 ),
-              ),
-              SizedBox(height: 15),
-              HomeCarouselWidget(),
-              const SizedBox(height: 14),
-              SectionSeparatorHead(
-                title: 'All Categories',
-                onTapSeeAll: () {
-                  context.read<MainNavBarProvider>().changeIndex(1);
-                },
-              ),
-              SizedBox(
-                height: 100,
-                child: LayoutBuilder(
-                  builder: (context, constraints) {
-                    return ListView.builder(
-                      scrollDirection: Axis.horizontal,
-
-                      itemCount: 4,
-                      itemBuilder: (context, index) {
-                        return CategoryCardWidget(constraints: constraints);
-                      },
-                    );
+                SizedBox(height: 15),
+                HomeCarouselWidget(),
+                SizedBox(height: AppUnits.headlineSeparateHeight),
+                SectionSeparatorHead(
+                  title: 'All Categories',
+                  onTapSeeAll: () {
+                    context.read<MainNavBarProvider>().changeIndex(1);
                   },
                 ),
-              ),
-            ],
+                SizedBox(
+                  height: 100,
+                  child: LayoutBuilder(
+                    builder: (context, constraints) {
+                      return ListView.builder(
+                        scrollDirection: Axis.horizontal,
+
+                        itemCount: 4,
+                        itemBuilder: (context, index) {
+                          return CategoryCardWidget(constraints: constraints);
+                        },
+                      );
+                    },
+                  ),
+                ),
+                SizedBox(height: AppUnits.headlineSeparateHeight),
+                SectionSeparatorHead(title: 'Popular', onTapSeeAll: () {}),
+                SizedBox(
+                  height: 200,
+                  child: LayoutBuilder(
+                    builder: (context, constraints) {
+                      final itemSize =
+                          (constraints.maxWidth / 3); // square side length
+                      return ListView.builder(
+                        itemCount: 3,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) =>
+                            ProductCard(itemSize: itemSize),
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
