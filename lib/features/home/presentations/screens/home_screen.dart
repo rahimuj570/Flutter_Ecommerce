@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_ecommerce/app/app_assets_path.dart';
-import 'package:flutter_ecommerce/app/app_colors.dart';
 import 'package:flutter_ecommerce/app/app_units.dart';
 import 'package:flutter_ecommerce/features/categories/presentations/widgets/category_card_widget.dart';
 import 'package:flutter_ecommerce/features/commons/presentations/widgets/appbar_widgets.dart';
@@ -92,6 +90,19 @@ class _HomeScreenState extends State<HomeScreen> {
                             ProductCard(itemSize: itemSize),
                       );
                     },
+                  ),
+                ),
+                SizedBox(height: AppUnits.headlineSeparateHeight),
+                SectionSeparatorHead(title: 'Special', onTapSeeAll: () {}),
+                SizedBox(
+                  height: 200,
+                  child: LayoutBuilder(
+                    builder: (context, constraints) => ListView.builder(
+                      itemCount: 3,
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, index) =>
+                          ProductCard(itemSize: constraints.maxWidth / 3),
+                    ),
                   ),
                 ),
               ],
