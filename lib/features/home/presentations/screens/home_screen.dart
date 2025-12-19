@@ -105,6 +105,21 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                 ),
+                SizedBox(height: AppUnits.headlineSeparateHeight),
+                SectionSeparatorHead(title: 'New', onTapSeeAll: () {}),
+                SizedBox(
+                  height: 200,
+                  child: LayoutBuilder(
+                    builder: (context, constraints) {
+                      return ListView.builder(
+                        itemCount: 3,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) =>
+                            ProductCard(itemSize: constraints.maxWidth / 3),
+                      );
+                    },
+                  ),
+                ),
               ],
             ),
           ),
