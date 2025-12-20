@@ -43,7 +43,49 @@ class _CartScreenState extends State<CartScreen> {
               Expanded(
                 child: ListView.builder(
                   itemCount: 10,
-                  itemBuilder: (context, index) => CartCardWidget(),
+                  itemBuilder: (context, index) =>
+                      index != 9 ? CartCardWidget() : SizedBox(height: 80),
+                ),
+              ),
+              Container(
+                decoration: BoxDecoration(
+                  color: AppColors.themeColor.withAlpha(
+                    AppUnits.themeColorOpacity,
+                  ),
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(AppUnits.round),
+                    topRight: Radius.circular(AppUnits.round),
+                  ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(24.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text('Total Price'),
+                          Text(
+                            '\$20,000',
+                            style: TextTheme.of(
+                              context,
+                            ).titleLarge!.copyWith(color: AppColors.themeColor),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 40,
+                        width: 150,
+                        child: FilledButton(
+                          onPressed: () {},
+                          child: Text('Checkout'),
+                        ),
+                      ),
+                      // FilledButton(onPressed: () {}, child: Text('Checkout')),
+                    ],
+                  ),
                 ),
               ),
             ],
