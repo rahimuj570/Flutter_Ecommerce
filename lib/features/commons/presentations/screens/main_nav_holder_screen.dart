@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce/app/app_colors.dart';
+import 'package:flutter_ecommerce/features/cart/presentations/screens/cart_screen.dart';
 import 'package:flutter_ecommerce/features/categories/presentations/screens/categories_screen.dart';
 import 'package:flutter_ecommerce/features/commons/state_management/main_nav_bar_provider.dart';
 import 'package:flutter_ecommerce/features/home/presentations/screens/home_screen.dart';
@@ -18,16 +19,16 @@ class _MainNavHolderScreenState extends State<MainNavHolderScreen> {
   final List<Widget> _screens = [
     HomeScreen(),
     CategoriesScreen(),
-    ProductListByWish(),
+    CartScreen(),
     ProductListByWish(),
   ];
 
   @override
   Widget build(BuildContext context) {
-    final MainNavBarProvider _mainNavBarProvider = context.watch();
+    final MainNavBarProvider mainNavBarProvider = context.watch();
     return SafeArea(
       child: Scaffold(
-        body: _screens[_mainNavBarProvider.getSelectedIndex],
+        body: _screens[mainNavBarProvider.getSelectedIndex],
         bottomNavigationBar: Container(
           decoration: const BoxDecoration(
             color: Colors.white,
@@ -41,12 +42,12 @@ class _MainNavHolderScreenState extends State<MainNavHolderScreen> {
           child: BottomNavigationBar(
             onTap: (value) {
               // print('ssssssssssssssssss $value');
-              _mainNavBarProvider.changeIndex(value);
+              mainNavBarProvider.changeIndex(value);
             },
             type: BottomNavigationBarType.fixed,
             backgroundColor: Colors.white,
             elevation: 0,
-            currentIndex: _mainNavBarProvider.getSelectedIndex,
+            currentIndex: mainNavBarProvider.getSelectedIndex,
             selectedItemColor: AppColors.themeColor,
             unselectedItemColor: Colors.grey,
             unselectedFontSize: 11,
