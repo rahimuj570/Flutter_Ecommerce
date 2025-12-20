@@ -28,10 +28,12 @@ class _ProductListByCategoryState extends State<ProductListByCategory> {
         title: Text(widget.arguments as String),
       ),
       body: GridView.builder(
+        padding: EdgeInsets.all(AppUnits.horizontalMainPadding),
         itemCount: 5,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          childAspectRatio: 9 / 10,
           crossAxisCount: 3,
-          mainAxisSpacing: 5,
+          mainAxisSpacing: 8,
           crossAxisSpacing: 5,
         ),
         itemBuilder: (context, index) => ProductCard(itemSize: 200),

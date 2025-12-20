@@ -19,11 +19,7 @@ class ProductCard extends StatelessWidget {
                   topLeft: Radius.circular(AppUnits.round),
                   topRight: Radius.circular(AppUnits.round),
                 ),
-                child: Image.asset(
-                  AppAssetsPath.shoePng,
-                  width: 100,
-                  height: 100,
-                ),
+                child: Image.asset(AppAssetsPath.shoePng),
               ),
             ),
             Container(
@@ -32,7 +28,8 @@ class ProductCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('ss'),
+                  SizedBox(height: 2),
+                  Text(' 200 ss'),
                   Row(
                     children: [
                       Text('\$200'),
