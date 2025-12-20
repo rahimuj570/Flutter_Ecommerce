@@ -10,7 +10,7 @@ import 'package:provider/provider.dart';
 
 class FlutterEcommerce extends StatefulWidget {
   const FlutterEcommerce({super.key});
-
+  static GlobalKey<NavigatorState> globalRoute = GlobalKey<NavigatorState>();
   @override
   State<FlutterEcommerce> createState() => _FlutterEcommerceState();
 }
@@ -28,6 +28,7 @@ class _FlutterEcommerceState extends State<FlutterEcommerce> {
         builder:
             (context, langProvider, themeProvider, mainNavBarProvider, child) =>
                 MaterialApp(
+                  navigatorKey: FlutterEcommerce.globalRoute,
                   initialRoute: '/',
                   onGenerateRoute: AppRoutes.appRoutes,
                   theme: AppThemes.light,

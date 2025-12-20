@@ -6,6 +6,7 @@ import 'package:flutter_ecommerce/features/auth/presentations/screens/splash_scr
 import 'package:flutter_ecommerce/features/auth/presentations/screens/verify_otp_screen.dart';
 import 'package:flutter_ecommerce/features/categories/presentations/screens/categories_screen.dart';
 import 'package:flutter_ecommerce/features/commons/presentations/screens/main_nav_holder_screen.dart';
+import 'package:flutter_ecommerce/features/products/presentations/screens/product_list_by_category.dart';
 
 class AppRoutes {
   static Route<dynamic> appRoutes(RouteSettings settings) {
@@ -25,6 +26,8 @@ class AppRoutes {
       widget = MainNavHolderScreen();
     } else if (settings.name == CategoriesScreen.name) {
       widget = CategoriesScreen();
+    } else if (settings.name == ProductListByCategory.name) {
+      widget = ProductListByCategory(arguments: settings.arguments);
     }
 
     return MaterialPageRoute(builder: (context) => widget);

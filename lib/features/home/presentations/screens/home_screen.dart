@@ -6,6 +6,7 @@ import 'package:flutter_ecommerce/features/commons/presentations/widgets/product
 import 'package:flutter_ecommerce/features/commons/state_management/main_nav_bar_provider.dart';
 import 'package:flutter_ecommerce/features/home/presentations/widgets/home_carousel_widget.dart';
 import 'package:flutter_ecommerce/features/home/presentations/widgets/section_separator_head.dart';
+import 'package:flutter_ecommerce/features/products/presentations/screens/product_list_by_category.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -63,13 +64,22 @@ class _HomeScreenState extends State<HomeScreen> {
                 SizedBox(
                   height: 100,
                   child: LayoutBuilder(
-                    builder: (context, constraints) {
+                    builder: (context2, constraints) {
                       return ListView.builder(
                         scrollDirection: Axis.horizontal,
 
                         itemCount: 4,
-                        itemBuilder: (context, index) {
-                          return CategoryCardWidget(constraints: constraints);
+                        itemBuilder: (context2, index) {
+                          return GestureDetector(
+                            onTap: () {
+                              Navigator.pushNamed(
+                                context,
+                                ProductListByCategory.name,
+                                arguments: 'Fashion',
+                              );
+                            },
+                            child: CategoryCardWidget(constraints: constraints),
+                          );
                         },
                       );
                     },
@@ -120,6 +130,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     },
                   ),
                 ),
+                SizedBox(height: AppUnits.headlineSeparateHeight),
               ],
             ),
           ),

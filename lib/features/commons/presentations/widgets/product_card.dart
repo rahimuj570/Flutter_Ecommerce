@@ -10,33 +10,29 @@ class ProductCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: itemSize,
-      height: itemSize,
       child: Card(
-        color: Colors.white,
-        elevation: 2,
         child: Column(
           children: [
-            ClipRRect(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(AppUnits.round),
-                topRight: Radius.circular(AppUnits.round),
-              ),
-              child: Container(
-                color: AppColors.themeColor.withAlpha(
-                  AppUnits.themeColorOpacity,
+            Expanded(
+              child: ClipRRect(
+                borderRadius: BorderRadiusGeometry.only(
+                  topLeft: Radius.circular(AppUnits.round),
+                  topRight: Radius.circular(AppUnits.round),
                 ),
-                padding: const EdgeInsets.all(8.0),
-                child: Image.asset(AppAssetsPath.shoePng, fit: BoxFit.contain),
+                child: Image.asset(
+                  AppAssetsPath.shoePng,
+                  width: 100,
+                  height: 100,
+                ),
               ),
             ),
-            //Details Cotainer Start
             Container(
-              padding: EdgeInsets.all(5),
+              padding: EdgeInsets.only(left: 6),
               color: Colors.white,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('data'),
+                  Text('ss'),
                   Row(
                     children: [
                       Text('\$200'),
