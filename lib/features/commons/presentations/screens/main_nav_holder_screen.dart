@@ -3,6 +3,7 @@ import 'package:flutter_ecommerce/app/app_colors.dart';
 import 'package:flutter_ecommerce/features/categories/presentations/screens/categories_screen.dart';
 import 'package:flutter_ecommerce/features/commons/state_management/main_nav_bar_provider.dart';
 import 'package:flutter_ecommerce/features/home/presentations/screens/home_screen.dart';
+import 'package:flutter_ecommerce/features/wish_list/presentations/screens/product_list_by_wish.dart';
 import 'package:provider/provider.dart';
 
 class MainNavHolderScreen extends StatefulWidget {
@@ -14,7 +15,12 @@ class MainNavHolderScreen extends StatefulWidget {
 }
 
 class _MainNavHolderScreenState extends State<MainNavHolderScreen> {
-  final List<Widget> _screens = [HomeScreen(), CategoriesScreen()];
+  final List<Widget> _screens = [
+    HomeScreen(),
+    CategoriesScreen(),
+    ProductListByWish(),
+    ProductListByWish(),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +40,7 @@ class _MainNavHolderScreenState extends State<MainNavHolderScreen> {
           ),
           child: BottomNavigationBar(
             onTap: (value) {
+              // print('ssssssssssssssssss $value');
               _mainNavBarProvider.changeIndex(value);
             },
             type: BottomNavigationBarType.fixed,
