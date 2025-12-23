@@ -6,6 +6,7 @@ import 'package:flutter_ecommerce/features/commons/presentations/widgets/product
 import 'package:flutter_ecommerce/features/commons/state_management/main_nav_bar_provider.dart';
 import 'package:flutter_ecommerce/features/home/presentations/widgets/home_carousel_widget.dart';
 import 'package:flutter_ecommerce/features/home/presentations/widgets/section_separator_head.dart';
+import 'package:flutter_ecommerce/features/products/presentations/screens/product_details_screen.dart';
 import 'package:flutter_ecommerce/features/products/presentations/screens/product_list_by_category.dart';
 import 'package:provider/provider.dart';
 
@@ -96,8 +97,15 @@ class _HomeScreenState extends State<HomeScreen> {
                       return ListView.builder(
                         itemCount: 3,
                         scrollDirection: Axis.horizontal,
-                        itemBuilder: (context, index) =>
-                            ProductCard(itemSize: itemSize),
+                        itemBuilder: (context, index) => GestureDetector(
+                          onTap: () {
+                            Navigator.pushNamed(
+                              context,
+                              ProductDetailsScreen.name,
+                            );
+                          },
+                          child: ProductCard(itemSize: itemSize),
+                        ),
                       );
                     },
                   ),

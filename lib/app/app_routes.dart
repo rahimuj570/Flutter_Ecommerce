@@ -6,6 +6,7 @@ import 'package:flutter_ecommerce/features/auth/presentations/screens/splash_scr
 import 'package:flutter_ecommerce/features/auth/presentations/screens/verify_otp_screen.dart';
 import 'package:flutter_ecommerce/features/categories/presentations/screens/categories_screen.dart';
 import 'package:flutter_ecommerce/features/commons/presentations/screens/main_nav_holder_screen.dart';
+import 'package:flutter_ecommerce/features/products/presentations/screens/product_details_screen.dart';
 import 'package:flutter_ecommerce/features/products/presentations/screens/product_list_by_category.dart';
 import 'package:flutter_ecommerce/features/wish_list/presentations/screens/product_list_by_wish.dart';
 
@@ -31,6 +32,8 @@ class AppRoutes {
       widget = ProductListByCategory(arguments: settings.arguments);
     } else if (settings.name == ProductListByWish.name) {
       widget = ProductListByWish();
+    } else if (settings.name == ProductDetailsScreen.name) {
+      widget = ProductDetailsScreen();
     }
 
     return MaterialPageRoute(builder: (context) => widget);
