@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce/app/app_assets_path.dart';
 import 'package:flutter_ecommerce/app/app_colors.dart';
 import 'package:flutter_ecommerce/app/app_units.dart';
+import 'package:flutter_ecommerce/features/commons/presentations/widgets/increment_decrement_button_widget.dart';
 
 class CartCardWidget extends StatefulWidget {
   const CartCardWidget({super.key});
@@ -46,44 +47,7 @@ class _CartCardWidgetState extends State<CartCardWidget> {
               children: [
                 IconButton(onPressed: () {}, icon: Icon(CupertinoIcons.delete)),
                 SizedBox(height: 20),
-                Row(
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        debugPrint('add');
-                      },
-                      child: Container(
-                        padding: EdgeInsets.all(2),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          color: AppColors.themeColor,
-                        ),
-                        child: Icon(Icons.add, size: 18, color: Colors.white),
-                      ),
-                    ),
-                    SizedBox(width: 5),
-                    Text('2'),
-                    SizedBox(width: 5),
-
-                    GestureDetector(
-                      onTap: () {
-                        debugPrint('remove');
-                      },
-                      child: Container(
-                        padding: EdgeInsets.all(2),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          color: AppColors.themeColor,
-                        ),
-                        child: Icon(
-                          Icons.remove,
-                          size: 18,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                IncrementDecrementButton(addOnTap: () {}, removeOnTap: () {}),
               ],
             ),
           ],

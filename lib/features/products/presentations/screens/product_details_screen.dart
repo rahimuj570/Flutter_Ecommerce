@@ -13,6 +13,7 @@ class ProductDetailsScreen extends StatefulWidget {
 class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   @override
   Widget build(BuildContext context) {
+    TextTheme textTheme = TextTheme.of(context);
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -27,9 +28,19 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
         children: [
           Expanded(
             child: SingleChildScrollView(
-              child: Column(children: [ProductDetailsCarouselWidget()]),
+              child: Column(
+                children: [
+                  ProductDetailsCarouselWidget(),
+                  Row(
+                    children: [
+                      Text('Product Name', style: textTheme.titleLarge),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
+
           BottomStaticSectionWidget(
             title: 'Price',
             amount: 100,
