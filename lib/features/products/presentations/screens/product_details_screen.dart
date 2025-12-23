@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ecommerce/app/app_colors.dart';
+import 'package:flutter_ecommerce/app/app_units.dart';
 import 'package:flutter_ecommerce/features/commons/presentations/widgets/bottom_static_section_widget.dart';
+import 'package:flutter_ecommerce/features/commons/presentations/widgets/increment_decrement_button_widget.dart';
+import 'package:flutter_ecommerce/features/products/presentations/widgets/color_picker_widget.dart';
 import 'package:flutter_ecommerce/features/products/presentations/widgets/product_details_carousel_widget.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
@@ -31,10 +35,59 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               child: Column(
                 children: [
                   ProductDetailsCarouselWidget(),
-                  Row(
-                    children: [
-                      Text('Product Name', style: textTheme.titleLarge),
-                    ],
+                  Padding(
+                    padding: EdgeInsets.all(AppUnits.headlineSeparateHeight),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Text(
+                                'Product Name ds  f s fd f sf sss s ssss',
+                                style: textTheme.titleLarge,
+                              ),
+                            ),
+                            IncrementDecrementButton(
+                              addOnTap: () {},
+                              removeOnTap: () {},
+                            ),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Icon(Icons.star, size: 22, color: Colors.amber),
+                            Text('4.8', style: textTheme.bodyLarge),
+                            TextButton(
+                              onPressed: () {},
+                              child: Text(
+                                'Reviews',
+                                style: textTheme.bodyLarge!.copyWith(
+                                  color: AppColors.themeColor,
+                                ),
+                              ),
+                            ),
+                            GestureDetector(
+                              onTap: () {},
+                              child: Container(
+                                padding: EdgeInsets.all(2),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5),
+                                  color: AppColors.themeColor,
+                                ),
+                                child: Icon(
+                                  Icons.favorite_outline,
+                                  size: 18,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: AppUnits.headlineSeparateHeight),
+                        ColorPickerWidget(),
+                      ],
+                    ),
                   ),
                 ],
               ),

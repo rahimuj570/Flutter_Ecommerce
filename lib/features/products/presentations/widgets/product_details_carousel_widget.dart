@@ -1,7 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce/app/app_colors.dart';
-import 'package:flutter_ecommerce/app/app_units.dart';
 
 class ProductDetailsCarouselWidget extends StatefulWidget {
   const ProductDetailsCarouselWidget({super.key});
