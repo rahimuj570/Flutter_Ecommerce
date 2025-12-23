@@ -34,7 +34,7 @@ class _ProductListByCategoryState extends State<ProductListByCategory> {
           childAspectRatio: 9 / 10,
           crossAxisCount: 3,
           mainAxisSpacing: 8,
-          crossAxisSpacing: 5,
+          crossAxisSpacing: 3,
         ),
         itemBuilder: (context, index) => ProductCard(itemSize: 200),
       ),

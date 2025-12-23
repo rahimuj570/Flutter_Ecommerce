@@ -23,8 +23,14 @@ class ProductCard extends StatelessWidget {
               ),
             ),
             Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(AppUnits.round),
+                  bottomRight: Radius.circular(AppUnits.round),
+                ),
+              ),
               padding: EdgeInsets.only(left: 6),
-              color: Colors.white,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -39,7 +45,9 @@ class ProductCard extends StatelessWidget {
                       SizedBox(width: 6),
                       Card(
                         elevation: 0,
-                        shape: RoundedRectangleBorder(),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5),
+                        ),
 
                         color: AppColors.themeColor,
                         child: Padding(

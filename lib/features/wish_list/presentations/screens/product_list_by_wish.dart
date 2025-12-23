@@ -40,7 +40,7 @@ class _ProductListByWishState extends State<ProductListByWish> {
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 3,
             mainAxisSpacing: 8,
-            crossAxisSpacing: 5,
+            crossAxisSpacing: 3,
           ),
           itemBuilder: (context, index) => ProductCard(itemSize: 200),
         ),
