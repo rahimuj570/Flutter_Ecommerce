@@ -46,15 +46,19 @@ class _ColorPickerWidgetState extends State<ColorPickerWidget> {
                 },
                 child: Container(
                   margin: EdgeInsets.only(right: 10),
-                  height: 20,
-                  width: 20,
+                  height: 25,
+                  width: 25,
                   decoration: BoxDecoration(
                     color: getColor(c),
                     // color: ,
                     shape: BoxShape.circle,
                   ),
                   child: c == _seletedColor
-                      ? Icon(Icons.check_rounded, color: Colors.white, size: 15)
+                      ? Icon(
+                          Icons.check_rounded,
+                          color: c != 'white' ? Colors.white : Colors.black,
+                          size: 15,
+                        )
                       : null,
                 ),
               ),

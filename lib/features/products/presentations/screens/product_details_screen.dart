@@ -5,6 +5,7 @@ import 'package:flutter_ecommerce/features/commons/presentations/widgets/bottom_
 import 'package:flutter_ecommerce/features/commons/presentations/widgets/increment_decrement_button_widget.dart';
 import 'package:flutter_ecommerce/features/products/presentations/widgets/color_picker_widget.dart';
 import 'package:flutter_ecommerce/features/products/presentations/widgets/product_details_carousel_widget.dart';
+import 'package:flutter_ecommerce/features/products/presentations/widgets/size_picker_widget.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
   const ProductDetailsScreen({super.key});
@@ -86,6 +87,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         ),
                         SizedBox(height: AppUnits.headlineSeparateHeight),
                         ColorPickerWidget(),
+                        SizedBox(height: AppUnits.headlineSeparateHeight),
+                        SizePickerWidget(),
                       ],
                     ),
                   ),
