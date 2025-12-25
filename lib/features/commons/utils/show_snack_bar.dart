@@ -1,0 +1,22 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_ecommerce/app/app_colors.dart';
+import 'package:flutter_ecommerce/app/app_units.dart';
+
+void showSnackBar({
+  required BuildContext context,
+  required String message,
+  bool isError = false,
+}) async {
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
+      content: Text(
+        message,
+        style: TextStyle(color: isError ? Colors.black : Colors.white),
+      ),
+      backgroundColor: !isError
+          ? AppColors.themeColor.withAlpha(AppUnits.themeColorOpacity)
+          : Colors.red,
+      elevation: 1,
+    ),
+  );
+}
