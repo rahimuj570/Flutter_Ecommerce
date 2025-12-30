@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce/app/app_colors.dart';
-import 'package:flutter_ecommerce/app/app_units.dart';
 
 void showSnackBar({
   required BuildContext context,
@@ -13,9 +12,7 @@ void showSnackBar({
         message,
         style: TextStyle(color: isError ? Colors.black : Colors.white),
       ),
-      backgroundColor: !isError
-          ? AppColors.themeColor.withAlpha(AppUnits.themeColorOpacity)
-          : Colors.red,
+      backgroundColor: !isError ? AppColors.snackBarSuccessColor : Colors.red,
       elevation: 1,
     ),
   );
