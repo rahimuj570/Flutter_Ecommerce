@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce/app/setup_network_caller.dart';
-import 'package:flutter_ecommerce/app/uri.dart';
+import 'package:flutter_ecommerce/app/uri_list.dart';
 import 'package:flutter_ecommerce/core/models/network_response_model.dart';
 
 class SignupProvider extends ChangeNotifier {

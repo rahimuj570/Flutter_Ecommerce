@@ -10,7 +10,7 @@ void showSnackBar({
     SnackBar(
       content: Text(
         message,
-        style: TextStyle(color: isError ? Colors.black : Colors.white),
+        style: TextStyle(color: isError ? Colors.white : Colors.black),
       ),
       backgroundColor: !isError ? AppColors.snackBarSuccessColor : Colors.red,
       elevation: 1,

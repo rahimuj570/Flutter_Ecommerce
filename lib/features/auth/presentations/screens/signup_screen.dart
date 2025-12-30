@@ -121,9 +121,9 @@ class _SignupScreenState extends State<SignupScreen> {
                           Consumer<SignupProvider>(
                             builder: (context, signupProvider, child) =>
                                 FilledButton(
-                                  onPressed: () {
-                                    onTapSignUp(signupProvider);
-                                  },
+                                  onPressed: () => signupProvider.getProgress
+                                      ? null
+                                      : onTapSignUp(signupProvider),
                                   child: Visibility(
                                     visible: !signupProvider.getProgress,
                                     replacement: SizedBox(
@@ -172,36 +172,54 @@ class _SignupScreenState extends State<SignupScreen> {
   Future<void> onTapSignUp(SignupProvider signupProvider) async {
     if (_formKey.currentState!.validate()) {
       SignupRequestModel requestModel = SignupRequestModel(
-        _firstNameTEC.text,
-        _lastNameTEC.text,
-        _emailTEC.text,
+        _firstNameTEC.text.trim(),
+        _lastNameTEC.text.trim(),
+        _emailTEC.text.trim(),
         _passwordTEC.text,
-        _phoneTEC.text,
-        _cityTEC.text,
+        _phoneTEC.text.trim(),
+        _cityTEC.text.trim(),
       );
 
       bool isSuccess = await signupProvider.signUp(requestModel.toJson());
-      if (mounted) {
-        if (isSuccess) {
-          showSnackBar(
-            context: context,
-            message: signupProvider.getResponse.message!,
-          );
-          await Future.delayed(Duration(seconds: 2));
-          if (mounted) {
-            Navigator.pushReplacementNamed(context, VerifyOtpScreen.name);
-          }
-        } else {
-          showSnackBar(
-            context: context,
-            message: signupProvider.getResponse.message!,
-          );
+
+      if (isSuccess) {
+        mounted
+            ? showSnackBar(
+                context: context,
+                message: signupProvider.getResponse.message!,
+              )
+            : null;
+        await Future.delayed(Duration(seconds: 2));
+        if (mounted) {
+          Navigator.pushReplacementNamed(context, VerifyOtpScreen.name);
         }
+      } else {
+        mounted
+            ? showSnackBar(
+                isError: true,
+                context: context,
+                message: signupProvider.getResponse.message!,
+              )
+            : null;
       }
     }
   }
 
   void _gotoSignin() {
     Navigator.pushReplacementNamed(context, SigninScreen.name);
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+
+    _cityTEC.dispose();
+    _emailTEC.dispose();
+    _firstNameTEC.dispose();
+    _lastNameTEC.dispose();
+    _passwordTEC.dispose();
+    _phoneTEC.dispose();
+
+    super.dispose();
   }
 }
