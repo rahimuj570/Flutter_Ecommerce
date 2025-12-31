@@ -16,7 +16,14 @@ class NetworkCaller {
     Response response = await get(Uri.parse(uri), headers: header);
     LoggerModel(url: uri, statusCode: response.statusCode, body: response.body);
 
-    return NetworkResponseModel(isSuccess: true, statusCode: 22);
+    Map<String, dynamic> responseData = jsonDecode(response.body);
+
+    return NetworkResponseModel(
+      isSuccess: responseData['status'] == 'success',
+      statusCode: response.statusCode,
+      message: responseData['msg'],
+      responseData: responseData['data'],
+    );
   }
 
   //POST Action

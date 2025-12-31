@@ -3,6 +3,7 @@ import 'package:flutter_ecommerce/app/app_routes.dart';
 import 'package:flutter_ecommerce/app/app_themes.dart';
 import 'package:flutter_ecommerce/app/state_management/language_provider.dart';
 import 'package:flutter_ecommerce/app/state_management/theme_provider.dart';
+import 'package:flutter_ecommerce/features/categories/state_management/category_provider.dart';
 import 'package:flutter_ecommerce/features/commons/state_management/main_nav_bar_provider.dart';
 import 'package:flutter_ecommerce/l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -23,6 +24,7 @@ class _FlutterEcommerceState extends State<FlutterEcommerce> {
         ChangeNotifierProvider(create: (context) => LanguageProvider()),
         ChangeNotifierProvider(create: (context) => ThemeProvider()),
         ChangeNotifierProvider(create: (context) => MainNavBarProvider()),
+        ChangeNotifierProvider(create: (context) => CategoryProvider()),
       ],
       child: Consumer3<LanguageProvider, ThemeProvider, MainNavBarProvider>(
         builder:
