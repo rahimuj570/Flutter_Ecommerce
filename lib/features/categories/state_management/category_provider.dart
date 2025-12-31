@@ -46,4 +46,28 @@ class CategoryProvider extends ChangeNotifier {
     _isFirstLoading = false;
     notifyListeners();
   }
+
+  Future<List<CategoryModel>> fetchMore() async {
+    List<CategoryModel> categories = [];
+    _currentPage++;
+    if (_currentPage <= _lastPage) {
+      print('sssssssssssssssssss$_currentPage');
+      _isLoadingMore = true;
+      notifyListeners();
+
+      NetworkResponseModel responseModel = await getNetworkCaller().getCall(
+        uri: UriList.fetchCategories(
+          postCount: _categoryCount,
+          pageNumber: _currentPage,
+        ),
+      );
+
+      for (Map<String, dynamic> json in responseModel.responseData['results']) {
+        categories.add(CategoryModel.fromJson(json));
+      }
+      _isLoadingMore = false;
+      notifyListeners();
+    }
+    return categories;
+  }
 }

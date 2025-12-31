@@ -15,23 +15,39 @@ class CategoriesScreen extends StatefulWidget {
   State<CategoriesScreen> createState() => _CategoriesScreenState();
 }
 
-List<CategoryModel> _categoryList = [];
-
 class _CategoriesScreenState extends State<CategoriesScreen> {
+  List<CategoryModel> _categoryList = [];
+  final ScrollController _scrollController = ScrollController();
+
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    _categoryList = context.read<CategoryProvider>().getCategories;
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      if (context.read<CategoryProvider>().getCategories.isEmpty) {
-        context.read<CategoryProvider>().fetchFirstTime(
-          currentPage: 1,
-          categoryCount: 30,
-        );
+
+    // Defer provider access until after first frame
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final provider = context.read<CategoryProvider>();
+
+      if (_scrollController.hasClients) {
+        _scrollController.addListener(() async {
+          if (_scrollController.position.extentBefore < 300) {
+            if (!provider.getIsLoadingMore) {
+              final temp = provider.fetchMore();
+              _categoryList.addAll(await temp);
+            }
+          }
+        });
       }
+      _categoryList = provider.getCategories;
+
+      provider.fetchFirstTime(currentPage: 1, categoryCount: 30);
     });
   }
+
+  // @override
+  // void dispose() {
+  //   _scrollController.dispose();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -64,20 +80,58 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                   vertical: 20,
                   horizontal: AppUnits.horizontalMainPadding,
                 ),
-                child: LayoutBuilder(
-                  builder: (context, constraints) => GridView.builder(
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 4,
-                      mainAxisSpacing: 10,
-                      crossAxisSpacing: 8,
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: LayoutBuilder(
+                        builder: (context, constraints) => CustomScrollView(
+                          controller: _scrollController,
+                          slivers: [
+                            SliverGrid(
+                              delegate: SliverChildBuilderDelegate(
+                                (context, index) => CategoryCardWidget(
+                                  constraints: constraints,
+                                  model: _categoryList[index],
+                                ),
+                                childCount: _categoryList.length,
+                              ),
+                              gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 4,
+                                    mainAxisSpacing: 10,
+                                    crossAxisSpacing: 8,
+                                  ),
+                            ),
+                            if (!categoryProvider.getIsLoadingMore &&
+                                categoryProvider.getCurrentPage ==
+                                    categoryProvider.getLastPage)
+                              SliverToBoxAdapter(
+                                child: Center(
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      vertical: 16,
+                                    ),
+                                    child: Text(
+                                      "No categories pending",
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                          ],
+                        ),
+                      ),
                     ),
 
-                    itemCount: _categoryList.length,
-                    itemBuilder: (context, index) => CategoryCardWidget(
-                      constraints: constraints,
-                      model: _categoryList[index],
-                    ),
-                  ),
+                    if (categoryProvider.getIsLoadingMore)
+                      const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 16),
+                        child: Center(child: CircularProgressIndicator()),
+                      ),
+                  ],
                 ),
               ),
             ),

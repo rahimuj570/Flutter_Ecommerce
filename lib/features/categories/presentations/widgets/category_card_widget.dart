@@ -20,8 +20,12 @@ class CategoryCardWidget extends StatelessWidget {
               child: Center(
                 child: Image.network(
                   model!.icon,
+                  loadingBuilder: (context, child, loadingProgress) =>
+                      loadingProgress != null
+                      ? CircularProgressIndicator()
+                      : child,
                   width: 40,
-                  height: 40, // make it square
+                  height: 40,
                   fit: BoxFit.contain,
                   errorBuilder: (context, error, stackTrace) =>
                       Icon(Icons.error, size: 40),
