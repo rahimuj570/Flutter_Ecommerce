@@ -23,7 +23,8 @@ class AppRoutes {
     } else if (settings.name == ForgotPasswordScreen.name) {
       widget = ForgotPasswordScreen();
     } else if (settings.name == VerifyOtpScreen.name) {
-      widget = VerifyOtpScreen();
+      String email = settings.arguments as String;
+      widget = VerifyOtpScreen(email: email);
     } else if (settings.name == MainNavHolderScreen.name) {
       widget = MainNavHolderScreen();
     } else if (settings.name == CategoriesScreen.name) {

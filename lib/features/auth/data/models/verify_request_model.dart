@@ -1,0 +1,11 @@
+import 'package:flutter/material.dart';
+
+class VerifyRequestModel extends ChangeNotifier {
+  final String email;
+  final String otp;
+  VerifyRequestModel({required this.email, required this.otp});
+
+  Map<String, dynamic> toJson() {
+    return {'email': email, 'otp': otp};
+  }
+}

@@ -9,8 +9,8 @@ import 'package:flutter_ecommerce/features/auth/presentations/screens/verify_otp
 import 'package:flutter_ecommerce/features/auth/presentations/widgets/app_logo_widget.dart';
 import 'package:flutter_ecommerce/features/auth/state_management/login_provider.dart';
 import 'package:flutter_ecommerce/features/commons/presentations/screens/main_nav_holder_screen.dart';
+import 'package:flutter_ecommerce/features/commons/presentations/widgets/button_loading_widget.dart';
 import 'package:flutter_ecommerce/features/commons/utils/show_snack_bar.dart';
-import 'package:flutter_ecommerce/features/home/presentations/screens/home_screen.dart';
 import 'package:provider/provider.dart';
 
 class SigninScreen extends StatefulWidget {
@@ -60,6 +60,7 @@ class _SigninScreenState extends State<SigninScreen> {
                         spacing: 15,
                         children: [
                           TextFormField(
+                            controller: _emailTEC,
                             decoration: InputDecoration(hintText: 'Email'),
 
                             autovalidateMode:
@@ -69,6 +70,7 @@ class _SigninScreenState extends State<SigninScreen> {
                                 value!.isEmpty ? 'Insert Email' : null,
                           ),
                           TextFormField(
+                            controller: _passwordTEC,
                             decoration: InputDecoration(
                               hintText: 'Pasword',
 
@@ -118,13 +120,7 @@ class _SigninScreenState extends State<SigninScreen> {
                                       : _loginOperation(loginProvider),
                                   child: Visibility(
                                     visible: !loginProvider.getIsLoginProcess,
-                                    replacement: SizedBox(
-                                      height: 20,
-                                      width: 20,
-                                      child: CircularProgressIndicator(
-                                        color: Colors.white,
-                                      ),
-                                    ),
+                                    replacement: ButtonLoadingWidget(),
                                     child: Text("SIGN IN"),
                                   ),
                                 ),
@@ -175,7 +171,11 @@ class _SigninScreenState extends State<SigninScreen> {
       } else {
         if (res.message!.contains('verified')) {
           mounted
-              ? Navigator.pushReplacementNamed(context, VerifyOtpScreen.name)
+              ? Navigator.pushReplacementNamed(
+                  context,
+                  arguments: _emailTEC.text.trim(),
+                  VerifyOtpScreen.name,
+                )
               : null;
         } else {
           mounted

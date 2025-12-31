@@ -6,6 +6,7 @@ import 'package:flutter_ecommerce/features/auth/presentations/screens/signin_scr
 import 'package:flutter_ecommerce/features/auth/presentations/screens/verify_otp_screen.dart';
 import 'package:flutter_ecommerce/features/auth/presentations/widgets/app_logo_widget.dart';
 import 'package:flutter_ecommerce/features/auth/state_management/signup_provider.dart';
+import 'package:flutter_ecommerce/features/commons/presentations/widgets/button_loading_widget.dart';
 import 'package:flutter_ecommerce/features/commons/utils/show_snack_bar.dart';
 import 'package:provider/provider.dart';
 
@@ -126,13 +127,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                       : onTapSignUp(signupProvider),
                                   child: Visibility(
                                     visible: !signupProvider.getProgress,
-                                    replacement: SizedBox(
-                                      width: 20,
-                                      height: 20,
-                                      child: CircularProgressIndicator(
-                                        color: Colors.white,
-                                      ),
-                                    ),
+                                    replacement: ButtonLoadingWidget(),
                                     child: Text("SIGN UP"),
                                   ),
                                 ),
@@ -191,7 +186,11 @@ class _SignupScreenState extends State<SignupScreen> {
             : null;
         await Future.delayed(Duration(seconds: 2));
         if (mounted) {
-          Navigator.pushReplacementNamed(context, VerifyOtpScreen.name);
+          Navigator.pushReplacementNamed(
+            context,
+            arguments: _emailTEC.text.trim(),
+            VerifyOtpScreen.name,
+          );
         }
       } else {
         mounted
