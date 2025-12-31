@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_ecommerce/features/auth/presentations/screens/signup_screen.dart';
+import 'package:flutter_ecommerce/features/auth/presentations/screens/signin_screen.dart';
 import 'package:flutter_ecommerce/features/auth/presentations/widgets/app_logo_widget.dart';
 import 'package:flutter_ecommerce/features/auth/utils/auth_management.dart';
 import 'package:flutter_ecommerce/features/commons/presentations/screens/main_nav_holder_screen.dart';
@@ -25,7 +25,7 @@ class _SplashScreenState extends State<SplashScreen> {
     if (mounted) {
       inHomePage
           ? Navigator.pushReplacementNamed(context, MainNavHolderScreen.name)
-          : Navigator.pushReplacementNamed(context, SignupScreen.name);
+          : Navigator.pushReplacementNamed(context, SigninScreen.name);
     }
   }
 
