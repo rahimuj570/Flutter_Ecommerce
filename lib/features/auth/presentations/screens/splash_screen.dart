@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce/features/auth/presentations/screens/signup_screen.dart';
 import 'package:flutter_ecommerce/features/auth/presentations/widgets/app_logo_widget.dart';
+import 'package:flutter_ecommerce/features/auth/utils/auth_management.dart';
+import 'package:flutter_ecommerce/features/commons/presentations/screens/main_nav_holder_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -15,13 +17,15 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _gotoNext();
+    _checkIsUserLoggedIn();
   }
 
-  Future<void> _gotoNext() async {
+  Future<void> _gotoNext({required bool inHomePage}) async {
     await Future.delayed(Duration(seconds: 2));
     if (mounted) {
-      Navigator.pushReplacementNamed(context, SignupScreen.name);
+      inHomePage
+          ? Navigator.pushReplacementNamed(context, MainNavHolderScreen.name)
+          : Navigator.pushReplacementNamed(context, SignupScreen.name);
     }
   }
 
@@ -55,5 +59,14 @@ class _SplashScreenState extends State<SplashScreen> {
       //   ),
       // ),
     );
+  }
+
+  Future<void> _checkIsUserLoggedIn() async {
+    if (await AuthManagement.isLoggedIn()) {
+      await AuthManagement.loadUser();
+      _gotoNext(inHomePage: true);
+    } else {
+      _gotoNext(inHomePage: false);
+    }
   }
 }
