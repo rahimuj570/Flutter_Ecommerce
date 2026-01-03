@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce/app/app_units.dart';
+import 'package:flutter_ecommerce/features/categories/data/models/category_model.dart';
 import 'package:flutter_ecommerce/features/categories/presentations/widgets/category_card_widget.dart';
+import 'package:flutter_ecommerce/features/categories/state_management/category_provider.dart';
 import 'package:flutter_ecommerce/features/commons/presentations/widgets/appbar_widgets.dart';
 import 'package:flutter_ecommerce/features/commons/presentations/widgets/product_card.dart';
 import 'package:flutter_ecommerce/features/commons/state_management/main_nav_bar_provider.dart';
@@ -18,6 +20,18 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      CategoryProvider categoryProvider = context.read<CategoryProvider>();
+      if (categoryProvider.getCategories.isEmpty) {
+        categoryProvider.fetchFirstTime(currentPage: 1, categoryCount: 30);
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -62,29 +76,44 @@ class _HomeScreenState extends State<HomeScreen> {
                     context.read<MainNavBarProvider>().changeIndex(1);
                   },
                 ),
-                SizedBox(
-                  height: 100,
-                  child: LayoutBuilder(
-                    builder: (context2, constraints) {
-                      return ListView.builder(
-                        scrollDirection: Axis.horizontal,
+                Consumer<CategoryProvider>(
+                  builder: (context, catProvider, child) {
+                    List<CategoryModel> _firstThreeCat = [];
+                    if (catProvider.getCategories.isNotEmpty) {
+                      _firstThreeCat = catProvider.getCategories.sublist(0, 4);
+                    }
+                    return Visibility(
+                      visible: !catProvider.getIsFirstLoadin,
+                      replacement: CircularProgressIndicator(),
+                      child: SizedBox(
+                        height: 100,
+                        child: LayoutBuilder(
+                          builder: (context2, constraints) {
+                            return ListView.builder(
+                              scrollDirection: Axis.horizontal,
 
-                        itemCount: 4,
-                        itemBuilder: (context2, index) {
-                          return GestureDetector(
-                            onTap: () {
-                              Navigator.pushNamed(
-                                context,
-                                ProductListByCategory.name,
-                                arguments: 'Fashion',
-                              );
-                            },
-                            child: CategoryCardWidget(constraints: constraints),
-                          );
-                        },
-                      );
-                    },
-                  ),
+                              itemCount: _firstThreeCat.length,
+                              itemBuilder: (context2, index) {
+                                return GestureDetector(
+                                  onTap: () {
+                                    Navigator.pushNamed(
+                                      context,
+                                      ProductListByCategory.name,
+                                      arguments: 'Fashion',
+                                    );
+                                  },
+                                  child: CategoryCardWidget(
+                                    model: _firstThreeCat[index],
+                                    constraints: constraints,
+                                  ),
+                                );
+                              },
+                            );
+                          },
+                        ),
+                      ),
+                    );
+                  },
                 ),
                 SizedBox(height: AppUnits.headlineSeparateHeight),
                 SectionSeparatorHead(title: 'Popular', onTapSeeAll: () {}),

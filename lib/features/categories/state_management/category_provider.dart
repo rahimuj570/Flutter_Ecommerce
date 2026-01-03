@@ -51,7 +51,6 @@ class CategoryProvider extends ChangeNotifier {
     List<CategoryModel> categories = [];
     _currentPage++;
     if (_currentPage <= _lastPage) {
-      print('sssssssssssssssssss$_currentPage');
       _isLoadingMore = true;
       notifyListeners();
 

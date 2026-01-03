@@ -23,10 +23,10 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
   void initState() {
     super.initState();
 
+    final provider = context.read<CategoryProvider>();
+    _categoryList = provider.getCategories;
     // Defer provider access until after first frame
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      final provider = context.read<CategoryProvider>();
-
       if (_scrollController.hasClients) {
         _scrollController.addListener(() async {
           if (_scrollController.position.extentBefore < 300) {
@@ -37,9 +37,6 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
           }
         });
       }
-      _categoryList = provider.getCategories;
-
-      provider.fetchFirstTime(currentPage: 1, categoryCount: 30);
     });
   }
 
