@@ -2,9 +2,11 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce/app/app_colors.dart';
 import 'package:flutter_ecommerce/app/app_units.dart';
+import 'package:flutter_ecommerce/features/home/data/models/slider_model.dart';
 
 class HomeCarouselWidget extends StatefulWidget {
-  const HomeCarouselWidget({super.key});
+  const HomeCarouselWidget({super.key, required this.sliderModels});
+  final List<SliderModel> sliderModels;
 
   @override
   State<HomeCarouselWidget> createState() => _HomeCarouselWidgetState();
@@ -31,17 +33,28 @@ class _HomeCarouselWidgetState extends State<HomeCarouselWidget> {
                   _valueNotifierIndex.value = index;
                 },
               ),
-              items: [1, 2, 3, 4, 5].map((i) {
+              items: widget.sliderModels.map((slider) {
                 return Builder(
                   builder: (BuildContext context) {
                     return Container(
                       width: MediaQuery.of(context).size.width,
                       margin: EdgeInsets.symmetric(horizontal: 5.0),
                       decoration: BoxDecoration(
-                        color: Colors.amber,
+                        color: AppColors.themeColor,
                         borderRadius: BorderRadius.circular(AppUnits.round),
                       ),
-                      child: Text('text $i', style: TextStyle(fontSize: 16.0)),
+                      child: Image.network(
+                        fit: BoxFit.cover,
+                        slider.photoUrl,
+                        loadingBuilder: (context, child, loadingProgress) =>
+                            loadingProgress == null
+                            ? child
+                            : Center(
+                                child: CircularProgressIndicator(
+                                  color: Colors.white,
+                                ),
+                              ),
+                      ),
                     );
                   },
                 );
@@ -57,7 +70,7 @@ class _HomeCarouselWidgetState extends State<HomeCarouselWidget> {
               mainAxisAlignment: MainAxisAlignment.center,
               spacing: 6,
               children: [
-                for (int i = 0; i < 5; i++)
+                for (int i = 0; i < 4; i++)
                   GestureDetector(
                     onTap: () {
                       _carouselSliderController.animateToPage(i);

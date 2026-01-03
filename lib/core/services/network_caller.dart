@@ -14,7 +14,11 @@ class NetworkCaller {
   //GET Action
   Future<NetworkResponseModel> getCall({required String uri}) async {
     Response response = await get(Uri.parse(uri), headers: header);
-    LoggerModel(url: uri, statusCode: response.statusCode, body: response.body);
+    LoggerModel(
+      url: uri,
+      statusCode: response.statusCode,
+      body: response.body,
+    ).printLog();
 
     Map<String, dynamic> responseData = jsonDecode(response.body);
 

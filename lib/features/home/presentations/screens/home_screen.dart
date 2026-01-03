@@ -8,6 +8,7 @@ import 'package:flutter_ecommerce/features/commons/presentations/widgets/product
 import 'package:flutter_ecommerce/features/commons/state_management/main_nav_bar_provider.dart';
 import 'package:flutter_ecommerce/features/home/presentations/widgets/home_carousel_widget.dart';
 import 'package:flutter_ecommerce/features/home/presentations/widgets/section_separator_head.dart';
+import 'package:flutter_ecommerce/features/home/state_management/slider_provider.dart';
 import 'package:flutter_ecommerce/features/products/presentations/screens/product_details_screen.dart';
 import 'package:flutter_ecommerce/features/products/presentations/screens/product_list_by_category.dart';
 import 'package:provider/provider.dart';
@@ -24,10 +25,16 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      CategoryProvider categoryProvider = context.read<CategoryProvider>();
-      if (categoryProvider.getCategories.isEmpty) {
-        categoryProvider.fetchFirstTime(currentPage: 1, categoryCount: 30);
+      final SliderProvider _sliderProvider = context.read<SliderProvider>();
+      if (_sliderProvider.getSliderList.isEmpty) {
+        _sliderProvider.fetchSlider();
+      }
+      final CategoryProvider _categoryProvider = context
+          .read<CategoryProvider>();
+      if (_categoryProvider.getCategories.isEmpty) {
+        _categoryProvider.fetchFirstTime(currentPage: 1, categoryCount: 30);
       }
     });
   }
@@ -68,7 +75,15 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 SizedBox(height: 15),
-                HomeCarouselWidget(),
+                Consumer<SliderProvider>(
+                  builder: (context, value, child) => Visibility(
+                    visible: !value.isSliderFetching,
+                    replacement: CircularProgressIndicator(),
+                    child: HomeCarouselWidget(
+                      sliderModels: value.getSliderList,
+                    ),
+                  ),
+                ),
                 SizedBox(height: AppUnits.headlineSeparateHeight),
                 SectionSeparatorHead(
                   title: 'All Categories',
