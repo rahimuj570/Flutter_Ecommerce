@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_ecommerce/app/app_assets_path.dart';
 import 'package:flutter_ecommerce/app/app_colors.dart';
 import 'package:flutter_ecommerce/app/app_units.dart';
 import 'package:flutter_ecommerce/features/products/data/models/product_card_model.dart';

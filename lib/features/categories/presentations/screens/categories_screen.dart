@@ -5,6 +5,7 @@ import 'package:flutter_ecommerce/features/categories/presentations/widgets/cate
 import 'package:flutter_ecommerce/features/categories/state_management/category_provider.dart';
 import 'package:flutter_ecommerce/features/commons/presentations/widgets/full_page_circuar_loading_widget.dart';
 import 'package:flutter_ecommerce/features/commons/state_management/main_nav_bar_provider.dart';
+import 'package:flutter_ecommerce/features/products/presentations/screens/product_list_by_category.dart';
 import 'package:provider/provider.dart';
 
 class CategoriesScreen extends StatefulWidget {
@@ -86,9 +87,25 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                           slivers: [
                             SliverGrid(
                               delegate: SliverChildBuilderDelegate(
-                                (context, index) => CategoryCardWidget(
-                                  constraints: constraints,
-                                  model: _categoryList[index],
+                                (context, index) => GestureDetector(
+                                  onTap: () {
+                                    Navigator.pushNamed(
+                                      context,
+                                      ProductListByCategory.name,
+                                      arguments: {
+                                        'id': categoryProvider
+                                            .getCategories[index]
+                                            .id,
+                                        'title': categoryProvider
+                                            .getCategories[index]
+                                            .title,
+                                      },
+                                    );
+                                  },
+                                  child: CategoryCardWidget(
+                                    constraints: constraints,
+                                    model: _categoryList[index],
+                                  ),
                                 ),
                                 childCount: _categoryList.length,
                               ),
