@@ -8,4 +8,6 @@ class UriList {
     required int postCount,
     required int pageNumber,
   }) => '$_uri/categories?count=$postCount&page=$pageNumber';
+  static String fetchProductCards(int count, int pageNo, String categoryId) =>
+      '$_uri/products?count=$count&page=$pageNo&category=$categoryId';
 }

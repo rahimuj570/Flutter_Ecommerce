@@ -30,7 +30,9 @@ class AppRoutes {
     } else if (settings.name == CategoriesScreen.name) {
       widget = CategoriesScreen();
     } else if (settings.name == ProductListByCategory.name) {
-      widget = ProductListByCategory(arguments: settings.arguments);
+      widget = ProductListByCategory(
+        arguments: settings.arguments as Map<String, dynamic>,
+      );
     } else if (settings.name == ProductListByWish.name) {
       widget = ProductListByWish();
     } else if (settings.name == ProductDetailsScreen.name) {

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce/app/app_units.dart';
 import 'package:flutter_ecommerce/features/commons/presentations/widgets/product_card.dart';
 import 'package:flutter_ecommerce/features/commons/state_management/main_nav_bar_provider.dart';
+import 'package:flutter_ecommerce/features/products/data/models/product_card_model.dart';
 import 'package:provider/provider.dart';
 
 class ProductListByWish extends StatefulWidget {
@@ -42,7 +43,15 @@ class _ProductListByWishState extends State<ProductListByWish> {
             mainAxisSpacing: 8,
             crossAxisSpacing: 3,
           ),
-          itemBuilder: (context, index) => ProductCard(itemSize: 200),
+          itemBuilder: (context, index) => ProductCard(
+            model: ProductCardModel(
+              id: 'id',
+              title: 'title',
+              photos: ['photos'],
+              currentPrice: 1,
+              inWishlist: true,
+            ),
+          ),
         ),
       ),
     );

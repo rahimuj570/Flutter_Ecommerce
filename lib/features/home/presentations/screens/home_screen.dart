@@ -9,6 +9,7 @@ import 'package:flutter_ecommerce/features/commons/state_management/main_nav_bar
 import 'package:flutter_ecommerce/features/home/presentations/widgets/home_carousel_widget.dart';
 import 'package:flutter_ecommerce/features/home/presentations/widgets/section_separator_head.dart';
 import 'package:flutter_ecommerce/features/home/state_management/slider_provider.dart';
+import 'package:flutter_ecommerce/features/products/data/models/product_card_model.dart';
 import 'package:flutter_ecommerce/features/products/presentations/screens/product_details_screen.dart';
 import 'package:flutter_ecommerce/features/products/presentations/screens/product_list_by_category.dart';
 import 'package:provider/provider.dart';
@@ -93,9 +94,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 Consumer<CategoryProvider>(
                   builder: (context, catProvider, child) {
-                    List<CategoryModel> _firstThreeCat = [];
+                    List<CategoryModel> _firstFourCat = [];
                     if (catProvider.getCategories.isNotEmpty) {
-                      _firstThreeCat = catProvider.getCategories.sublist(0, 4);
+                      _firstFourCat = catProvider.getCategories.sublist(0, 4);
                     }
                     return Visibility(
                       visible: !catProvider.getIsFirstLoadin,
@@ -107,18 +108,21 @@ class _HomeScreenState extends State<HomeScreen> {
                             return ListView.builder(
                               scrollDirection: Axis.horizontal,
 
-                              itemCount: _firstThreeCat.length,
+                              itemCount: _firstFourCat.length,
                               itemBuilder: (context2, index) {
                                 return GestureDetector(
                                   onTap: () {
                                     Navigator.pushNamed(
                                       context,
                                       ProductListByCategory.name,
-                                      arguments: 'Fashion',
+                                      arguments: {
+                                        'id': _firstFourCat[index].id,
+                                        'title': _firstFourCat[index].title,
+                                      },
                                     );
                                   },
                                   child: CategoryCardWidget(
-                                    model: _firstThreeCat[index],
+                                    model: _firstFourCat[index],
                                     constraints: constraints,
                                   ),
                                 );
@@ -134,24 +138,23 @@ class _HomeScreenState extends State<HomeScreen> {
                 SectionSeparatorHead(title: 'Popular', onTapSeeAll: () {}),
                 SizedBox(
                   height: 200,
-                  child: LayoutBuilder(
-                    builder: (context, constraints) {
-                      final itemSize =
-                          (constraints.maxWidth / 3); // square side length
-                      return ListView.builder(
-                        itemCount: 3,
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (context, index) => GestureDetector(
-                          onTap: () {
-                            Navigator.pushNamed(
-                              context,
-                              ProductDetailsScreen.name,
-                            );
-                          },
-                          child: ProductCard(itemSize: itemSize),
+                  child: ListView.builder(
+                    itemCount: 3,
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context, index) => GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(context, ProductDetailsScreen.name);
+                      },
+                      child: ProductCard(
+                        model: ProductCardModel(
+                          id: 'id',
+                          title: 'title',
+                          photos: [],
+                          currentPrice: 1,
+                          inWishlist: true,
                         ),
-                      );
-                    },
+                      ),
+                    ),
                   ),
                 ),
                 SizedBox(height: AppUnits.headlineSeparateHeight),
@@ -162,8 +165,15 @@ class _HomeScreenState extends State<HomeScreen> {
                     builder: (context, constraints) => ListView.builder(
                       itemCount: 3,
                       scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) =>
-                          ProductCard(itemSize: constraints.maxWidth / 3),
+                      itemBuilder: (context, index) => ProductCard(
+                        model: ProductCardModel(
+                          id: 'id',
+                          title: 'title',
+                          photos: ['photos'],
+                          currentPrice: 1,
+                          inWishlist: true,
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -176,8 +186,15 @@ class _HomeScreenState extends State<HomeScreen> {
                       return ListView.builder(
                         itemCount: 3,
                         scrollDirection: Axis.horizontal,
-                        itemBuilder: (context, index) =>
-                            ProductCard(itemSize: constraints.maxWidth / 3),
+                        itemBuilder: (context, index) => ProductCard(
+                          model: ProductCardModel(
+                            id: 'id',
+                            title: 'title',
+                            photos: ['photos'],
+                            currentPrice: 1,
+                            inWishlist: true,
+                          ),
+                        ),
                       );
                     },
                   ),
