@@ -6,25 +6,46 @@ import 'package:flutter_ecommerce/features/products/data/models/product_card_mod
 
 class ProductProvider extends ChangeNotifier {
   List<ProductCardModel> _productCardList = [];
-  bool _isFethingProductCardList = false;
+  int count = 10;
+  int? pageNo = 1;
+  int? _lastPage = 1;
 
+  bool _isFethingProductCardList = false;
+  bool _isFethingMore = false;
   List<ProductCardModel> get getProductCardList => _productCardList;
   bool get getIsFetchingProductCardList => _isFethingProductCardList;
+  bool get getIsFetchingMore => _isFethingMore;
+  int get getPageNo => pageNo!;
+  int get getLastPage => _lastPage!;
 
-  Future<void> fethingProductCardListByCategry(String categoryId) async {
-    _productCardList.clear();
-    _isFethingProductCardList = true;
+  Future<void> fethingProductCardListByCategry(
+    int count,
+    int page,
+    String categoryId,
+  ) async {
+    if (page == 1) {
+      _productCardList.clear();
+      _isFethingProductCardList = true;
+    } else {
+      _isFethingMore = true;
+    }
     notifyListeners();
 
     NetworkResponseModel responseModel = await getNetworkCaller().getCall(
-      uri: UriList.fetchProductCards(30, 1, categoryId),
+      uri: UriList.fetchProductCards(count, page, categoryId),
     );
 
     for (Map<String, dynamic> json in responseModel.responseData['results']) {
       _productCardList.add(ProductCardModel.fromJson(json));
     }
 
-    _isFethingProductCardList = false;
+    if (page == 1) {
+      _lastPage = responseModel.responseData['last_page'] ?? page + 1;
+      _isFethingProductCardList = false;
+    } else {
+      _isFethingMore = false;
+    }
+    pageNo = page + 1;
     notifyListeners();
   }
 }

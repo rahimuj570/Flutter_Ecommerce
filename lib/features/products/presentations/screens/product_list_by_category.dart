@@ -14,15 +14,34 @@ class ProductListByCategory extends StatefulWidget {
 }
 
 class _ProductListByCategoryState extends State<ProductListByCategory> {
+  ScrollController _scrollController = ScrollController();
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
 
+    ProductProvider productProvider = context.read<ProductProvider>();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      context.read<ProductProvider>().fethingProductCardListByCategry(
+      productProvider.fethingProductCardListByCategry(
+        10,
+        1,
         widget.arguments['id'],
       );
+    });
+
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels >=
+          _scrollController.position.maxScrollExtent - 200) {
+        if (productProvider.getIsFetchingMore == false &&
+            productProvider.getPageNo <= productProvider.getLastPage) {
+          productProvider.fethingProductCardListByCategry(
+            10,
+            productProvider.getPageNo,
+            widget.arguments['id'],
+          );
+        }
+      }
     });
   }
 
@@ -46,17 +65,43 @@ class _ProductListByCategoryState extends State<ProductListByCategory> {
         builder: (context, productCardProvider, child) => Visibility(
           visible: !productCardProvider.getIsFetchingProductCardList,
           replacement: FullPageCircuarLoadingWidget(),
-          child: GridView.builder(
+          child: Padding(
             padding: EdgeInsets.all(AppUnits.horizontalMainPadding),
-            itemCount: productCardProvider.getProductCardList.length,
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              childAspectRatio: 9 / 10,
-              crossAxisCount: MediaQuery.sizeOf(context).width < 600 ? 2 : 3,
-              mainAxisSpacing: 8,
-              crossAxisSpacing: 3,
-            ),
-            itemBuilder: (context, index) => ProductCard(
-              model: productCardProvider.getProductCardList[index],
+            child: CustomScrollView(
+              controller: _scrollController,
+              slivers: [
+                SliverGrid.builder(
+                  itemCount: productCardProvider.getProductCardList.length,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    childAspectRatio: 9 / 10,
+                    crossAxisCount: MediaQuery.sizeOf(context).width < 600
+                        ? 2
+                        : 3,
+                    mainAxisSpacing: 8,
+                    crossAxisSpacing: 3,
+                  ),
+                  itemBuilder: (context, index) => ProductCard(
+                    model: productCardProvider.getProductCardList[index],
+                  ),
+                ),
+
+                SliverToBoxAdapter(child: SizedBox(height: 30)),
+
+                Consumer<ProductProvider>(
+                  builder: (context, value, child) => SliverToBoxAdapter(
+                    child: Visibility(
+                      visible: !value.getIsFetchingMore,
+                      replacement: Center(child: CircularProgressIndicator()),
+                      child: Center(
+                        child: Container(
+                          margin: EdgeInsets.only(bottom: 25),
+                          child: Text('No data to show'),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ),
