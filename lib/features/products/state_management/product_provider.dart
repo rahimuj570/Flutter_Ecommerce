@@ -3,6 +3,7 @@ import 'package:flutter_ecommerce/app/setup_network_caller.dart';
 import 'package:flutter_ecommerce/app/uri_list.dart';
 import 'package:flutter_ecommerce/core/models/network_response_model.dart';
 import 'package:flutter_ecommerce/features/products/data/models/product_card_model.dart';
+import 'package:flutter_ecommerce/features/products/data/models/product_details_model.dart';
 
 class ProductProvider extends ChangeNotifier {
   List<ProductCardModel> _productCardList = [];
@@ -12,11 +13,15 @@ class ProductProvider extends ChangeNotifier {
 
   bool _isFethingProductCardList = false;
   bool _isFethingMore = false;
+  bool _isFetchingProductById = false;
+  late ProductDetailsModel? _productDetailsModel;
   List<ProductCardModel> get getProductCardList => _productCardList;
+  ProductDetailsModel get getProductById => _productDetailsModel!;
   bool get getIsFetchingProductCardList => _isFethingProductCardList;
   bool get getIsFetchingMore => _isFethingMore;
   int get getPageNo => pageNo!;
   int get getLastPage => _lastPage!;
+  bool get getIsFatchingProductById => _isFetchingProductById;
 
   Future<void> fethingProductCardListByCategry(
     int count,
@@ -46,6 +51,20 @@ class ProductProvider extends ChangeNotifier {
       _isFethingMore = false;
     }
     pageNo = page + 1;
+    notifyListeners();
+  }
+
+  Future<void> fetchProductById(String id) async {
+    _isFetchingProductById = true;
+    notifyListeners();
+    NetworkResponseModel responseModel = await getNetworkCaller().getCall(
+      uri: UriList.fetchProductById(id),
+    );
+    _productDetailsModel = ProductDetailsModel.fromJson(
+      responseModel.responseData,
+    );
+
+    _isFetchingProductById = false;
     notifyListeners();
   }
 }

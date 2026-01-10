@@ -36,7 +36,8 @@ class AppRoutes {
     } else if (settings.name == ProductListByWish.name) {
       widget = ProductListByWish();
     } else if (settings.name == ProductDetailsScreen.name) {
-      widget = ProductDetailsScreen();
+      String _productId = settings.arguments as String;
+      widget = ProductDetailsScreen(productId: _productId);
     }
 
     return MaterialPageRoute(builder: (context) => widget);

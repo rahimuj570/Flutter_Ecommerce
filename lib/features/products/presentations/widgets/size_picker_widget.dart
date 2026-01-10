@@ -2,21 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce/app/app_colors.dart';
 
 class SizePickerWidget extends StatefulWidget {
-  const SizePickerWidget({super.key});
+  const SizePickerWidget({super.key, required this.sizeList});
+  final List<String> sizeList;
 
   @override
   State<SizePickerWidget> createState() => _SizePickerWidgetState();
 }
 
-List<String> _sizes = [
-  'S',
-  'L',
-  'XL',
-  '2L',
-].map((e) => e.toUpperCase()).toList();
-String _seletedSize = _sizes[0];
-
 class _SizePickerWidgetState extends State<SizePickerWidget> {
+  late String seletedSize = widget.sizeList[0];
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -26,21 +20,21 @@ class _SizePickerWidgetState extends State<SizePickerWidget> {
         SizedBox(height: 5),
         Row(
           children: [
-            for (String c in _sizes)
+            for (String c in widget.sizeList)
               GestureDetector(
                 onTap: () {
-                  _seletedSize = c;
+                  seletedSize = c;
                   setState(() {});
                 },
                 child: Container(
                   margin: EdgeInsets.only(right: 10),
-                  height: 25,
-                  width: 25,
+                  height: 28,
+                  width: 28,
                   decoration: BoxDecoration(
-                    color: _seletedSize != c
+                    color: seletedSize != c
                         ? Colors.white
                         : AppColors.themeColor,
-                    // color: ,
+
                     shape: BoxShape.circle,
                     border: Border.all(color: Colors.black),
                   ),
@@ -50,7 +44,7 @@ class _SizePickerWidgetState extends State<SizePickerWidget> {
                         c,
                         style: TextStyle(
                           fontSize: 13,
-                          color: _seletedSize == c ? Colors.white : null,
+                          color: seletedSize == c ? Colors.white : null,
                           fontWeight: FontWeight.bold,
                         ),
                       ),

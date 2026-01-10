@@ -24,10 +24,10 @@ class ProductDetailsModel {
       id: json['_id'],
       title: json['title'],
       description: json['description'],
-      photos: json['photos'],
-      colors: json['colors'],
-      sizes: json['sizes'],
-      currentPrice: json['currentPrice'],
+      photos: List<String>.from(json['photos']),
+      colors: List<String>.from(json['colors']),
+      sizes: List<String>.from(json['sizes']),
+      currentPrice: json['current_price'],
       quantity: json['quantity'],
     );
   }

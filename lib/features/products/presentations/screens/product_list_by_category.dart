@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce/app/app_units.dart';
 import 'package:flutter_ecommerce/features/commons/presentations/widgets/full_page_circuar_loading_widget.dart';
 import 'package:flutter_ecommerce/features/commons/presentations/widgets/product_card.dart';
+import 'package:flutter_ecommerce/features/products/presentations/screens/product_details_screen.dart';
 import 'package:flutter_ecommerce/features/products/state_management/product_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -80,8 +81,16 @@ class _ProductListByCategoryState extends State<ProductListByCategory> {
                     mainAxisSpacing: 8,
                     crossAxisSpacing: 3,
                   ),
-                  itemBuilder: (context, index) => ProductCard(
-                    model: productCardProvider.getProductCardList[index],
+                  itemBuilder: (context, index) => GestureDetector(
+                    onTap: () => Navigator.pushNamed(
+                      context,
+                      ProductDetailsScreen.name,
+                      arguments:
+                          productCardProvider.getProductCardList[index].id,
+                    ),
+                    child: ProductCard(
+                      model: productCardProvider.getProductCardList[index],
+                    ),
                   ),
                 ),
 

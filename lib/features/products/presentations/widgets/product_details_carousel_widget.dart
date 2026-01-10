@@ -1,10 +1,11 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce/app/app_colors.dart';
+import 'package:flutter_ecommerce/features/commons/presentations/widgets/full_page_circuar_loading_widget.dart';
 
 class ProductDetailsCarouselWidget extends StatefulWidget {
-  const ProductDetailsCarouselWidget({super.key});
-
+  const ProductDetailsCarouselWidget({super.key, required this.images});
+  final List<String> images;
   @override
   State<ProductDetailsCarouselWidget> createState() =>
       _ProductDetailsCarouselWidgetState();
@@ -32,7 +33,7 @@ class _ProductDetailsCarouselWidgetState
                   _valueNotifierIndex.value = index;
                 },
               ),
-              items: [1, 2, 3, 4, 5].map((i) {
+              items: widget.images.map((i) {
                 return Builder(
                   builder: (BuildContext context) {
                     return Container(
@@ -40,7 +41,17 @@ class _ProductDetailsCarouselWidgetState
                       decoration: BoxDecoration(
                         color: AppColors.themeColor.withAlpha(12),
                       ),
-                      child: Text('text $i', style: TextStyle(fontSize: 16.0)),
+                      child: widget.images.isEmpty
+                          ? Center(child: Text('No Image'))
+                          : Image.network(
+                              i,
+                              fit: BoxFit.cover,
+                              loadingBuilder:
+                                  (context, child, loadingProgress) =>
+                                      loadingProgress == null
+                                      ? child
+                                      : FullPageCircuarLoadingWidget(),
+                            ),
                     );
                   },
                 );
@@ -59,7 +70,7 @@ class _ProductDetailsCarouselWidgetState
                 mainAxisAlignment: MainAxisAlignment.center,
                 spacing: 6,
                 children: [
-                  for (int i = 0; i < 5; i++)
+                  for (int i = 0; i < widget.images.length; i++)
                     GestureDetector(
                       onTap: () {
                         _carouselSliderController.animateToPage(i);
