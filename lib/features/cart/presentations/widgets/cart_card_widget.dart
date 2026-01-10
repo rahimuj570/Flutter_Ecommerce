@@ -47,7 +47,7 @@ class _CartCardWidgetState extends State<CartCardWidget> {
               children: [
                 IconButton(onPressed: () {}, icon: Icon(CupertinoIcons.delete)),
                 SizedBox(height: 20),
-                IncrementDecrementButton(addOnTap: () {}, removeOnTap: () {}),
+                IncrementDecrementButton(),
               ],
             ),
           ],

@@ -11,6 +11,8 @@ class ProductProvider extends ChangeNotifier {
   int? pageNo = 1;
   int? _lastPage = 1;
 
+  int productQuantity = 0;
+
   bool _isFethingProductCardList = false;
   bool _isFethingMore = false;
   bool _isFetchingProductById = false;
@@ -63,7 +65,7 @@ class ProductProvider extends ChangeNotifier {
     _productDetailsModel = ProductDetailsModel.fromJson(
       responseModel.responseData,
     );
-
+    productQuantity = _productDetailsModel!.quantity;
     _isFetchingProductById = false;
     notifyListeners();
   }

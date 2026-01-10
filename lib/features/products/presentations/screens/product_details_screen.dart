@@ -72,8 +72,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                   ),
                                 ),
                                 IncrementDecrementButton(
-                                  addOnTap: () {},
-                                  removeOnTap: () {},
+                                  quantity: value.productQuantity,
                                 ),
                               ],
                             ),
@@ -105,20 +104,27 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                     ),
                                   ),
                                 ),
+                                Spacer(),
+                                Text(
+                                  'In Stock: ${value.getProductById.quantity}',
+                                ),
                               ],
                             ),
                             SizedBox(
                               height: AppUnits.headlineSeparateHeight - 6,
                             ),
-                            ColorPickerWidget(
-                              colorList: value.getProductById.colors
-                                  .map((e) => e.toLowerCase())
-                                  .toList(),
-                            ),
-                            SizedBox(height: AppUnits.headlineSeparateHeight),
-                            SizePickerWidget(
-                              sizeList: value.getProductById.sizes,
-                            ),
+                            if (value.getProductById.colors.isNotEmpty)
+                              ColorPickerWidget(
+                                colorList: value.getProductById.colors
+                                    .map((e) => e.toLowerCase())
+                                    .toList(),
+                              ),
+                            if (value.getProductById.colors.isNotEmpty)
+                              SizedBox(height: AppUnits.headlineSeparateHeight),
+                            if (value.getProductById.colors.isNotEmpty)
+                              SizePickerWidget(
+                                sizeList: value.getProductById.sizes,
+                              ),
                             SizedBox(height: AppUnits.headlineSeparateHeight),
                             Text(
                               'Description',
