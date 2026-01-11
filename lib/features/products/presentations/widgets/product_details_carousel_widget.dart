@@ -33,17 +33,16 @@ class _ProductDetailsCarouselWidgetState
                   _valueNotifierIndex.value = index;
                 },
               ),
-              items: widget.images.map((i) {
-                return Builder(
-                  builder: (BuildContext context) {
-                    return Container(
-                      width: MediaQuery.of(context).size.width,
-                      decoration: BoxDecoration(
-                        color: AppColors.themeColor.withAlpha(12),
-                      ),
-                      child: widget.images.isEmpty
-                          ? Center(child: Text('No Image'))
-                          : Image.network(
+              items: widget.images.isNotEmpty
+                  ? widget.images.map((i) {
+                      return Builder(
+                        builder: (BuildContext context) {
+                          return Container(
+                            width: MediaQuery.of(context).size.width,
+                            decoration: BoxDecoration(
+                              color: AppColors.themeColor.withAlpha(12),
+                            ),
+                            child: Image.network(
                               i,
                               fit: BoxFit.cover,
                               loadingBuilder:
@@ -52,10 +51,17 @@ class _ProductDetailsCarouselWidgetState
                                       ? child
                                       : FullPageCircuarLoadingWidget(),
                             ),
-                    );
-                  },
-                );
-              }).toList(),
+                          );
+                        },
+                      );
+                    }).toList()
+                  : [
+                      Container(
+                        width: double.infinity,
+                        decoration: BoxDecoration(color: Colors.grey.shade100),
+                        child: Center(child: Text('No Image')),
+                      ),
+                    ],
             );
           },
         ),
