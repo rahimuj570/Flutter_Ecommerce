@@ -44,17 +44,19 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
         title: Text('Product Details'),
       ),
       body: Consumer<ProductProvider>(
-        builder: (context, value, child) => Visibility(
-          visible: !value.getIsFatchingProductById,
-          replacement: FullPageCircuarLoadingWidget(),
-          child: Column(
+        builder: (context, value, child) {
+          if (value.getIsFatchingProductById || value.getProductById == null) {
+            return FullPageCircuarLoadingWidget();
+          }
+
+          return Column(
             children: [
               Expanded(
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
                       ProductDetailsCarouselWidget(
-                        images: value.getProductById.photos,
+                        images: value.getProductById!.photos,
                       ),
                       Padding(
                         padding: EdgeInsets.all(
@@ -67,7 +69,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                               children: [
                                 Expanded(
                                   child: Text(
-                                    value.getProductById.title,
+                                    value.getProductById!.title,
                                     style: textTheme.titleLarge,
                                   ),
                                 ),
@@ -106,24 +108,24 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                 ),
                                 Spacer(),
                                 Text(
-                                  'In Stock: ${value.getProductById.quantity}',
+                                  'In Stock: ${value.getProductById!.quantity}',
                                 ),
                               ],
                             ),
                             SizedBox(
                               height: AppUnits.headlineSeparateHeight - 6,
                             ),
-                            if (value.getProductById.colors.isNotEmpty)
+                            if (value.getProductById!.colors.isNotEmpty)
                               ColorPickerWidget(
-                                colorList: value.getProductById.colors
+                                colorList: value.getProductById!.colors
                                     .map((e) => e.toLowerCase())
                                     .toList(),
                               ),
-                            if (value.getProductById.colors.isNotEmpty)
+                            if (value.getProductById!.colors.isNotEmpty)
                               SizedBox(height: AppUnits.headlineSeparateHeight),
-                            if (value.getProductById.colors.isNotEmpty)
+                            if (value.getProductById!.colors.isNotEmpty)
                               SizePickerWidget(
-                                sizeList: value.getProductById.sizes,
+                                sizeList: value.getProductById!.sizes,
                               ),
                             SizedBox(height: AppUnits.headlineSeparateHeight),
                             Text(
@@ -132,7 +134,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                             ),
                             SizedBox(height: 5),
                             Text(
-                              value.getProductById.description,
+                              value.getProductById!.description,
                               style: textTheme.bodyMedium,
                             ),
                           ],
@@ -145,15 +147,15 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
               BottomStaticSectionWidget(
                 title: 'Price',
-                amount: value.getProductById.currentPrice,
+                amount: value.getProductById!.currentPrice,
                 isTextButton: true,
                 textButtonTitle: 'Add to cart',
                 buttonWidget: null,
                 textButtonOnTap: () {},
               ),
             ],
-          ),
-        ),
+          );
+        },
       ),
     );
   }

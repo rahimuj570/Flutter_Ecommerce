@@ -16,9 +16,10 @@ class ProductProvider extends ChangeNotifier {
   bool _isFethingProductCardList = false;
   bool _isFethingMore = false;
   bool _isFetchingProductById = false;
-  late ProductDetailsModel? _productDetailsModel;
+  ProductDetailsModel? _productDetailsModel;
+
   List<ProductCardModel> get getProductCardList => _productCardList;
-  ProductDetailsModel get getProductById => _productDetailsModel!;
+  ProductDetailsModel? get getProductById => _productDetailsModel;
   bool get getIsFetchingProductCardList => _isFethingProductCardList;
   bool get getIsFetchingMore => _isFethingMore;
   int get getPageNo => pageNo!;
