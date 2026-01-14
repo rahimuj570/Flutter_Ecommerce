@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce/app/app_colors.dart';
+import 'package:flutter_ecommerce/features/products/presentations/screens/product_details_screen.dart';
 
 class SizePickerWidget extends StatefulWidget {
   const SizePickerWidget({super.key, required this.sizeList});
@@ -13,6 +14,7 @@ class _SizePickerWidgetState extends State<SizePickerWidget> {
   late String seletedSize = widget.sizeList[0];
   @override
   Widget build(BuildContext context) {
+    ProductDetailsScreen.selectedSize = seletedSize;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

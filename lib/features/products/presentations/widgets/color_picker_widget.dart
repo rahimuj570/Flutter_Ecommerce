@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ecommerce/features/products/presentations/screens/product_details_screen.dart';
 
 class ColorPickerWidget extends StatefulWidget {
   const ColorPickerWidget({super.key, required this.colorList});
@@ -97,6 +98,8 @@ class _ColorPickerWidgetState extends State<ColorPickerWidget> {
 
   @override
   Widget build(BuildContext context) {
+    ProductDetailsScreen.selectedColor = _seletedColor;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -108,6 +111,7 @@ class _ColorPickerWidgetState extends State<ColorPickerWidget> {
               GestureDetector(
                 onTap: () {
                   _seletedColor = c;
+                  ProductDetailsScreen.selectedColor = _seletedColor;
                   setState(() {});
                 },
                 child: Container(

@@ -19,6 +19,10 @@ class ProductDetailsScreen extends StatefulWidget {
   static final String name = 'product_details_screen';
   final String productId;
 
+  static String? selectedColor;
+  static String? selectedSize;
+  static int selectedQuantity = 1;
+
   @override
   State<ProductDetailsScreen> createState() => _ProductDetailsScreenState();
 }
@@ -28,6 +32,11 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+
+    ProductDetailsScreen.selectedColor = null;
+    ProductDetailsScreen.selectedSize = null;
+    ProductDetailsScreen.selectedQuantity = 1;
+
     ProductProvider productProvider = context.read<ProductProvider>();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       productProvider.fetchProductById(widget.productId);
@@ -167,7 +176,12 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   void _onTapAddToCart() async {
     if (await AuthManagement.isLoggedIn()) {
       if (mounted) {
-        await context.read<ProductProvider>().addToCart(widget.productId);
+        await context.read<ProductProvider>().addToCart({
+          "product": widget.productId,
+          "quantity": ProductDetailsScreen.selectedQuantity,
+          "color": ProductDetailsScreen.selectedColor,
+          "size": ProductDetailsScreen.selectedSize,
+        });
         NetworkResponseModel responseModel = context
             .read<ProductProvider>()
             .getResponseModel;

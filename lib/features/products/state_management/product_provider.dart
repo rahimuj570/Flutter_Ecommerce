@@ -77,11 +77,12 @@ class ProductProvider extends ChangeNotifier {
   bool get getIsAddCartProcesing => _isAddToCartPrcessing;
   NetworkResponseModel get getResponseModel => _responseModel!;
 
-  Future<void> addToCart(String productId) async {
+  Future<void> addToCart(Map<String, dynamic> body) async {
+    // print(body);
     _isAddToCartPrcessing = true;
     notifyListeners();
     _responseModel = await getNetworkCaller().postCall(
-      body: <String, dynamic>{'product': productId},
+      body: body,
       uri: UriList.cart,
     );
     _isAddToCartPrcessing = false;

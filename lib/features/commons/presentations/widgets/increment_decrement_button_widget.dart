@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce/app/app_colors.dart';
+import 'package:flutter_ecommerce/features/products/presentations/screens/product_details_screen.dart';
 import 'package:flutter_ecommerce/features/products/state_management/product_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -62,5 +63,6 @@ class _IncrementDecrementButtonState extends State<IncrementDecrementButton> {
         }
       }
     }
+    ProductDetailsScreen.selectedQuantity = count;
   }
 }
