@@ -42,23 +42,7 @@ class _MainNavHolderScreenState extends State<MainNavHolderScreen> {
             ),
           ),
           child: BottomNavigationBar(
-            onTap: (value) async {
-              // print('ssssssssssssssssss $value');
-              if ([2, 3].contains(value)) {
-                if (await AuthManagement.isLoggedIn() == false) {
-                  if (context.mounted) {
-                    Navigator.pushNamed(
-                      context,
-                      SigninScreen.comeFromRunningProceesKey,
-                    );
-                  }
-                } else {
-                  mainNavBarProvider.changeIndex(value);
-                }
-              } else {
-                mainNavBarProvider.changeIndex(value);
-              }
-            },
+            onTap: (value) => _onTapNavButton(value, mainNavBarProvider),
             type: BottomNavigationBarType.fixed,
             backgroundColor: Colors.white,
             elevation: 0,
@@ -90,5 +74,20 @@ class _MainNavHolderScreenState extends State<MainNavHolderScreen> {
         ),
       ),
     );
+  }
+
+  void _onTapNavButton(int value, MainNavBarProvider mainNavBarProvider) async {
+    // print('ssssssssssssssssss $value');
+    if ([2, 3].contains(value)) {
+      if (await AuthManagement.isLoggedIn() == false) {
+        if (mounted) {
+          Navigator.pushNamed(context, SigninScreen.comeFromRunningProceesKey);
+        }
+      } else {
+        mainNavBarProvider.changeIndex(value);
+      }
+    } else {
+      mainNavBarProvider.changeIndex(value);
+    }
   }
 }

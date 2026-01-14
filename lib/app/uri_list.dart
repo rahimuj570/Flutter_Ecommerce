@@ -13,4 +13,6 @@ class UriList {
 
   static String fetchProductById(String productId) =>
       '$_baseUri/products/id/$productId';
+
+  static String cart = '$_baseUri/cart';
 }

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce/app/app_colors.dart';
 import 'package:flutter_ecommerce/app/app_units.dart';
+import 'package:flutter_ecommerce/core/models/network_response_model.dart';
 import 'package:flutter_ecommerce/features/auth/presentations/screens/signin_screen.dart';
 import 'package:flutter_ecommerce/features/auth/utils/auth_management.dart';
 import 'package:flutter_ecommerce/features/commons/presentations/widgets/bottom_static_section_widget.dart';
 import 'package:flutter_ecommerce/features/commons/presentations/widgets/full_page_circuar_loading_widget.dart';
 import 'package:flutter_ecommerce/features/commons/presentations/widgets/increment_decrement_button_widget.dart';
+import 'package:flutter_ecommerce/features/commons/utils/show_snack_bar.dart';
 import 'package:flutter_ecommerce/features/products/presentations/widgets/color_picker_widget.dart';
 import 'package:flutter_ecommerce/features/products/presentations/widgets/product_details_carousel_widget.dart';
 import 'package:flutter_ecommerce/features/products/presentations/widgets/size_picker_widget.dart';
@@ -164,7 +166,23 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
   void _onTapAddToCart() async {
     if (await AuthManagement.isLoggedIn()) {
-      print('okkkkkk');
+      if (mounted) {
+        await context.read<ProductProvider>().addToCart(widget.productId);
+        NetworkResponseModel responseModel = context
+            .read<ProductProvider>()
+            .getResponseModel;
+        if (mounted) {
+          if (responseModel.isSuccess) {
+            showSnackBar(context: context, message: responseModel.message!);
+          } else {
+            showSnackBar(
+              context: context,
+              message: responseModel.message!,
+              isError: true,
+            );
+          }
+        }
+      }
     } else {
       if (mounted) {
         Navigator.pushNamed(

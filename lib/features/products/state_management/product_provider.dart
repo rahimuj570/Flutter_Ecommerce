@@ -70,4 +70,21 @@ class ProductProvider extends ChangeNotifier {
     _isFetchingProductById = false;
     notifyListeners();
   }
+
+  //Cart Logic Start
+  bool _isAddToCartPrcessing = false;
+  NetworkResponseModel? _responseModel;
+  bool get getIsAddCartProcesing => _isAddToCartPrcessing;
+  NetworkResponseModel get getResponseModel => _responseModel!;
+
+  Future<void> addToCart(String productId) async {
+    _isAddToCartPrcessing = true;
+    notifyListeners();
+    _responseModel = await getNetworkCaller().postCall(
+      body: <String, dynamic>{'product': productId},
+      uri: UriList.cart,
+    );
+    _isAddToCartPrcessing = false;
+    notifyListeners();
+  }
 }
