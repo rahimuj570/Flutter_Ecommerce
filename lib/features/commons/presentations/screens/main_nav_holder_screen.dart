@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce/app/app_colors.dart';
+import 'package:flutter_ecommerce/features/auth/presentations/screens/signin_screen.dart';
+import 'package:flutter_ecommerce/features/auth/utils/auth_management.dart';
 import 'package:flutter_ecommerce/features/cart/presentations/screens/cart_screen.dart';
 import 'package:flutter_ecommerce/features/categories/presentations/screens/categories_screen.dart';
 import 'package:flutter_ecommerce/features/commons/state_management/main_nav_bar_provider.dart';
@@ -40,9 +42,22 @@ class _MainNavHolderScreenState extends State<MainNavHolderScreen> {
             ),
           ),
           child: BottomNavigationBar(
-            onTap: (value) {
+            onTap: (value) async {
               // print('ssssssssssssssssss $value');
-              mainNavBarProvider.changeIndex(value);
+              if ([2, 3].contains(value)) {
+                if (await AuthManagement.isLoggedIn() == false) {
+                  if (context.mounted) {
+                    Navigator.pushNamed(
+                      context,
+                      SigninScreen.comeFromRunningProceesKey,
+                    );
+                  }
+                } else {
+                  mainNavBarProvider.changeIndex(value);
+                }
+              } else {
+                mainNavBarProvider.changeIndex(value);
+              }
             },
             type: BottomNavigationBarType.fixed,
             backgroundColor: Colors.white,
