@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce/app/app_colors.dart';
 import 'package:flutter_ecommerce/app/app_units.dart';
+import 'package:flutter_ecommerce/features/auth/presentations/screens/signin_screen.dart';
+import 'package:flutter_ecommerce/features/auth/utils/auth_management.dart';
 import 'package:flutter_ecommerce/features/commons/presentations/widgets/bottom_static_section_widget.dart';
 import 'package:flutter_ecommerce/features/commons/presentations/widgets/full_page_circuar_loading_widget.dart';
 import 'package:flutter_ecommerce/features/commons/presentations/widgets/increment_decrement_button_widget.dart';
@@ -151,12 +153,26 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 isTextButton: true,
                 textButtonTitle: 'Add to cart',
                 buttonWidget: null,
-                textButtonOnTap: () {},
+                textButtonOnTap: _onTapAddToCart,
               ),
             ],
           );
         },
       ),
     );
+  }
+
+  void _onTapAddToCart() async {
+    if (await AuthManagement.isLoggedIn()) {
+      print('okkkkkk');
+    } else {
+      if (mounted) {
+        Navigator.pushNamed(
+          context,
+          SigninScreen.name,
+          arguments: SigninScreen.comeFromRunningProceesKey,
+        );
+      }
+    }
   }
 }

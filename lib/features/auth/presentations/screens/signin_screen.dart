@@ -14,8 +14,10 @@ import 'package:flutter_ecommerce/features/commons/utils/show_snack_bar.dart';
 import 'package:provider/provider.dart';
 
 class SigninScreen extends StatefulWidget {
-  const SigninScreen({super.key});
+  const SigninScreen({super.key, this.isComesFromRunningProcess});
+  final String? isComesFromRunningProcess;
   static String name = '/signin';
+  static final String comeFromRunningProceesKey = 'fromRunningProcess';
 
   @override
   State<SigninScreen> createState() => _SigninScreenState();
@@ -166,7 +168,11 @@ class _SigninScreenState extends State<SigninScreen> {
       if (res.isSuccess) {
         if (mounted) {
           showSnackBar(context: context, message: res.message!);
-          Navigator.pushReplacementNamed(context, MainNavHolderScreen.name);
+          if (widget.isComesFromRunningProcess != null) {
+            Navigator.pushReplacementNamed(context, MainNavHolderScreen.name);
+          } else {
+            Navigator.pop(context);
+          }
         }
       } else {
         if (res.message!.contains('verified')) {

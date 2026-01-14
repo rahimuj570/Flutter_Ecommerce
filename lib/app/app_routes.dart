@@ -19,7 +19,8 @@ class AppRoutes {
     } else if (settings.name == SignupScreen.name) {
       widget = SignupScreen();
     } else if (settings.name == SigninScreen.name) {
-      widget = SigninScreen();
+      String? tmp = settings.arguments as String?;
+      widget = SigninScreen(isComesFromRunningProcess: tmp);
     } else if (settings.name == ForgotPasswordScreen.name) {
       widget = ForgotPasswordScreen();
     } else if (settings.name == VerifyOtpScreen.name) {

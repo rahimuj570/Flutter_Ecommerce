@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter_ecommerce/features/auth/data/models/user_model.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthManagement {
@@ -28,7 +29,8 @@ class AuthManagement {
 
   static Future<bool> isLoggedIn() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    return sharedPreferences.getString(_tokenKey) != null;
+    return sharedPreferences.getString(_tokenKey) != null &&
+        !JwtDecoder.isExpired(sharedPreferences.getString(_tokenKey) ?? '');
   }
 
   static Future<void> cleatUser() async {
