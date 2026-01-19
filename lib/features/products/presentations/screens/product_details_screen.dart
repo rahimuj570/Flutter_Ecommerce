@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce/app/app_colors.dart';
 import 'package:flutter_ecommerce/app/app_units.dart';
+import 'package:flutter_ecommerce/app/extensions/string_capitalize.dart';
 import 'package:flutter_ecommerce/core/models/network_response_model.dart';
 import 'package:flutter_ecommerce/features/auth/presentations/screens/signin_screen.dart';
 import 'package:flutter_ecommerce/features/auth/utils/auth_management.dart';
@@ -179,8 +180,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
         await context.read<ProductProvider>().addToCart({
           "product": widget.productId,
           "quantity": ProductDetailsScreen.selectedQuantity,
-          "color": ProductDetailsScreen.selectedColor,
-          "size": ProductDetailsScreen.selectedSize,
+          "color": ProductDetailsScreen.selectedColor!.toCapitalizeFirstWord(),
+          "size": ProductDetailsScreen.selectedSize!.toUpperCase(),
         });
         NetworkResponseModel responseModel = context
             .read<ProductProvider>()
