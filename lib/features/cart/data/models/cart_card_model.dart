@@ -1,7 +1,40 @@
 class CartCardModel {
-  // final String id;
-  // final String productId;
-  // final String productTitle;
+  final String id;
+  final String productId;
+  final String productTitle;
+  final String? color;
+  final String? size;
+  int selectedQuantity;
+  final String? photo;
+  final int price;
+  final int stockQuantity;
+
+  CartCardModel({
+    required this.id,
+    required this.productId,
+    required this.productTitle,
+    required this.color,
+    required this.size,
+    required this.selectedQuantity,
+    required this.photo,
+    required this.price,
+    required this.stockQuantity,
+  });
+
+  factory CartCardModel.fromJson(Map<String, dynamic> json) {
+    Map<String, dynamic> product = json['product'];
+    return CartCardModel(
+      id: json['_id'],
+      productId: product['_id'],
+      productTitle: product['title'],
+      color: json['color'],
+      size: json['size'],
+      selectedQuantity: json['quantity'],
+      photo: product['photos'][0],
+      price: product['current_price'],
+      stockQuantity: product['quantity'],
+    );
+  }
   // {
   //  "_id": "6967a777f6079d6f14dd8e38",
   //               "product": {

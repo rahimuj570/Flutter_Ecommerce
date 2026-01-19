@@ -1,13 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_ecommerce/app/app_assets_path.dart';
 import 'package:flutter_ecommerce/app/app_colors.dart';
 import 'package:flutter_ecommerce/app/app_units.dart';
+import 'package:flutter_ecommerce/features/cart/data/models/cart_card_model.dart';
 import 'package:flutter_ecommerce/features/commons/presentations/widgets/increment_decrement_button_widget.dart';
 
 class CartCardWidget extends StatefulWidget {
-  const CartCardWidget({super.key});
-
+  const CartCardWidget({
+    super.key,
+    required this.cartModel,
+    required this.cartIndex,
+  });
+  final CartCardModel cartModel;
+  final cartIndex;
   @override
   State<CartCardWidget> createState() => _CartCardWidgetState();
 }
@@ -22,20 +27,27 @@ class _CartCardWidgetState extends State<CartCardWidget> {
         padding: const EdgeInsets.all(10.0),
         child: Row(
           children: [
-            Image.asset(AppAssetsPath.shoePng, width: 100),
+            Image.network(
+              widget.cartModel.photo ?? '',
+              loadingBuilder: (context, child, loadingProgress) =>
+                  loadingProgress == null ? child : CircularProgressIndicator(),
+              width: 100,
+              height: 100,
+              fit: BoxFit.cover,
+            ),
             SizedBox(width: 12),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Show PUma", style: th.bodyLarge),
+                  Text(widget.cartModel.productTitle, style: th.bodyLarge),
                   Text(
-                    'Color: Red , Size: X',
+                    'Color: ${widget.cartModel.color ?? 'N/A'} , Size: ${widget.cartModel.size ?? 'N/A'}',
                     style: TextStyle(color: Colors.grey),
                   ),
                   SizedBox(height: AppUnits.headlineSeparateHeight),
                   Text(
-                    '\$300',
+                    '\$${widget.cartModel.price}',
                     style: th.bodyLarge!.copyWith(color: AppColors.themeColor),
                   ),
                 ],
@@ -47,7 +59,11 @@ class _CartCardWidgetState extends State<CartCardWidget> {
               children: [
                 IconButton(onPressed: () {}, icon: Icon(CupertinoIcons.delete)),
                 SizedBox(height: 20),
-                IncrementDecrementButton(),
+                IncrementDecrementButton(
+                  cartIndex: widget.cartIndex,
+                  quantity: widget.cartModel.stockQuantity,
+                  selectedQuantity: widget.cartModel.selectedQuantity,
+                ),
               ],
             ),
           ],

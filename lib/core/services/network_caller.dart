@@ -55,4 +55,30 @@ class NetworkCaller {
       responseData: responseData['data'],
     );
   }
+
+  //PATCH Action
+  Future<NetworkResponseModel> patchCall({
+    required String uri,
+    required Map<String, dynamic> body,
+  }) async {
+    Response response = await patch(
+      Uri.parse(uri),
+      body: jsonEncode(body),
+      headers: header,
+    );
+    LoggerModel(
+      url: uri,
+      statusCode: response.statusCode,
+      body: response.body,
+    ).printLog();
+
+    Map<String, dynamic> responseData = jsonDecode(response.body);
+
+    return NetworkResponseModel(
+      isSuccess: responseData['status'] == 'success',
+      statusCode: response.statusCode,
+      message: responseData['msg'],
+      responseData: responseData['data'],
+    );
+  }
 }

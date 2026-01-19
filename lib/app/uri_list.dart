@@ -15,4 +15,5 @@ class UriList {
       '$_baseUri/products/id/$productId';
 
   static String cart = '$_baseUri/cart';
+  static String updateCart(String cartId) => '$_baseUri/cart/$cartId';
 }
