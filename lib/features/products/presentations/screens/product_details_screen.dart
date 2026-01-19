@@ -180,8 +180,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
         await context.read<ProductProvider>().addToCart({
           "product": widget.productId,
           "quantity": ProductDetailsScreen.selectedQuantity,
-          "color": ProductDetailsScreen.selectedColor!.toCapitalizeFirstWord(),
-          "size": ProductDetailsScreen.selectedSize!.toUpperCase(),
+          "color": ProductDetailsScreen.selectedColor?.toCapitalizeFirstWord(),
+          "size": ProductDetailsScreen.selectedSize?.toUpperCase(),
         });
         NetworkResponseModel responseModel = context
             .read<ProductProvider>()

@@ -81,4 +81,24 @@ class NetworkCaller {
       responseData: responseData['data'],
     );
   }
+
+  //DELETE Action
+  Future<NetworkResponseModel> deleteCall({required String uri}) async {
+    Response response = await delete(Uri.parse(uri), headers: header);
+
+    LoggerModel(
+      url: uri,
+      statusCode: response.statusCode,
+      body: response.body,
+    ).printLog();
+
+    Map<String, dynamic> responseData = jsonDecode(response.body);
+
+    return NetworkResponseModel(
+      isSuccess: responseData['status'] == 'success',
+      statusCode: response.statusCode,
+      message: responseData['msg'],
+      responseData: responseData['data'],
+    );
+  }
 }

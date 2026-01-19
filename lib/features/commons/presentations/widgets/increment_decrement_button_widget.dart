@@ -10,12 +10,12 @@ class IncrementDecrementButton extends StatefulWidget {
     required this.quantity,
     this.selectedQuantity,
     this.isFromCart,
-    required this.cartIndex,
+    this.cartIndex,
   });
   final int quantity;
   final int? selectedQuantity;
   final bool? isFromCart;
-  final int cartIndex;
+  final int? cartIndex;
   @override
   State<IncrementDecrementButton> createState() =>
       _IncrementDecrementButtonState();

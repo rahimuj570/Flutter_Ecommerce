@@ -7,7 +7,7 @@ import 'package:flutter_ecommerce/features/cart/data/models/cart_card_model.dart
 class CartProvider extends ChangeNotifier {
   bool _isCartFetching = false;
   NetworkResponseModel? _responseModel;
-  List<CartCardModel> _cartList = [];
+  final List<CartCardModel> _cartList = [];
 
   bool get getIsCartFetching => _isCartFetching;
   NetworkResponseModel get getResponseModel => _responseModel!;
@@ -48,6 +48,23 @@ class CartProvider extends ChangeNotifier {
       uri: UriList.updateCart(_cartList[cartIndex].id),
       body: {"quantity": _cartList[cartIndex].selectedQuantity.toString()},
     );
+    notifyListeners();
+  }
+
+  int? _cartDeletingIndex;
+  int? get getCartDeletingIndex => _cartDeletingIndex;
+  Future<void> deleteCart(int cartIndex) async {
+    _responseModel = null;
+    _cartDeletingIndex = cartIndex;
+    notifyListeners();
+
+    _responseModel = await getNetworkCaller().deleteCall(
+      uri: UriList.updateCart(_cartList[cartIndex].id),
+    );
+    if (_responseModel!.isSuccess) {
+      _cartList.removeAt(cartIndex);
+    }
+    _cartDeletingIndex = null;
     notifyListeners();
   }
 }
