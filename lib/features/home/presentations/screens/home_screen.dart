@@ -59,6 +59,11 @@ class _HomeScreenState extends State<HomeScreen> {
         specialFirstThreeProduct = productProvider.getSpecialProductCardList;
       }
 
+      if (productProvider.getNewProductCardList.isEmpty) {
+        productProvider.fethingProductCardListByCategry(3, 1, newCategoryId);
+        newArrivalFirstThreeProduct = productProvider.getNewProductCardList;
+      }
+
       final CategoryProvider categoryProvider = context
           .read<CategoryProvider>();
       if (categoryProvider.getCategories.isEmpty) {
@@ -243,25 +248,43 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 SizedBox(height: AppUnits.headlineSeparateHeight),
-                SectionSeparatorHead(title: 'New', onTapSeeAll: () {}),
-                SizedBox(
-                  height: 200,
-                  child: LayoutBuilder(
-                    builder: (context, constraints) {
-                      return ListView.builder(
-                        itemCount: 3,
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (context, index) => ProductCard(
-                          model: ProductCardModel(
-                            id: 'id',
-                            title: 'title',
-                            photos: ['photos'],
-                            currentPrice: 1,
-                            inWishlist: true,
-                          ),
-                        ),
-                      );
-                    },
+                SectionSeparatorHead(
+                  title: 'New',
+                  onTapSeeAll: () {
+                    Navigator.pushNamed(
+                      context,
+                      ProductListByCategory.name,
+                      arguments: {'id': newCategoryId, 'title': 'New Arrival'},
+                    );
+                  },
+                ),
+                Consumer<ProductProvider>(
+                  builder: (context, _, _) => SizedBox(
+                    height: 200,
+                    child: Visibility(
+                      visible: newArrivalFirstThreeProduct.isNotEmpty,
+                      replacement: Center(child: CircularProgressIndicator()),
+                      child: LayoutBuilder(
+                        builder: (context, constraints) {
+                          return ListView.builder(
+                            itemCount: newArrivalFirstThreeProduct.length,
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (context, index) => ProductCard(
+                              model: ProductCardModel(
+                                id: newArrivalFirstThreeProduct[index].id,
+                                title: newArrivalFirstThreeProduct[index].title,
+                                photos:
+                                    newArrivalFirstThreeProduct[index].photos,
+                                currentPrice: newArrivalFirstThreeProduct[index]
+                                    .currentPrice,
+                                inWishlist: newArrivalFirstThreeProduct[index]
+                                    .inWishlist,
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
                   ),
                 ),
                 SizedBox(height: AppUnits.headlineSeparateHeight),
