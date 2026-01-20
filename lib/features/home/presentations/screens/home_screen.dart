@@ -27,7 +27,7 @@ List<ProductCardModel> newArrivalFirstThreeProduct = [];
 List<ProductCardModel> specialFirstThreeProduct = [];
 String popularCategoryId = '67c35af85e8a445235de197b';
 String newCategoryId = "67c7bec4623a876bc4766fea";
-String specialProducts = '67c35b395e8a445235de197e';
+String specialProductsId = '67c35b395e8a445235de197e';
 
 class _HomeScreenState extends State<HomeScreen> {
   @override
@@ -49,6 +49,14 @@ class _HomeScreenState extends State<HomeScreen> {
           popularCategoryId,
         );
         popularFirstThreeProduct = productProvider.getPopularProductCardList;
+      }
+      if (productProvider.getSpecialProductCardList.isEmpty) {
+        productProvider.fethingProductCardListByCategry(
+          3,
+          1,
+          specialProductsId,
+        );
+        specialFirstThreeProduct = productProvider.getSpecialProductCardList;
       }
 
       final CategoryProvider categoryProvider = context
@@ -154,7 +162,16 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                 ),
                 SizedBox(height: AppUnits.headlineSeparateHeight),
-                SectionSeparatorHead(title: 'Popular', onTapSeeAll: () {}),
+                SectionSeparatorHead(
+                  title: 'Popular',
+                  onTapSeeAll: () {
+                    Navigator.pushNamed(
+                      context,
+                      ProductListByCategory.name,
+                      arguments: {'id': popularCategoryId, 'title': 'Popular'},
+                    );
+                  },
+                ),
                 Consumer<ProductProvider>(
                   builder: (context, productProvider, child) => SizedBox(
                     height: 200,
@@ -189,20 +206,37 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 SizedBox(height: AppUnits.headlineSeparateHeight),
-                SectionSeparatorHead(title: 'Special', onTapSeeAll: () {}),
-                SizedBox(
-                  height: 200,
-                  child: LayoutBuilder(
-                    builder: (context, constraints) => ListView.builder(
-                      itemCount: 3,
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) => ProductCard(
-                        model: ProductCardModel(
-                          id: 'id',
-                          title: 'title',
-                          photos: ['photos'],
-                          currentPrice: 1,
-                          inWishlist: true,
+                SectionSeparatorHead(
+                  title: 'Special',
+                  onTapSeeAll: () {
+                    Navigator.pushNamed(
+                      context,
+                      ProductListByCategory.name,
+                      arguments: {'id': specialProductsId, 'title': 'Special'},
+                    );
+                  },
+                ),
+                Consumer<ProductProvider>(
+                  builder: (context, value, child) => SizedBox(
+                    height: 200,
+                    child: Visibility(
+                      visible: specialFirstThreeProduct.isNotEmpty,
+                      replacement: Center(child: CircularProgressIndicator()),
+                      child: LayoutBuilder(
+                        builder: (context, constraints) => ListView.builder(
+                          itemCount: specialFirstThreeProduct.length,
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) => ProductCard(
+                            model: ProductCardModel(
+                              id: specialProductsId,
+                              title: specialFirstThreeProduct[index].title,
+                              photos: specialFirstThreeProduct[index].photos,
+                              currentPrice:
+                                  specialFirstThreeProduct[index].currentPrice,
+                              inWishlist:
+                                  specialFirstThreeProduct[index].inWishlist,
+                            ),
+                          ),
                         ),
                       ),
                     ),
