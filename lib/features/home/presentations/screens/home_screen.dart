@@ -12,6 +12,7 @@ import 'package:flutter_ecommerce/features/home/state_management/slider_provider
 import 'package:flutter_ecommerce/features/products/data/models/product_card_model.dart';
 import 'package:flutter_ecommerce/features/products/presentations/screens/product_details_screen.dart';
 import 'package:flutter_ecommerce/features/products/presentations/screens/product_list_by_category.dart';
+import 'package:flutter_ecommerce/features/products/state_management/product_provider.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -21,6 +22,10 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
+List<ProductCardModel> popularFirstThreeProduct = [];
+List<ProductCardModel> newArrivalFirstThreeProduct = [];
+List<ProductCardModel> specialFirstThreeProduct = [];
+
 class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
@@ -28,17 +33,32 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      final SliderProvider _sliderProvider = context.read<SliderProvider>();
-      if (_sliderProvider.getSliderList.isEmpty) {
-        _sliderProvider.fetchSlider();
+      final SliderProvider sliderProvider = context.read<SliderProvider>();
+      if (sliderProvider.getSliderList.isEmpty) {
+        sliderProvider.fetchSlider();
       }
-      final CategoryProvider _categoryProvider = context
+
+      final ProductProvider productProvider = context.read<ProductProvider>();
+      if (popularFirstThreeProduct.isEmpty) {
+        productProvider.fethingProductCardListByCategry(
+          3,
+          1,
+          popularCategoryId,
+        );
+        popularFirstThreeProduct = productProvider.getProductCardList;
+      }
+
+      final CategoryProvider categoryProvider = context
           .read<CategoryProvider>();
-      if (_categoryProvider.getCategories.isEmpty) {
-        _categoryProvider.fetchFirstTime(currentPage: 1, categoryCount: 30);
+      if (categoryProvider.getCategories.isEmpty) {
+        categoryProvider.fetchFirstTime(currentPage: 1, categoryCount: 30);
       }
     });
   }
+
+  String popularCategoryId = '67c35af85e8a445235de197b';
+  String newCategoryId = "67c7bec4623a876bc4766fea";
+  String specialProducts = '67c35b395e8a445235de197e';
 
   @override
   Widget build(BuildContext context) {
@@ -94,9 +114,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 Consumer<CategoryProvider>(
                   builder: (context, catProvider, child) {
-                    List<CategoryModel> _firstFourCat = [];
+                    List<CategoryModel> firstFourCat = [];
                     if (catProvider.getCategories.isNotEmpty) {
-                      _firstFourCat = catProvider.getCategories.sublist(0, 4);
+                      firstFourCat = catProvider.getCategories.sublist(0, 4);
                     }
                     return Visibility(
                       visible: !catProvider.getIsFirstLoadin,
@@ -108,7 +128,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             return ListView.builder(
                               scrollDirection: Axis.horizontal,
 
-                              itemCount: _firstFourCat.length,
+                              itemCount: firstFourCat.length,
                               itemBuilder: (context2, index) {
                                 return GestureDetector(
                                   onTap: () {
@@ -116,13 +136,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                       context,
                                       ProductListByCategory.name,
                                       arguments: {
-                                        'id': _firstFourCat[index].id,
-                                        'title': _firstFourCat[index].title,
+                                        'id': firstFourCat[index].id,
+                                        'title': firstFourCat[index].title,
                                       },
                                     );
                                   },
                                   child: CategoryCardWidget(
-                                    model: _firstFourCat[index],
+                                    model: firstFourCat[index],
                                     constraints: constraints,
                                   ),
                                 );
@@ -136,22 +156,34 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 SizedBox(height: AppUnits.headlineSeparateHeight),
                 SectionSeparatorHead(title: 'Popular', onTapSeeAll: () {}),
-                SizedBox(
-                  height: 200,
-                  child: ListView.builder(
-                    itemCount: 3,
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) => GestureDetector(
-                      onTap: () {
-                        Navigator.pushNamed(context, ProductDetailsScreen.name);
-                      },
-                      child: ProductCard(
-                        model: ProductCardModel(
-                          id: 'id',
-                          title: 'title',
-                          photos: [],
-                          currentPrice: 1,
-                          inWishlist: true,
+                Consumer<ProductProvider>(
+                  builder: (context, productProvider, child) => SizedBox(
+                    height: 200,
+                    child: Visibility(
+                      visible: popularFirstThreeProduct.isNotEmpty,
+                      replacement: Center(child: CircularProgressIndicator()),
+                      child: ListView.builder(
+                        itemCount: popularFirstThreeProduct.length,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) => GestureDetector(
+                          onTap: () {
+                            Navigator.pushNamed(
+                              context,
+                              ProductDetailsScreen.name,
+                              arguments: popularFirstThreeProduct[index].id,
+                            );
+                          },
+                          child: ProductCard(
+                            model: ProductCardModel(
+                              id: popularFirstThreeProduct[index].id,
+                              title: popularFirstThreeProduct[index].title,
+                              photos: popularFirstThreeProduct[index].photos,
+                              currentPrice:
+                                  popularFirstThreeProduct[index].currentPrice,
+                              inWishlist:
+                                  popularFirstThreeProduct[index].inWishlist,
+                            ),
+                          ),
                         ),
                       ),
                     ),

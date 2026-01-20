@@ -6,7 +6,7 @@ import 'package:flutter_ecommerce/features/products/data/models/product_card_mod
 import 'package:flutter_ecommerce/features/products/data/models/product_details_model.dart';
 
 class ProductProvider extends ChangeNotifier {
-  List<ProductCardModel> _productCardList = [];
+  final List<ProductCardModel> _productCardList = [];
   int count = 10;
   int? pageNo = 1;
   int? _lastPage = 1;
