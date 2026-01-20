@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce/app/app_units.dart';
+import 'package:flutter_ecommerce/features/commons/presentations/widgets/full_page_circuar_loading_widget.dart';
 import 'package:flutter_ecommerce/features/commons/presentations/widgets/product_card.dart';
 import 'package:flutter_ecommerce/features/commons/state_management/main_nav_bar_provider.dart';
 import 'package:flutter_ecommerce/features/products/data/models/product_card_model.dart';
+import 'package:flutter_ecommerce/features/wish_list/state_management/wish_provider.dart';
 import 'package:provider/provider.dart';
 
 class ProductListByWish extends StatefulWidget {
@@ -14,6 +16,18 @@ class ProductListByWish extends StatefulWidget {
 }
 
 class _ProductListByWishState extends State<ProductListByWish> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    WishProvider wishProvider = context.read<WishProvider>();
+
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      wishProvider.fetchWishList();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return PopScope(
@@ -35,22 +49,36 @@ class _ProductListByWishState extends State<ProductListByWish> {
           shadowColor: Colors.grey,
           surfaceTintColor: Colors.transparent,
         ),
-        body: GridView.builder(
-          itemCount: 10,
-          padding: EdgeInsets.all(AppUnits.horizontalMainPadding),
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3,
-            mainAxisSpacing: 8,
-            crossAxisSpacing: 3,
-          ),
-          itemBuilder: (context, index) => ProductCard(
-            model: ProductCardModel(
-              id: 'id',
-              title: 'title',
-              photos: ['photos'],
-              currentPrice: 1,
-              inWishlist: true,
-            ),
+        body: Consumer<WishProvider>(
+          builder: (context, wishProvider, child) => Visibility(
+            visible: !wishProvider.getIsWishFetching,
+            replacement: FullPageCircuarLoadingWidget(),
+            child: wishProvider.getWishList.isNotEmpty
+                ? GridView.builder(
+                    itemCount: 10,
+                    padding: EdgeInsets.all(AppUnits.horizontalMainPadding),
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 3,
+                      mainAxisSpacing: 8,
+                      crossAxisSpacing: 3,
+                    ),
+                    itemBuilder: (context, index) => ProductCard(
+                      model: ProductCardModel(
+                        id: wishProvider.getWishList[index].id,
+                        title: wishProvider.getWishList[index].title,
+                        photos: wishProvider.getWishList[index].photos,
+                        currentPrice:
+                            wishProvider.getWishList[index].currentPrice,
+                        inWishlist: wishProvider.getWishList[index].inWishlist,
+                      ),
+                    ),
+                  )
+                : Center(
+                    child: Text(
+                      "No Wished Product",
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    ),
+                  ),
           ),
         ),
       ),
