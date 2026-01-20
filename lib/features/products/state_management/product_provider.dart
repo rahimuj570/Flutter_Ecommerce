@@ -7,6 +7,13 @@ import 'package:flutter_ecommerce/features/products/data/models/product_details_
 
 class ProductProvider extends ChangeNotifier {
   final List<ProductCardModel> _productCardList = [];
+  final List<ProductCardModel> _popularProductCardList = [];
+  final List<ProductCardModel> _newProductCardList = [];
+  final List<ProductCardModel> _specialProductCardList = [];
+  final String popularCategoryId = '67c35af85e8a445235de197b';
+  final String newCategoryId = "67c7bec4623a876bc4766fea";
+  final String specialProducts = '67c35b395e8a445235de197e';
+
   int count = 10;
   int? pageNo = 1;
   int? _lastPage = 1;
@@ -19,6 +26,12 @@ class ProductProvider extends ChangeNotifier {
   ProductDetailsModel? _productDetailsModel;
 
   List<ProductCardModel> get getProductCardList => _productCardList;
+  List<ProductCardModel> get getPopularProductCardList =>
+      _popularProductCardList;
+  List<ProductCardModel> get getNewProductCardList => _newProductCardList;
+  List<ProductCardModel> get getSpecialProductCardList =>
+      _specialProductCardList;
+
   ProductDetailsModel? get getProductById => _productDetailsModel;
   bool get getIsFetchingProductCardList => _isFethingProductCardList;
   bool get getIsFetchingMore => _isFethingMore;
@@ -44,7 +57,15 @@ class ProductProvider extends ChangeNotifier {
     );
 
     for (Map<String, dynamic> json in responseModel.responseData['results']) {
-      _productCardList.add(ProductCardModel.fromJson(json));
+      if (categoryId == popularCategoryId) {
+        _popularProductCardList.add(ProductCardModel.fromJson(json));
+      } else if (categoryId == newCategoryId) {
+        _newProductCardList.add(ProductCardModel.fromJson(json));
+      } else if (categoryId == specialProducts) {
+        _specialProductCardList.add(ProductCardModel.fromJson(json));
+      } else {
+        _productCardList.add(ProductCardModel.fromJson(json));
+      }
     }
 
     if (page == 1) {

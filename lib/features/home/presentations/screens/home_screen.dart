@@ -25,6 +25,9 @@ class HomeScreen extends StatefulWidget {
 List<ProductCardModel> popularFirstThreeProduct = [];
 List<ProductCardModel> newArrivalFirstThreeProduct = [];
 List<ProductCardModel> specialFirstThreeProduct = [];
+String popularCategoryId = '67c35af85e8a445235de197b';
+String newCategoryId = "67c7bec4623a876bc4766fea";
+String specialProducts = '67c35b395e8a445235de197e';
 
 class _HomeScreenState extends State<HomeScreen> {
   @override
@@ -39,13 +42,13 @@ class _HomeScreenState extends State<HomeScreen> {
       }
 
       final ProductProvider productProvider = context.read<ProductProvider>();
-      if (popularFirstThreeProduct.isEmpty) {
+      if (productProvider.getPopularProductCardList.isEmpty) {
         productProvider.fethingProductCardListByCategry(
           3,
           1,
           popularCategoryId,
         );
-        popularFirstThreeProduct = productProvider.getProductCardList;
+        popularFirstThreeProduct = productProvider.getPopularProductCardList;
       }
 
       final CategoryProvider categoryProvider = context
@@ -55,10 +58,6 @@ class _HomeScreenState extends State<HomeScreen> {
       }
     });
   }
-
-  String popularCategoryId = '67c35af85e8a445235de197b';
-  String newCategoryId = "67c7bec4623a876bc4766fea";
-  String specialProducts = '67c35b395e8a445235de197e';
 
   @override
   Widget build(BuildContext context) {
