@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce/app/app_colors.dart';
 import 'package:flutter_ecommerce/app/app_units.dart';
+import 'package:flutter_ecommerce/features/commons/utils/show_snack_bar.dart';
 import 'package:flutter_ecommerce/features/products/data/models/product_card_model.dart';
 import 'package:flutter_ecommerce/features/wish_list/state_management/wish_provider.dart';
 import 'package:provider/provider.dart';
@@ -60,18 +61,33 @@ class ProductCard extends StatelessWidget {
                       Consumer<WishProvider>(
                         builder: (context, wishProvider, child) {
                           return GestureDetector(
+                            behavior: HitTestBehavior.opaque,
                             onTap: () {
-                              wishProvider.addToWish(model.id);
-                              model.inWishlist != true;
+                              if (model.inWishlist == true) {
+                                if (model.indexFromParent == null) {
+                                  showSnackBar(
+                                    context: context,
+                                    message: 'Already added to wishlist!',
+                                  );
+                                } else {
+                                  wishProvider.removeToWish(
+                                    model.wishId!,
+                                    model.id,
+                                    model.indexFromParent,
+                                  );
+                                }
+                              } else {
+                                wishProvider.addToWish(model.id);
+                              }
                             },
-                            child: wishProvider.getIsWishStatusChanging
-                                // &&
-                                // wishProvider.getChangeingProductId ==
-                                //     model.id
+                            child:
+                                wishProvider.getIsWishStatusChanging &&
+                                    wishProvider.getChangeingProductId ==
+                                        model.id
                                 ? Center(
                                     child: SizedBox(
-                                      width: 12,
-                                      height: 12,
+                                      width: 14,
+                                      height: 14,
                                       child: CircularProgressIndicator(
                                         strokeWidth: 2,
                                       ),

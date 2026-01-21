@@ -3,9 +3,10 @@ class ProductCardModel {
   final String title;
   final List<dynamic> photos;
   final int currentPrice;
-  final bool? inWishlist;
-
+  bool? inWishlist = false;
   final String? wishId;
+
+  final int? indexFromParent;
 
   ProductCardModel({
     required this.id,
@@ -14,6 +15,8 @@ class ProductCardModel {
     required this.currentPrice,
     required this.inWishlist,
     this.wishId,
+
+    this.indexFromParent,
   });
 
   factory ProductCardModel.fromJson({

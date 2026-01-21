@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_ecommerce/app/setup_network_caller.dart';
 import 'package:flutter_ecommerce/app/uri_list.dart';
@@ -35,6 +33,7 @@ class WishProvider extends ChangeNotifier {
   bool get getIsWishStatusChanging => _isWishStatusChanging;
   String _changingProductId = '1';
   String get getChangeingProductId => _changingProductId;
+
   Future<void> addToWish(String prouctId) async {
     _changingProductId = prouctId;
     _responseModel = null;
@@ -50,15 +49,19 @@ class WishProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> removeToWish(String prouctId) async {
+  Future<void> removeToWish(String wishId, String productId, int? index) async {
+    _changingProductId = productId;
     _responseModel = null;
     _isWishStatusChanging = true;
     notifyListeners();
 
     _responseModel = await getNetworkCaller().deleteCall(
-      uri: '${UriList.wish}/$prouctId',
+      uri: '${UriList.wish}/$wishId',
     );
 
+    if (index != null) {
+      _wishList.removeAt(index);
+    }
     _isWishStatusChanging = false;
     notifyListeners();
   }

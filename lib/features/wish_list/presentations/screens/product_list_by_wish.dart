@@ -4,6 +4,7 @@ import 'package:flutter_ecommerce/features/commons/presentations/widgets/full_pa
 import 'package:flutter_ecommerce/features/commons/presentations/widgets/product_card.dart';
 import 'package:flutter_ecommerce/features/commons/state_management/main_nav_bar_provider.dart';
 import 'package:flutter_ecommerce/features/products/data/models/product_card_model.dart';
+import 'package:flutter_ecommerce/features/products/presentations/screens/product_details_screen.dart';
 import 'package:flutter_ecommerce/features/wish_list/state_management/wish_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -62,15 +63,27 @@ class _ProductListByWishState extends State<ProductListByWish> {
                       mainAxisSpacing: 8,
                       crossAxisSpacing: 3,
                     ),
-                    itemBuilder: (context, index) => ProductCard(
-                      model: ProductCardModel(
-                        id: wishProvider.getWishList[index].id,
-                        title: wishProvider.getWishList[index].title,
-                        photos: wishProvider.getWishList[index].photos,
-                        currentPrice:
-                            wishProvider.getWishList[index].currentPrice,
-                        inWishlist:
-                            wishProvider.getWishList[index].inWishlist ?? true,
+                    itemBuilder: (context, index) => GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(
+                          context,
+                          ProductDetailsScreen.name,
+                          arguments: wishProvider.getWishList[index].id,
+                        );
+                      },
+                      child: ProductCard(
+                        model: ProductCardModel(
+                          indexFromParent: index,
+                          id: wishProvider.getWishList[index].id,
+                          title: wishProvider.getWishList[index].title,
+                          photos: wishProvider.getWishList[index].photos,
+                          currentPrice:
+                              wishProvider.getWishList[index].currentPrice,
+                          inWishlist:
+                              wishProvider.getWishList[index].inWishlist ??
+                              true,
+                          wishId: wishProvider.getWishList[index].wishId,
+                        ),
                       ),
                     ),
                   )

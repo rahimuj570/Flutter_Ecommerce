@@ -231,15 +231,24 @@ class _HomeScreenState extends State<HomeScreen> {
                         builder: (context, constraints) => ListView.builder(
                           itemCount: specialFirstThreeProduct.length,
                           scrollDirection: Axis.horizontal,
-                          itemBuilder: (context, index) => ProductCard(
-                            model: ProductCardModel(
-                              id: specialProductsId,
-                              title: specialFirstThreeProduct[index].title,
-                              photos: specialFirstThreeProduct[index].photos,
-                              currentPrice:
-                                  specialFirstThreeProduct[index].currentPrice,
-                              inWishlist:
-                                  specialFirstThreeProduct[index].inWishlist,
+                          itemBuilder: (context, index) => GestureDetector(
+                            onTap: () {
+                              Navigator.pushNamed(
+                                context,
+                                ProductDetailsScreen.name,
+                                arguments: specialFirstThreeProduct[index].id,
+                              );
+                            },
+                            child: ProductCard(
+                              model: ProductCardModel(
+                                id: specialProductsId,
+                                title: specialFirstThreeProduct[index].title,
+                                photos: specialFirstThreeProduct[index].photos,
+                                currentPrice: specialFirstThreeProduct[index]
+                                    .currentPrice,
+                                inWishlist:
+                                    specialFirstThreeProduct[index].inWishlist,
+                              ),
                             ),
                           ),
                         ),
@@ -269,16 +278,28 @@ class _HomeScreenState extends State<HomeScreen> {
                           return ListView.builder(
                             itemCount: newArrivalFirstThreeProduct.length,
                             scrollDirection: Axis.horizontal,
-                            itemBuilder: (context, index) => ProductCard(
-                              model: ProductCardModel(
-                                id: newArrivalFirstThreeProduct[index].id,
-                                title: newArrivalFirstThreeProduct[index].title,
-                                photos:
-                                    newArrivalFirstThreeProduct[index].photos,
-                                currentPrice: newArrivalFirstThreeProduct[index]
-                                    .currentPrice,
-                                inWishlist: newArrivalFirstThreeProduct[index]
-                                    .inWishlist,
+                            itemBuilder: (context, index) => GestureDetector(
+                              onTap: () {
+                                Navigator.pushNamed(
+                                  context,
+                                  ProductDetailsScreen.name,
+                                  arguments:
+                                      newArrivalFirstThreeProduct[index].id,
+                                );
+                              },
+                              child: ProductCard(
+                                model: ProductCardModel(
+                                  id: newArrivalFirstThreeProduct[index].id,
+                                  title:
+                                      newArrivalFirstThreeProduct[index].title,
+                                  photos:
+                                      newArrivalFirstThreeProduct[index].photos,
+                                  currentPrice:
+                                      newArrivalFirstThreeProduct[index]
+                                          .currentPrice,
+                                  inWishlist: newArrivalFirstThreeProduct[index]
+                                      .inWishlist,
+                                ),
                               ),
                             ),
                           );
