@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce/app/app_colors.dart';
 import 'package:flutter_ecommerce/app/app_units.dart';
 import 'package:flutter_ecommerce/features/products/data/models/product_card_model.dart';
+import 'package:flutter_ecommerce/features/wish_list/state_management/wish_provider.dart';
+import 'package:provider/provider.dart';
 
 class ProductCard extends StatelessWidget {
   const ProductCard({super.key, required this.model});
@@ -55,24 +57,48 @@ class ProductCard extends StatelessWidget {
                       Icon(Icons.star, color: Colors.amber, size: 16),
                       Text('4.9'),
                       Spacer(),
-                      Card(
-                        elevation: 0,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5),
-                        ),
+                      Consumer<WishProvider>(
+                        builder: (context, wishProvider, child) {
+                          return GestureDetector(
+                            onTap: () {
+                              wishProvider.addToWish(model.id);
+                              model.inWishlist != true;
+                            },
+                            child: wishProvider.getIsWishStatusChanging
+                                // &&
+                                // wishProvider.getChangeingProductId ==
+                                //     model.id
+                                ? Center(
+                                    child: SizedBox(
+                                      width: 12,
+                                      height: 12,
+                                      child: CircularProgressIndicator(
+                                        strokeWidth: 2,
+                                      ),
+                                    ),
+                                  )
+                                : Card(
+                                    elevation: 0,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
 
-                        color: AppColors.themeColor,
-                        child: Padding(
-                          padding: const EdgeInsets.all(2.0),
-                          child: Icon(
-                            Icons.favorite_outline,
-                            size: 15,
-                            color: Colors.white,
-                          ),
-                        ),
+                                    color: AppColors.themeColor,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(2.0),
+                                      child: Icon(
+                                        model.inWishlist!
+                                            ? Icons.favorite_rounded
+                                            : Icons.favorite_outline,
+                                        size: 15,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
+                          );
+                        },
                       ),
-                      Spacer(),
-                      Spacer(),
+                      Spacer(flex: 2),
                     ],
                   ),
                 ],

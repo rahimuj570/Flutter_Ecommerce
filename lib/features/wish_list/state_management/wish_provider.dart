@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_ecommerce/app/setup_network_caller.dart';
 import 'package:flutter_ecommerce/app/uri_list.dart';
@@ -21,10 +23,43 @@ class WishProvider extends ChangeNotifier {
     _responseModel = await getNetworkCaller().getCall(uri: UriList.wish);
     List<dynamic> temp = _responseModel!.responseData['results'];
     for (Map<String, dynamic> w in temp) {
-      _wishList.add(ProductCardModel.fromJson(w));
+      _wishList.add(
+        ProductCardModel.fromJson(json: w['product'], wishIdParam: w['_id']),
+      );
     }
-
     _isWishListFetching = false;
+    notifyListeners();
+  }
+
+  bool _isWishStatusChanging = false;
+  bool get getIsWishStatusChanging => _isWishStatusChanging;
+  String _changingProductId = '1';
+  String get getChangeingProductId => _changingProductId;
+  Future<void> addToWish(String prouctId) async {
+    _changingProductId = prouctId;
+    _responseModel = null;
+    _isWishStatusChanging = true;
+    notifyListeners();
+
+    _responseModel = await getNetworkCaller().postCall(
+      uri: UriList.wish,
+      body: {"product": prouctId},
+    );
+
+    _isWishStatusChanging = false;
+    notifyListeners();
+  }
+
+  Future<void> removeToWish(String prouctId) async {
+    _responseModel = null;
+    _isWishStatusChanging = true;
+    notifyListeners();
+
+    _responseModel = await getNetworkCaller().deleteCall(
+      uri: '${UriList.wish}/$prouctId',
+    );
+
+    _isWishStatusChanging = false;
     notifyListeners();
   }
 }

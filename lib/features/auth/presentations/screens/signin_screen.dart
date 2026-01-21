@@ -168,7 +168,7 @@ class _SigninScreenState extends State<SigninScreen> {
       if (res.isSuccess) {
         if (mounted) {
           showSnackBar(context: context, message: res.message!);
-          if (widget.isComesFromRunningProcess != null) {
+          if (widget.isComesFromRunningProcess == null) {
             Navigator.pushReplacementNamed(context, MainNavHolderScreen.name);
           } else {
             Navigator.pop(context);

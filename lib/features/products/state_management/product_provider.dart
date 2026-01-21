@@ -59,15 +59,15 @@ class ProductProvider extends ChangeNotifier {
     for (Map<String, dynamic> json in responseModel.responseData['results']) {
       if (categoryId == popularCategoryId &&
           _popularProductCardList.length < 3) {
-        _popularProductCardList.add(ProductCardModel.fromJson(json));
+        _popularProductCardList.add(ProductCardModel.fromJson(json: json));
       } else if (categoryId == newCategoryId &&
           _newProductCardList.length < 3) {
-        _newProductCardList.add(ProductCardModel.fromJson(json));
+        _newProductCardList.add(ProductCardModel.fromJson(json: json));
       } else if (categoryId == specialProducts &&
           _specialProductCardList.length < 3) {
-        _specialProductCardList.add(ProductCardModel.fromJson(json));
+        _specialProductCardList.add(ProductCardModel.fromJson(json: json));
       }
-      _productCardList.add(ProductCardModel.fromJson(json));
+      _productCardList.add(ProductCardModel.fromJson(json: json));
     }
 
     if (page == 1) {

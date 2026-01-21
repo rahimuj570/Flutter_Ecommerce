@@ -55,10 +55,10 @@ class _ProductListByWishState extends State<ProductListByWish> {
             replacement: FullPageCircuarLoadingWidget(),
             child: wishProvider.getWishList.isNotEmpty
                 ? GridView.builder(
-                    itemCount: 10,
+                    itemCount: wishProvider.getWishList.length,
                     padding: EdgeInsets.all(AppUnits.horizontalMainPadding),
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3,
+                      crossAxisCount: 2,
                       mainAxisSpacing: 8,
                       crossAxisSpacing: 3,
                     ),
@@ -69,7 +69,8 @@ class _ProductListByWishState extends State<ProductListByWish> {
                         photos: wishProvider.getWishList[index].photos,
                         currentPrice:
                             wishProvider.getWishList[index].currentPrice,
-                        inWishlist: wishProvider.getWishList[index].inWishlist,
+                        inWishlist:
+                            wishProvider.getWishList[index].inWishlist ?? true,
                       ),
                     ),
                   )
