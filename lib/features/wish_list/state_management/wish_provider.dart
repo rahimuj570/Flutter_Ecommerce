@@ -85,6 +85,8 @@ class WishProvider extends ChangeNotifier {
 
             break;
           }
+        case 'details':
+          {}
         default:
           context
                   .read<ProductProvider>()

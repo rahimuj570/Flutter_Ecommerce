@@ -7,6 +7,7 @@ class ProductDetailsModel {
   final List<String> sizes;
   final int currentPrice;
   final int quantity;
+  bool? inWishList = false;
 
   ProductDetailsModel({
     required this.id,
@@ -17,6 +18,7 @@ class ProductDetailsModel {
     required this.sizes,
     required this.currentPrice,
     required this.quantity,
+    this.inWishList,
   });
 
   factory ProductDetailsModel.fromJson(Map<String, dynamic> json) {
@@ -29,6 +31,7 @@ class ProductDetailsModel {
       sizes: List<String>.from(json['sizes']),
       currentPrice: json['current_price'],
       quantity: json['quantity'],
+      inWishList: json['in_wishlist'],
     );
   }
 }

@@ -13,6 +13,7 @@ import 'package:flutter_ecommerce/features/products/presentations/widgets/color_
 import 'package:flutter_ecommerce/features/products/presentations/widgets/product_details_carousel_widget.dart';
 import 'package:flutter_ecommerce/features/products/presentations/widgets/size_picker_widget.dart';
 import 'package:flutter_ecommerce/features/products/state_management/product_provider.dart';
+import 'package:flutter_ecommerce/features/wish_list/state_management/wish_provider.dart';
 import 'package:provider/provider.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
@@ -105,20 +106,45 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                     ),
                                   ),
                                 ),
-                                GestureDetector(
-                                  onTap: () {},
-                                  child: Container(
-                                    padding: EdgeInsets.all(2),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(5),
-                                      color: AppColors.themeColor,
-                                    ),
-                                    child: Icon(
-                                      Icons.favorite_outline,
-                                      size: 18,
-                                      color: Colors.white,
-                                    ),
-                                  ),
+                                Consumer<WishProvider>(
+                                  builder: (context, wishProvider, child) =>
+                                      Visibility(
+                                        visible:
+                                            wishProvider
+                                                .getIsWishStatusChanging ==
+                                            false,
+                                        replacement: SizedBox(
+                                          height: 14,
+                                          width: 14,
+                                          child: CircularProgressIndicator(
+                                            strokeWidth: 3,
+                                          ),
+                                        ),
+                                        child: GestureDetector(
+                                          onTap: () {
+                                            _addToWish(value);
+                                          },
+                                          child: Container(
+                                            padding: EdgeInsets.all(2),
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                              color: AppColors.themeColor,
+                                            ),
+                                            child: Icon(
+                                              value
+                                                          .getProductById!
+                                                          .inWishList ??
+                                                      false
+                                                  ? Icons.favorite_outlined
+                                                  : Icons
+                                                        .favorite_outline_rounded,
+                                              size: 18,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
                                 ),
                                 Spacer(),
                                 Text(
@@ -172,6 +198,24 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
         },
       ),
     );
+  }
+
+  void _addToWish(ProductProvider value) async {
+    WishProvider wishProvider = context.read<WishProvider>();
+    await wishProvider.addToWish(value.getProductById!.id, 'deatils', 0);
+    print('ssssssssssssssss');
+    if (wishProvider.getResponseModel!.isSuccess) {
+      showSnackBar(
+        context: context,
+        message: wishProvider.getResponseModel!.message!,
+      );
+    } else {
+      showSnackBar(
+        context: context,
+        message: wishProvider.getResponseModel!.message!,
+        isError: true,
+      );
+    }
   }
 
   void _onTapAddToCart() async {
