@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_ecommerce/app/app.dart';
 import 'package:flutter_ecommerce/app/setup_network_caller.dart';
 import 'package:flutter_ecommerce/app/uri_list.dart';
 import 'package:flutter_ecommerce/core/models/network_response_model.dart';
@@ -13,7 +14,7 @@ class WishProvider extends ChangeNotifier {
 
   List<ProductCardModel> get getWishList => _wishList;
   bool get getIsWishFetching => _isWishListFetching;
-  NetworkResponseModel get getResponseModel => _responseModel!;
+  NetworkResponseModel? get getResponseModel => _responseModel;
 
   Future<void> fetchWishList() async {
     _wishList.clear();
@@ -40,8 +41,8 @@ class WishProvider extends ChangeNotifier {
     String prouctId,
     String whereFrom,
     int indexFromParent,
-    BuildContext context,
   ) async {
+    BuildContext context = FlutterEcommerce.globalRoute.currentContext!;
     _changingProductId = prouctId;
     _responseModel = null;
     _isWishStatusChanging = true;
@@ -51,11 +52,11 @@ class WishProvider extends ChangeNotifier {
       uri: UriList.wish,
       body: {"product": prouctId},
     );
-    if (context.mounted) {
+    if (context.mounted && _responseModel!.isSuccess) {
       switch (whereFrom) {
         case 'Popular':
           {
-            context
+            FlutterEcommerce.globalRoute.currentContext!
                     .read<ProductProvider>()
                     .getPopularProductCardList[indexFromParent]
                     .inWishlist =
@@ -103,7 +104,6 @@ class WishProvider extends ChangeNotifier {
     _responseModel = null;
     _isWishStatusChanging = true;
     notifyListeners();
-
     _responseModel = await getNetworkCaller().deleteCall(
       uri: '${UriList.wish}/$wishId',
     );

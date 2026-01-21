@@ -20,6 +20,9 @@ class FlutterEcommerce extends StatefulWidget {
   State<FlutterEcommerce> createState() => _FlutterEcommerceState();
 }
 
+final RouteObserver<ModalRoute<void>> routeObserver =
+    RouteObserver<ModalRoute<void>>();
+
 class _FlutterEcommerceState extends State<FlutterEcommerce> {
   @override
   Widget build(BuildContext context) {
@@ -38,6 +41,7 @@ class _FlutterEcommerceState extends State<FlutterEcommerce> {
         builder:
             (context, langProvider, themeProvider, mainNavBarProvider, child) =>
                 MaterialApp(
+                  navigatorObservers: [routeObserver],
                   navigatorKey: FlutterEcommerce.globalRoute,
                   initialRoute: '/',
                   onGenerateRoute: AppRoutes.appRoutes,

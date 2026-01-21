@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ecommerce/app/app.dart';
 import 'package:flutter_ecommerce/app/app_units.dart';
 import 'package:flutter_ecommerce/features/categories/data/models/category_model.dart';
 import 'package:flutter_ecommerce/features/categories/presentations/widgets/category_card_widget.dart';
@@ -26,10 +27,28 @@ String popularCategoryId = '67c35af85e8a445235de197b';
 String newCategoryId = "67c7bec4623a876bc4766fea";
 String specialProductsId = '67c35b395e8a445235de197e';
 
-class _HomeScreenState extends State<HomeScreen> {
-  List<ProductCardModel> popularFirstThreeProduct = [];
-  List<ProductCardModel> newArrivalFirstThreeProduct = [];
-  List<ProductCardModel> specialFirstThreeProduct = [];
+class _HomeScreenState extends State<HomeScreen> with RouteAware {
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+    routeObserver.subscribe(this, ModalRoute.of(context)!);
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    routeObserver.unsubscribe(this);
+    super.dispose();
+  }
+
+  @override
+  void didPopNext() {
+    // TODO: implement didPopNext
+    super.didPopNext();
+    loadData();
+  }
+
   @override
   void initState() {
     // TODO: implement initState
@@ -40,24 +59,26 @@ class _HomeScreenState extends State<HomeScreen> {
       if (sliderProvider.getSliderList.isEmpty) {
         sliderProvider.fetchSlider();
       }
-
-      final ProductProvider productProvider = context.read<ProductProvider>();
-
-      productProvider.fethingProductCardListByCategry(3, 1, popularCategoryId);
-      popularFirstThreeProduct = productProvider.getPopularProductCardList;
-
-      productProvider.fethingProductCardListByCategry(3, 1, specialProductsId);
-      specialFirstThreeProduct = productProvider.getSpecialProductCardList;
-
-      productProvider.fethingProductCardListByCategry(3, 1, newCategoryId);
-      newArrivalFirstThreeProduct = productProvider.getNewProductCardList;
-
+      loadData();
       final CategoryProvider categoryProvider = context
           .read<CategoryProvider>();
       if (categoryProvider.getCategories.isEmpty) {
         categoryProvider.fetchFirstTime(currentPage: 1, categoryCount: 30);
       }
     });
+  }
+
+  void loadData() {
+    final ProductProvider productProvider = context.read<ProductProvider>();
+
+    productProvider.fethingProductCardListByCategry(3, 1, popularCategoryId);
+    productProvider.getPopularProductCardList;
+
+    productProvider.fethingProductCardListByCategry(3, 1, specialProductsId);
+    productProvider.getSpecialProductCardList;
+
+    productProvider.fethingProductCardListByCategry(3, 1, newCategoryId);
+    productProvider.getNewProductCardList;
   }
 
   @override
@@ -169,30 +190,42 @@ class _HomeScreenState extends State<HomeScreen> {
                   builder: (context, productProvider, child) => SizedBox(
                     height: 200,
                     child: Visibility(
-                      visible: popularFirstThreeProduct.isNotEmpty,
+                      visible:
+                          productProvider.getPopularProductCardList.isNotEmpty,
                       replacement: Center(child: CircularProgressIndicator()),
                       child: ListView.builder(
-                        itemCount: popularFirstThreeProduct.length,
+                        itemCount:
+                            productProvider.getPopularProductCardList.length,
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (context, index) => GestureDetector(
                           onTap: () {
                             Navigator.pushNamed(
                               context,
                               ProductDetailsScreen.name,
-                              arguments: popularFirstThreeProduct[index].id,
+                              arguments: productProvider
+                                  .getPopularProductCardList[index]
+                                  .id,
                             );
                           },
                           child: ProductCard(
                             model: ProductCardModel(
                               whereFrom: 'Popular',
                               indexFromParent: index,
-                              id: popularFirstThreeProduct[index].id,
-                              title: popularFirstThreeProduct[index].title,
-                              photos: popularFirstThreeProduct[index].photos,
-                              currentPrice:
-                                  popularFirstThreeProduct[index].currentPrice,
-                              inWishlist:
-                                  popularFirstThreeProduct[index].inWishlist,
+                              id: productProvider
+                                  .getPopularProductCardList[index]
+                                  .id,
+                              title: productProvider
+                                  .getPopularProductCardList[index]
+                                  .title,
+                              photos: productProvider
+                                  .getPopularProductCardList[index]
+                                  .photos,
+                              currentPrice: productProvider
+                                  .getPopularProductCardList[index]
+                                  .currentPrice,
+                              inWishlist: productProvider
+                                  .getPopularProductCardList[index]
+                                  .inWishlist,
                             ),
                           ),
                         ),
@@ -212,34 +245,46 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                 ),
                 Consumer<ProductProvider>(
-                  builder: (context, value, child) => SizedBox(
+                  builder: (context, productProvider, child) => SizedBox(
                     height: 200,
                     child: Visibility(
-                      visible: specialFirstThreeProduct.isNotEmpty,
+                      visible:
+                          productProvider.getSpecialProductCardList.isNotEmpty,
                       replacement: Center(child: CircularProgressIndicator()),
                       child: LayoutBuilder(
                         builder: (context, constraints) => ListView.builder(
-                          itemCount: specialFirstThreeProduct.length,
+                          itemCount:
+                              productProvider.getSpecialProductCardList.length,
                           scrollDirection: Axis.horizontal,
                           itemBuilder: (context, index) => GestureDetector(
                             onTap: () {
                               Navigator.pushNamed(
                                 context,
                                 ProductDetailsScreen.name,
-                                arguments: specialFirstThreeProduct[index].id,
+                                arguments: productProvider
+                                    .getSpecialProductCardList[index]
+                                    .id,
                               );
                             },
                             child: ProductCard(
                               model: ProductCardModel(
                                 whereFrom: 'Special',
                                 indexFromParent: index,
-                                id: specialFirstThreeProduct[index].id,
-                                title: specialFirstThreeProduct[index].title,
-                                photos: specialFirstThreeProduct[index].photos,
-                                currentPrice: specialFirstThreeProduct[index]
+                                id: productProvider
+                                    .getSpecialProductCardList[index]
+                                    .id,
+                                title: productProvider
+                                    .getSpecialProductCardList[index]
+                                    .title,
+                                photos: productProvider
+                                    .getSpecialProductCardList[index]
+                                    .photos,
+                                currentPrice: productProvider
+                                    .getSpecialProductCardList[index]
                                     .currentPrice,
-                                inWishlist:
-                                    specialFirstThreeProduct[index].inWishlist,
+                                inWishlist: productProvider
+                                    .getSpecialProductCardList[index]
+                                    .inWishlist,
                               ),
                             ),
                           ),
@@ -260,38 +305,45 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                 ),
                 Consumer<ProductProvider>(
-                  builder: (context, _, _) => SizedBox(
+                  builder: (context, productProvider, _) => SizedBox(
                     height: 200,
                     child: Visibility(
-                      visible: newArrivalFirstThreeProduct.isNotEmpty,
+                      visible: productProvider.getNewProductCardList.isNotEmpty,
                       replacement: Center(child: CircularProgressIndicator()),
                       child: LayoutBuilder(
                         builder: (context, constraints) {
                           return ListView.builder(
-                            itemCount: newArrivalFirstThreeProduct.length,
+                            itemCount:
+                                productProvider.getNewProductCardList.length,
                             scrollDirection: Axis.horizontal,
                             itemBuilder: (context, index) => GestureDetector(
                               onTap: () {
                                 Navigator.pushNamed(
                                   context,
                                   ProductDetailsScreen.name,
-                                  arguments:
-                                      newArrivalFirstThreeProduct[index].id,
+                                  arguments: productProvider
+                                      .getNewProductCardList[index]
+                                      .id,
                                 );
                               },
                               child: ProductCard(
                                 model: ProductCardModel(
                                   whereFrom: 'New',
                                   indexFromParent: index,
-                                  id: newArrivalFirstThreeProduct[index].id,
-                                  title:
-                                      newArrivalFirstThreeProduct[index].title,
-                                  photos:
-                                      newArrivalFirstThreeProduct[index].photos,
-                                  currentPrice:
-                                      newArrivalFirstThreeProduct[index]
-                                          .currentPrice,
-                                  inWishlist: newArrivalFirstThreeProduct[index]
+                                  id: productProvider
+                                      .getNewProductCardList[index]
+                                      .id,
+                                  title: productProvider
+                                      .getNewProductCardList[index]
+                                      .title,
+                                  photos: productProvider
+                                      .getNewProductCardList[index]
+                                      .photos,
+                                  currentPrice: productProvider
+                                      .getNewProductCardList[index]
+                                      .currentPrice,
+                                  inWishlist: productProvider
+                                      .getNewProductCardList[index]
                                       .inWishlist,
                                 ),
                               ),

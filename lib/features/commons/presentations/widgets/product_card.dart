@@ -81,8 +81,15 @@ class ProductCard extends StatelessWidget {
                                   model.id,
                                   model.whereFrom!,
                                   model.indexFromParent!,
-                                  context,
                                 );
+                                if (wishProvider.getResponseModel?.isSuccess ==
+                                    false) {
+                                  showSnackBar(
+                                    context: context,
+                                    message: 'Try again',
+                                    isError: true,
+                                  );
+                                }
                               }
                             },
                             child:

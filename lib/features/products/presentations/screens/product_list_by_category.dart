@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce/app/app_units.dart';
 import 'package:flutter_ecommerce/features/commons/presentations/widgets/full_page_circuar_loading_widget.dart';
 import 'package:flutter_ecommerce/features/commons/presentations/widgets/product_card.dart';
+import 'package:flutter_ecommerce/features/products/data/models/product_card_model.dart';
 import 'package:flutter_ecommerce/features/products/presentations/screens/product_details_screen.dart';
 import 'package:flutter_ecommerce/features/products/state_management/product_provider.dart';
 import 'package:provider/provider.dart';
@@ -15,7 +16,7 @@ class ProductListByCategory extends StatefulWidget {
 }
 
 class _ProductListByCategoryState extends State<ProductListByCategory> {
-  ScrollController _scrollController = ScrollController();
+  final ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
@@ -81,17 +82,33 @@ class _ProductListByCategoryState extends State<ProductListByCategory> {
                     mainAxisSpacing: 8,
                     crossAxisSpacing: 3,
                   ),
-                  itemBuilder: (context, index) => GestureDetector(
-                    onTap: () => Navigator.pushNamed(
-                      context,
-                      ProductDetailsScreen.name,
-                      arguments:
-                          productCardProvider.getProductCardList[index].id,
-                    ),
-                    child: ProductCard(
-                      model: productCardProvider.getProductCardList[index],
-                    ),
-                  ),
+                  itemBuilder: (context, index) {
+                    ProductCardModel model = ProductCardModel(
+                      id: productCardProvider.getProductCardList[index].id,
+                      title:
+                          productCardProvider.getProductCardList[index].title,
+                      photos:
+                          productCardProvider.getProductCardList[index].photos,
+                      currentPrice: productCardProvider
+                          .getProductCardList[index]
+                          .currentPrice,
+                      inWishlist: productCardProvider
+                          .getProductCardList[index]
+                          .inWishlist,
+                      whereFrom: 'category',
+                      indexFromParent: index,
+                    );
+
+                    return GestureDetector(
+                      onTap: () => Navigator.pushNamed(
+                        context,
+                        ProductDetailsScreen.name,
+                        arguments:
+                            productCardProvider.getProductCardList[index].id,
+                      ),
+                      child: ProductCard(model: model),
+                    );
+                  },
                 ),
 
                 SliverToBoxAdapter(child: SizedBox(height: 30)),
