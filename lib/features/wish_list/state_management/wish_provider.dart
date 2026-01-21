@@ -3,6 +3,8 @@ import 'package:flutter_ecommerce/app/setup_network_caller.dart';
 import 'package:flutter_ecommerce/app/uri_list.dart';
 import 'package:flutter_ecommerce/core/models/network_response_model.dart';
 import 'package:flutter_ecommerce/features/products/data/models/product_card_model.dart';
+import 'package:flutter_ecommerce/features/products/state_management/product_provider.dart';
+import 'package:provider/provider.dart';
 
 class WishProvider extends ChangeNotifier {
   bool _isWishListFetching = false;
@@ -34,7 +36,12 @@ class WishProvider extends ChangeNotifier {
   String _changingProductId = '1';
   String get getChangeingProductId => _changingProductId;
 
-  Future<void> addToWish(String prouctId) async {
+  Future<void> addToWish(
+    String prouctId,
+    String whereFrom,
+    int indexFromParent,
+    BuildContext context,
+  ) async {
     _changingProductId = prouctId;
     _responseModel = null;
     _isWishStatusChanging = true;
@@ -44,6 +51,48 @@ class WishProvider extends ChangeNotifier {
       uri: UriList.wish,
       body: {"product": prouctId},
     );
+    if (context.mounted) {
+      switch (whereFrom) {
+        case 'Popular':
+          {
+            context
+                    .read<ProductProvider>()
+                    .getPopularProductCardList[indexFromParent]
+                    .inWishlist =
+                true;
+            context.read<ProductProvider>().refreshAll();
+            break;
+          }
+        case 'Special':
+          {
+            context
+                    .read<ProductProvider>()
+                    .getSpecialProductCardList[indexFromParent]
+                    .inWishlist =
+                true;
+            context.read<ProductProvider>().refreshAll();
+            break;
+          }
+        case 'New':
+          {
+            context
+                    .read<ProductProvider>()
+                    .getNewProductCardList[indexFromParent]
+                    .inWishlist =
+                true;
+            context.read<ProductProvider>().refreshAll();
+
+            break;
+          }
+        default:
+          context
+                  .read<ProductProvider>()
+                  .getProductCardList[indexFromParent]
+                  .inWishlist =
+              true;
+          context.read<ProductProvider>().refreshAll();
+      }
+    }
 
     _isWishStatusChanging = false;
     notifyListeners();
@@ -59,7 +108,7 @@ class WishProvider extends ChangeNotifier {
       uri: '${UriList.wish}/$wishId',
     );
 
-    if (index != null) {
+    if (index != null && _responseModel!.isSuccess) {
       _wishList.removeAt(index);
     }
     _isWishStatusChanging = false;

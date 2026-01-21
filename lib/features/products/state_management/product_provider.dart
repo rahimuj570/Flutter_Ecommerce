@@ -39,6 +39,10 @@ class ProductProvider extends ChangeNotifier {
   int get getLastPage => _lastPage!;
   bool get getIsFatchingProductById => _isFetchingProductById;
 
+  void refreshAll() {
+    notifyListeners();
+  }
+
   Future<void> fethingProductCardListByCategry(
     int count,
     int page,
@@ -46,6 +50,9 @@ class ProductProvider extends ChangeNotifier {
   ) async {
     if (page == 1) {
       _productCardList.clear();
+      _newProductCardList.clear();
+      _popularProductCardList.clear();
+      _specialProductCardList.clear();
       _isFethingProductCardList = true;
     } else {
       _isFethingMore = true;

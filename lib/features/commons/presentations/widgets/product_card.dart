@@ -64,7 +64,7 @@ class ProductCard extends StatelessWidget {
                             behavior: HitTestBehavior.opaque,
                             onTap: () {
                               if (model.inWishlist == true) {
-                                if (model.indexFromParent == null) {
+                                if (model.wishId == null) {
                                   showSnackBar(
                                     context: context,
                                     message: 'Already added to wishlist!',
@@ -77,7 +77,12 @@ class ProductCard extends StatelessWidget {
                                   );
                                 }
                               } else {
-                                wishProvider.addToWish(model.id);
+                                wishProvider.addToWish(
+                                  model.id,
+                                  model.whereFrom!,
+                                  model.indexFromParent!,
+                                  context,
+                                );
                               }
                             },
                             child:

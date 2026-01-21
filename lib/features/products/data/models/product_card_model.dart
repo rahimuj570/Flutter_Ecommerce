@@ -7,6 +7,7 @@ class ProductCardModel {
   final String? wishId;
 
   final int? indexFromParent;
+  final String? whereFrom;
 
   ProductCardModel({
     required this.id,
@@ -17,6 +18,7 @@ class ProductCardModel {
     this.wishId,
 
     this.indexFromParent,
+    this.whereFrom,
   });
 
   factory ProductCardModel.fromJson({

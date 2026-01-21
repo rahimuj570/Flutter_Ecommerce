@@ -22,14 +22,14 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-List<ProductCardModel> popularFirstThreeProduct = [];
-List<ProductCardModel> newArrivalFirstThreeProduct = [];
-List<ProductCardModel> specialFirstThreeProduct = [];
 String popularCategoryId = '67c35af85e8a445235de197b';
 String newCategoryId = "67c7bec4623a876bc4766fea";
 String specialProductsId = '67c35b395e8a445235de197e';
 
 class _HomeScreenState extends State<HomeScreen> {
+  List<ProductCardModel> popularFirstThreeProduct = [];
+  List<ProductCardModel> newArrivalFirstThreeProduct = [];
+  List<ProductCardModel> specialFirstThreeProduct = [];
   @override
   void initState() {
     // TODO: implement initState
@@ -42,27 +42,15 @@ class _HomeScreenState extends State<HomeScreen> {
       }
 
       final ProductProvider productProvider = context.read<ProductProvider>();
-      if (productProvider.getPopularProductCardList.isEmpty) {
-        productProvider.fethingProductCardListByCategry(
-          3,
-          1,
-          popularCategoryId,
-        );
-        popularFirstThreeProduct = productProvider.getPopularProductCardList;
-      }
-      if (productProvider.getSpecialProductCardList.isEmpty) {
-        productProvider.fethingProductCardListByCategry(
-          3,
-          1,
-          specialProductsId,
-        );
-        specialFirstThreeProduct = productProvider.getSpecialProductCardList;
-      }
 
-      if (productProvider.getNewProductCardList.isEmpty) {
-        productProvider.fethingProductCardListByCategry(3, 1, newCategoryId);
-        newArrivalFirstThreeProduct = productProvider.getNewProductCardList;
-      }
+      productProvider.fethingProductCardListByCategry(3, 1, popularCategoryId);
+      popularFirstThreeProduct = productProvider.getPopularProductCardList;
+
+      productProvider.fethingProductCardListByCategry(3, 1, specialProductsId);
+      specialFirstThreeProduct = productProvider.getSpecialProductCardList;
+
+      productProvider.fethingProductCardListByCategry(3, 1, newCategoryId);
+      newArrivalFirstThreeProduct = productProvider.getNewProductCardList;
 
       final CategoryProvider categoryProvider = context
           .read<CategoryProvider>();
@@ -196,6 +184,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           },
                           child: ProductCard(
                             model: ProductCardModel(
+                              whereFrom: 'Popular',
+                              indexFromParent: index,
                               id: popularFirstThreeProduct[index].id,
                               title: popularFirstThreeProduct[index].title,
                               photos: popularFirstThreeProduct[index].photos,
@@ -241,7 +231,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             },
                             child: ProductCard(
                               model: ProductCardModel(
-                                id: specialProductsId,
+                                whereFrom: 'Special',
+                                indexFromParent: index,
+                                id: specialFirstThreeProduct[index].id,
                                 title: specialFirstThreeProduct[index].title,
                                 photos: specialFirstThreeProduct[index].photos,
                                 currentPrice: specialFirstThreeProduct[index]
@@ -289,6 +281,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               },
                               child: ProductCard(
                                 model: ProductCardModel(
+                                  whereFrom: 'New',
+                                  indexFromParent: index,
                                   id: newArrivalFirstThreeProduct[index].id,
                                   title:
                                       newArrivalFirstThreeProduct[index].title,
