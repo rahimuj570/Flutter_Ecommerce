@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce/app/app_colors.dart';
 import 'package:flutter_ecommerce/app/app_units.dart';
+import 'package:flutter_ecommerce/app/extensions/localization_extension.dart';
 import 'package:flutter_ecommerce/features/auth/utils/auth_management.dart';
 import 'package:flutter_ecommerce/features/commons/presentations/widgets/bottom_static_section_widget.dart';
 import 'package:flutter_ecommerce/features/commons/presentations/widgets/full_page_circuar_loading_widget.dart';
@@ -55,7 +56,7 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
         surfaceTintColor: Colors.transparent,
         elevation: 1,
         shadowColor: Colors.grey,
-        title: Text('Reviews'),
+        title: Text(context.localization.review),
       ),
       body: Consumer<ReviewProvider>(
         builder: (context, reviewProvider, child) {
@@ -65,7 +66,7 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
           if (reviewProvider.getReviewList.isEmpty) {
             return Center(
               child: Text(
-                'No Product Review!',
+                context.localization.review,
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
             );
@@ -98,7 +99,7 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
                                 backgroundColor: Colors.lightBlue,
                                 foregroundColor: Colors.white,
                                 icon: Icons.edit,
-                                label: 'Edit',
+                                label: context.localization.update,
                                 borderRadius: BorderRadius.only(
                                   topLeft: Radius.circular(AppUnits.round),
                                   bottomLeft: Radius.circular(AppUnits.round),
@@ -112,7 +113,7 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
                                   backgroundColor: Color(0xFF0392CF),
                                   foregroundColor: Colors.white,
                                   icon: Icons.delete,
-                                  label: 'Delete',
+                                  label: context.localization.delete,
                                   borderRadius: BorderRadius.only(
                                     topRight: Radius.circular(AppUnits.round),
                                     bottomRight: Radius.circular(
@@ -143,7 +144,7 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
                           child: Column(
                             children: [
                               SizedBox(height: 80),
-                              Text('No more data'),
+                              Text(context.localization.no_more),
                             ],
                           ),
                         );
@@ -153,7 +154,8 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
                 ),
               ),
               BottomStaticSectionWidget(
-                title: 'Total Reviews (${reviewProvider.getReviewCount})',
+                title:
+                    '${context.localization.total_reviews} (${reviewProvider.getReviewCount})',
                 amount: reviewProvider.getReviewCount,
                 isTextButton: false,
                 textButtonTitle: '',

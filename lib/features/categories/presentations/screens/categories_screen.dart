@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce/app/app_units.dart';
+import 'package:flutter_ecommerce/app/extensions/localization_extension.dart';
 import 'package:flutter_ecommerce/app/state_management/theme_provider.dart';
 import 'package:flutter_ecommerce/features/categories/data/models/category_model.dart';
 import 'package:flutter_ecommerce/features/categories/presentations/widgets/category_card_widget.dart';
@@ -70,7 +71,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
               },
               icon: Icon(Icons.chevron_left_rounded, size: 40),
             ),
-            title: Text('Categories'),
+            title: Text(context.localization.allCat),
           ),
           body: Consumer<CategoryProvider>(
             builder: (context, categoryProvider, child) => Visibility(
@@ -129,7 +130,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                       vertical: 16,
                                     ),
                                     child: Text(
-                                      "No categories pending",
+                                      context.localization.no_more,
                                       style: const TextStyle(
                                         fontWeight: FontWeight.bold,
                                         color: Colors.grey,

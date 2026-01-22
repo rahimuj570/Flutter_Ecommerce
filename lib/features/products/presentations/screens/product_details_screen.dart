@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce/app/app_colors.dart';
 import 'package:flutter_ecommerce/app/app_units.dart';
+import 'package:flutter_ecommerce/app/extensions/localization_extension.dart';
 import 'package:flutter_ecommerce/app/extensions/string_capitalize.dart';
 import 'package:flutter_ecommerce/core/models/network_response_model.dart';
 import 'package:flutter_ecommerce/features/auth/presentations/screens/signin_screen.dart';
@@ -57,7 +58,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
           },
           icon: Icon(Icons.arrow_back_ios_new_rounded),
         ),
-        title: Text('Product Details'),
+        title: Text(context.localization.product_details),
       ),
       body: Consumer<ProductProvider>(
         builder: (context, value, child) {
@@ -107,7 +108,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                     );
                                   },
                                   child: Text(
-                                    'Reviews',
+                                    context.localization.review,
                                     style: textTheme.bodyLarge!.copyWith(
                                       color: AppColors.themeColor,
                                     ),
@@ -155,7 +156,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                 ),
                                 Spacer(),
                                 Text(
-                                  'In Stock: ${value.getProductById!.quantity}',
+                                  '${context.localization.in_stock}: ${value.getProductById!.quantity}',
                                 ),
                               ],
                             ),
@@ -176,7 +177,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                               ),
                             SizedBox(height: AppUnits.headlineSeparateHeight),
                             Text(
-                              'Description',
+                              context.localization.description,
                               style: TextTheme.of(context).titleMedium,
                             ),
                             SizedBox(height: 5),
@@ -193,10 +194,10 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               ),
 
               BottomStaticSectionWidget(
-                title: 'Price',
+                title: context.localization.price,
                 amount: value.getProductById!.currentPrice,
                 isTextButton: true,
-                textButtonTitle: 'Add to cart',
+                textButtonTitle: context.localization.add_to_cart,
                 buttonWidget: null,
                 textButtonOnTap: _onTapAddToCart,
               ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce/app/app_units.dart';
+import 'package:flutter_ecommerce/app/extensions/localization_extension.dart';
 import 'package:flutter_ecommerce/app/state_management/theme_provider.dart';
 import 'package:flutter_ecommerce/features/commons/presentations/widgets/full_page_circuar_loading_widget.dart';
 import 'package:flutter_ecommerce/features/commons/presentations/widgets/product_card.dart';
@@ -45,7 +46,7 @@ class _ProductListByWishState extends State<ProductListByWish> {
             },
             icon: Icon(Icons.arrow_back_ios_rounded),
           ),
-          title: Text('Wish'),
+          title: Text(context.localization.wish),
           backgroundColor: context.read<ThemeProvider>().isDark! == false
               ? Colors.white
               : null,
@@ -92,7 +93,7 @@ class _ProductListByWishState extends State<ProductListByWish> {
                   )
                 : Center(
                     child: Text(
-                      "No Wished Product",
+                      context.localization.no_more,
                       style: Theme.of(context).textTheme.bodyLarge,
                     ),
                   ),

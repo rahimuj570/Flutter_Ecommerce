@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce/app/app.dart';
 import 'package:flutter_ecommerce/app/app_units.dart';
+import 'package:flutter_ecommerce/app/extensions/localization_extension.dart';
 import 'package:flutter_ecommerce/app/state_management/theme_provider.dart';
 import 'package:flutter_ecommerce/features/categories/data/models/category_model.dart';
 import 'package:flutter_ecommerce/features/categories/presentations/widgets/category_card_widget.dart';
@@ -97,7 +98,7 @@ class _HomeScreenState extends State<HomeScreen> with RouteAware {
                 Consumer<ThemeProvider>(
                   builder: (context, value, child) => TextField(
                     decoration: InputDecoration(
-                      hintText: 'Search',
+                      hintText: context.localization.search,
                       prefixIcon: Icon(Icons.search),
                       fillColor: value.isDark == false
                           ? Colors.grey.shade100
@@ -133,7 +134,7 @@ class _HomeScreenState extends State<HomeScreen> with RouteAware {
                 ),
                 SizedBox(height: AppUnits.headlineSeparateHeight),
                 SectionSeparatorHead(
-                  title: 'All Categories',
+                  title: context.localization.allCat,
                   onTapSeeAll: () {
                     context.read<MainNavBarProvider>().changeIndex(1);
                   },
@@ -182,12 +183,15 @@ class _HomeScreenState extends State<HomeScreen> with RouteAware {
                 ),
                 SizedBox(height: AppUnits.headlineSeparateHeight),
                 SectionSeparatorHead(
-                  title: 'Popular',
+                  title: context.localization.popular,
                   onTapSeeAll: () {
                     Navigator.pushNamed(
                       context,
                       ProductListByCategory.name,
-                      arguments: {'id': popularCategoryId, 'title': 'Popular'},
+                      arguments: {
+                        'id': popularCategoryId,
+                        'title': context.localization.popular,
+                      },
                     );
                   },
                 ),
@@ -240,12 +244,15 @@ class _HomeScreenState extends State<HomeScreen> with RouteAware {
                 ),
                 SizedBox(height: AppUnits.headlineSeparateHeight),
                 SectionSeparatorHead(
-                  title: 'Special',
+                  title: context.localization.special,
                   onTapSeeAll: () {
                     Navigator.pushNamed(
                       context,
                       ProductListByCategory.name,
-                      arguments: {'id': specialProductsId, 'title': 'Special'},
+                      arguments: {
+                        'id': specialProductsId,
+                        'title': context.localization.special,
+                      },
                     );
                   },
                 ),
@@ -300,12 +307,15 @@ class _HomeScreenState extends State<HomeScreen> with RouteAware {
                 ),
                 SizedBox(height: AppUnits.headlineSeparateHeight),
                 SectionSeparatorHead(
-                  title: 'New',
+                  title: context.localization.newProduct,
                   onTapSeeAll: () {
                     Navigator.pushNamed(
                       context,
                       ProductListByCategory.name,
-                      arguments: {'id': newCategoryId, 'title': 'New Arrival'},
+                      arguments: {
+                        'id': newCategoryId,
+                        'title': context.localization.newProduct,
+                      },
                     );
                   },
                 ),

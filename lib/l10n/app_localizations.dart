@@ -95,17 +95,311 @@ abstract class AppLocalizations {
     Locale('en')
   ];
 
-  /// No description provided for @hello.
+  /// No description provided for @allCat.
   ///
   /// In en, this message translates to:
-  /// **'hello'**
-  String get hello;
+  /// **'All Categories'**
+  String get allCat;
 
   /// No description provided for @changeLaguage.
   ///
   /// In en, this message translates to:
   /// **'Change Language'**
   String get changeLaguage;
+
+  /// No description provided for @popular.
+  ///
+  /// In en, this message translates to:
+  /// **'Popular'**
+  String get popular;
+
+  /// No description provided for @special.
+  ///
+  /// In en, this message translates to:
+  /// **'Special'**
+  String get special;
+
+  /// No description provided for @newProduct.
+  ///
+  /// In en, this message translates to:
+  /// **'New'**
+  String get newProduct;
+
+  /// No description provided for @search.
+  ///
+  /// In en, this message translates to:
+  /// **'Search'**
+  String get search;
+
+  /// No description provided for @cart.
+  ///
+  /// In en, this message translates to:
+  /// **'Cart'**
+  String get cart;
+
+  /// No description provided for @wish.
+  ///
+  /// In en, this message translates to:
+  /// **'Wishlist'**
+  String get wish;
+
+  /// No description provided for @product_details.
+  ///
+  /// In en, this message translates to:
+  /// **'Product Details'**
+  String get product_details;
+
+  /// No description provided for @review.
+  ///
+  /// In en, this message translates to:
+  /// **'Review'**
+  String get review;
+
+  /// No description provided for @in_stock.
+  ///
+  /// In en, this message translates to:
+  /// **'In Stock'**
+  String get in_stock;
+
+  /// No description provided for @colors.
+  ///
+  /// In en, this message translates to:
+  /// **'Colors'**
+  String get colors;
+
+  /// No description provided for @description.
+  ///
+  /// In en, this message translates to:
+  /// **'Description'**
+  String get description;
+
+  /// No description provided for @add_to_cart.
+  ///
+  /// In en, this message translates to:
+  /// **'Add to Cart'**
+  String get add_to_cart;
+
+  /// No description provided for @price.
+  ///
+  /// In en, this message translates to:
+  /// **'Price'**
+  String get price;
+
+  /// No description provided for @total_reviews.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Reviews'**
+  String get total_reviews;
+
+  /// No description provided for @submit.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit'**
+  String get submit;
+
+  /// No description provided for @write_review.
+  ///
+  /// In en, this message translates to:
+  /// **'Write Review'**
+  String get write_review;
+
+  /// No description provided for @create_review.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Review'**
+  String get create_review;
+
+  /// No description provided for @checkout.
+  ///
+  /// In en, this message translates to:
+  /// **'Checkout'**
+  String get checkout;
+
+  /// No description provided for @see_all.
+  ///
+  /// In en, this message translates to:
+  /// **'See All'**
+  String get see_all;
+
+  /// No description provided for @size.
+  ///
+  /// In en, this message translates to:
+  /// **'Sizes'**
+  String get size;
+
+  /// No description provided for @no_more.
+  ///
+  /// In en, this message translates to:
+  /// **'No more data to show'**
+  String get no_more;
+
+  /// No description provided for @total_price.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Price'**
+  String get total_price;
+
+  /// No description provided for @need_to_write_a_review.
+  ///
+  /// In en, this message translates to:
+  /// **'Need to write a review'**
+  String get need_to_write_a_review;
+
+  /// No description provided for @update_review.
+  ///
+  /// In en, this message translates to:
+  /// **'Update Review'**
+  String get update_review;
+
+  /// No description provided for @update.
+  ///
+  /// In en, this message translates to:
+  /// **'Update'**
+  String get update;
+
+  /// No description provided for @email.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get email;
+
+  /// No description provided for @password.
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get password;
+
+  /// No description provided for @login.
+  ///
+  /// In en, this message translates to:
+  /// **'Signin'**
+  String get login;
+
+  /// No description provided for @signup.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign Up'**
+  String get signup;
+
+  /// No description provided for @first_name.
+  ///
+  /// In en, this message translates to:
+  /// **'First Name'**
+  String get first_name;
+
+  /// No description provided for @last_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Last Name'**
+  String get last_name;
+
+  /// No description provided for @shipping_address.
+  ///
+  /// In en, this message translates to:
+  /// **'Shipping Address'**
+  String get shipping_address;
+
+  /// No description provided for @city.
+  ///
+  /// In en, this message translates to:
+  /// **'City'**
+  String get city;
+
+  /// No description provided for @fogot_pass_qn.
+  ///
+  /// In en, this message translates to:
+  /// **'Forgot Password?'**
+  String get fogot_pass_qn;
+
+  /// No description provided for @dont_have_account_qn.
+  ///
+  /// In en, this message translates to:
+  /// **'Don\'t have an account? '**
+  String get dont_have_account_qn;
+
+  /// No description provided for @signup_profile.
+  ///
+  /// In en, this message translates to:
+  /// **'Signup Profile'**
+  String get signup_profile;
+
+  /// No description provided for @signin_profile.
+  ///
+  /// In en, this message translates to:
+  /// **'Signin Profile'**
+  String get signin_profile;
+
+  /// No description provided for @wellcome_back.
+  ///
+  /// In en, this message translates to:
+  /// **'Wellcome back. Let\'s shopping'**
+  String get wellcome_back;
+
+  /// No description provided for @already_have_account.
+  ///
+  /// In en, this message translates to:
+  /// **'Already have an account? '**
+  String get already_have_account;
+
+  /// No description provided for @delete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get delete;
+
+  /// No description provided for @insert_email.
+  ///
+  /// In en, this message translates to:
+  /// **'Insert Email'**
+  String get insert_email;
+
+  /// No description provided for @insert_pass.
+  ///
+  /// In en, this message translates to:
+  /// **'Insert Password'**
+  String get insert_pass;
+
+  /// No description provided for @insert_address.
+  ///
+  /// In en, this message translates to:
+  /// **'Insert Shippig Address'**
+  String get insert_address;
+
+  /// No description provided for @insert_city.
+  ///
+  /// In en, this message translates to:
+  /// **'Insert City'**
+  String get insert_city;
+
+  /// No description provided for @insert_phone.
+  ///
+  /// In en, this message translates to:
+  /// **'Insert Phone'**
+  String get insert_phone;
+
+  /// No description provided for @get_started.
+  ///
+  /// In en, this message translates to:
+  /// **'Get started with us with profile details'**
+  String get get_started;
+
+  /// No description provided for @insert_last_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Insert Last Name'**
+  String get insert_last_name;
+
+  /// No description provided for @insert_first_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Insert First Name'**
+  String get insert_first_name;
+
+  /// No description provided for @phone.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone'**
+  String get phone;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

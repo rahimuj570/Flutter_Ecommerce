@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce/app/app_colors.dart';
+import 'package:flutter_ecommerce/app/extensions/localization_extension.dart';
 import 'package:flutter_ecommerce/core/models/network_response_model.dart';
 import 'package:flutter_ecommerce/features/auth/data/models/login_request_model.dart';
 import 'package:flutter_ecommerce/features/auth/presentations/screens/forgot_password_screen.dart';
@@ -44,13 +45,13 @@ class _SigninScreenState extends State<SigninScreen> {
                   AppLogoWidget(width: 100),
                   SizedBox(height: 5),
                   Text(
-                    "Sigin Profile",
+                    context.localization.signin_profile,
                     style: textTheme.headlineMedium!.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   Text(
-                    "Wellcome back. Let's shopping",
+                    context.localization.wellcome_back,
                     style: textTheme.bodyMedium,
                   ),
                   SizedBox(height: 25),
@@ -63,18 +64,21 @@ class _SigninScreenState extends State<SigninScreen> {
                         children: [
                           TextFormField(
                             controller: _emailTEC,
-                            decoration: InputDecoration(hintText: 'Email'),
+                            decoration: InputDecoration(
+                              hintText: context.localization.email,
+                            ),
 
                             autovalidateMode:
                                 AutovalidateMode.onUserInteraction,
                             textInputAction: TextInputAction.next,
-                            validator: (value) =>
-                                value!.isEmpty ? 'Insert Email' : null,
+                            validator: (value) => value!.isEmpty
+                                ? context.localization.insert_email
+                                : null,
                           ),
                           TextFormField(
                             controller: _passwordTEC,
                             decoration: InputDecoration(
-                              hintText: 'Pasword',
+                              hintText: context.localization.password,
 
                               suffixIcon: IconButton(
                                 onPressed: () {
@@ -89,8 +93,9 @@ class _SigninScreenState extends State<SigninScreen> {
                                 AutovalidateMode.onUserInteraction,
                             obscureText: isObsecure,
                             textInputAction: TextInputAction.done,
-                            validator: (value) =>
-                                value!.isEmpty ? 'Insert Password' : null,
+                            validator: (value) => value!.isEmpty
+                                ? context.localization.insert_pass
+                                : null,
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.end,
@@ -108,7 +113,7 @@ class _SigninScreenState extends State<SigninScreen> {
                                     ForgotPasswordScreen.name,
                                   );
                                 },
-                                child: Text('Forgot Password?'),
+                                child: Text(context.localization.fogot_pass_qn),
                               ),
                             ],
                           ),
@@ -123,21 +128,21 @@ class _SigninScreenState extends State<SigninScreen> {
                                   child: Visibility(
                                     visible: !loginProvider.getIsLoginProcess,
                                     replacement: ButtonLoadingWidget(),
-                                    child: Text("SIGN IN"),
+                                    child: Text(context.localization.login),
                                   ),
                                 ),
                           ),
                           RichText(
                             text: TextSpan(
                               style: textTheme.bodyMedium,
-                              text: 'Don\'t have an account? ',
+                              text: context.localization.dont_have_account_qn,
                               children: [
                                 TextSpan(
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     color: AppColors.themeColor,
                                   ),
-                                  text: 'Sign up',
+                                  text: ' ${context.localization.signup}',
                                   recognizer: TapGestureRecognizer()
                                     ..onTap = _gotoSignup,
                                 ),
@@ -169,9 +174,13 @@ class _SigninScreenState extends State<SigninScreen> {
         if (mounted) {
           showSnackBar(context: context, message: res.message!);
           if (widget.isComesFromRunningProcess == null) {
-            Navigator.pushReplacementNamed(context, MainNavHolderScreen.name);
+            Navigator.pushNamedAndRemoveUntil(
+              context,
+              MainNavHolderScreen.name,
+              (route) => false,
+            );
           } else {
-            Navigator.pop(context);
+            Navigator.popUntil(context, (route) => false);
           }
         }
       } else {

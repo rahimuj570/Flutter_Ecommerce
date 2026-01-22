@@ -91,7 +91,7 @@ class _MainNavHolderScreenState extends State<MainNavHolderScreen> {
     if ([2, 3].contains(value)) {
       if (await AuthManagement.isLoggedIn() == false) {
         if (mounted) {
-          Navigator.pushNamed(context, SigninScreen.comeFromRunningProceesKey);
+          Navigator.pushNamed(context, SigninScreen.name);
         }
       } else {
         mainNavBarProvider.changeIndex(value);

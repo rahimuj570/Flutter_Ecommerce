@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ecommerce/app/extensions/localization_extension.dart';
 import 'package:flutter_ecommerce/features/products/presentations/screens/product_details_screen.dart';
 
 class ColorPickerWidget extends StatefulWidget {
@@ -103,7 +104,10 @@ class _ColorPickerWidgetState extends State<ColorPickerWidget> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Colors', style: TextTheme.of(context).titleMedium),
+        Text(
+          context.localization.colors,
+          style: TextTheme.of(context).titleMedium,
+        ),
         SizedBox(height: 5),
         Row(
           children: [

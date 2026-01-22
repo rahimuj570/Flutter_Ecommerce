@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce/app/app_colors.dart';
+import 'package:flutter_ecommerce/app/extensions/localization_extension.dart';
 import 'package:flutter_ecommerce/features/auth/data/models/signup_request_model.dart';
 import 'package:flutter_ecommerce/features/auth/presentations/screens/signin_screen.dart';
 import 'package:flutter_ecommerce/features/auth/presentations/screens/verify_otp_screen.dart';
@@ -42,13 +43,13 @@ class _SignupScreenState extends State<SignupScreen> {
                   AppLogoWidget(width: 100),
                   SizedBox(height: 5),
                   Text(
-                    "Signup Profile",
+                    context.localization.signup_profile,
                     style: textTheme.headlineMedium!.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   Text(
-                    "Get started with us with profile details",
+                    context.localization.get_started,
                     style: textTheme.bodyMedium,
                   ),
                   SizedBox(height: 25),
@@ -61,62 +62,77 @@ class _SignupScreenState extends State<SignupScreen> {
                         children: [
                           TextFormField(
                             controller: _firstNameTEC,
-                            decoration: InputDecoration(hintText: "First Name"),
+                            decoration: InputDecoration(
+                              hintText: context.localization.first_name,
+                            ),
                             autovalidateMode:
                                 AutovalidateMode.onUserInteraction,
                             textInputAction: TextInputAction.next,
-                            validator: (value) =>
-                                value!.isEmpty ? 'Insert First Name' : null,
+                            validator: (value) => value!.isEmpty
+                                ? context.localization.insert_first_name
+                                : null,
                           ),
                           TextFormField(
-                            decoration: InputDecoration(hintText: 'Last Name'),
+                            decoration: InputDecoration(
+                              hintText: context.localization.last_name,
+                            ),
                             controller: _lastNameTEC,
                             autovalidateMode:
                                 AutovalidateMode.onUserInteraction,
                             textInputAction: TextInputAction.next,
-                            validator: (value) =>
-                                value!.isEmpty ? 'Insert Last Name' : null,
+                            validator: (value) => value!.isEmpty
+                                ? context.localization.insert_last_name
+                                : null,
                           ),
                           TextFormField(
-                            decoration: InputDecoration(hintText: 'Email'),
+                            decoration: InputDecoration(
+                              hintText: context.localization.email,
+                            ),
                             controller: _emailTEC,
                             autovalidateMode:
                                 AutovalidateMode.onUserInteraction,
                             textInputAction: TextInputAction.next,
-                            validator: (value) =>
-                                value!.isEmpty ? 'Insert Email' : null,
+                            validator: (value) => value!.isEmpty
+                                ? context.localization.insert_email
+                                : null,
                           ),
                           TextFormField(
-                            decoration: InputDecoration(hintText: 'Phone'),
+                            decoration: InputDecoration(
+                              hintText: context.localization.phone,
+                            ),
                             controller: _phoneTEC,
                             autovalidateMode:
                                 AutovalidateMode.onUserInteraction,
                             textInputAction: TextInputAction.next,
-                            validator: (value) =>
-                                value!.isEmpty ? 'Insert Phone' : null,
+                            validator: (value) => value!.isEmpty
+                                ? context.localization.insert_phone
+                                : null,
                           ),
                           TextFormField(
-                            decoration: InputDecoration(hintText: 'Pasword'),
+                            decoration: InputDecoration(
+                              hintText: context.localization.password,
+                            ),
                             controller: _passwordTEC,
                             autovalidateMode:
                                 AutovalidateMode.onUserInteraction,
                             obscureText: true,
                             textInputAction: TextInputAction.next,
-                            validator: (value) =>
-                                value!.isEmpty ? 'Insert Password' : null,
+                            validator: (value) => value!.isEmpty
+                                ? context.localization.insert_pass
+                                : null,
                           ),
 
                           TextFormField(
                             controller: _cityTEC,
                             maxLines: 3,
                             decoration: InputDecoration(
-                              hintText: 'Shipping Address',
+                              hintText: context.localization.shipping_address,
                             ),
                             autovalidateMode:
                                 AutovalidateMode.onUserInteraction,
                             textInputAction: TextInputAction.done,
                             validator: (value) => value!.isEmpty
-                                ? 'Insert Shipping Address'
+                                ? context.localization.insert_address
                                 : null,
                           ),
                           Consumer<SignupProvider>(
@@ -128,21 +144,21 @@ class _SignupScreenState extends State<SignupScreen> {
                                   child: Visibility(
                                     visible: !signupProvider.getProgress,
                                     replacement: ButtonLoadingWidget(),
-                                    child: Text("SIGN UP"),
+                                    child: Text(context.localization.signup),
                                   ),
                                 ),
                           ),
                           RichText(
                             text: TextSpan(
                               style: textTheme.bodyMedium,
-                              text: 'Already have an account? ',
+                              text: context.localization.already_have_account,
                               children: [
                                 TextSpan(
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     color: AppColors.themeColor,
                                   ),
-                                  text: 'Signin',
+                                  text: " ${context.localization.login}",
                                   recognizer: TapGestureRecognizer()
                                     ..onTap = _gotoSignin,
                                 ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce/app/app_colors.dart';
+import 'package:flutter_ecommerce/app/extensions/localization_extension.dart';
 import 'package:flutter_ecommerce/features/products/presentations/screens/product_details_screen.dart';
 
 class SizePickerWidget extends StatefulWidget {
@@ -18,7 +19,10 @@ class _SizePickerWidgetState extends State<SizePickerWidget> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Sizes', style: TextTheme.of(context).titleMedium),
+        Text(
+          context.localization.size,
+          style: TextTheme.of(context).titleMedium,
+        ),
         SizedBox(height: 5),
         Row(
           children: [

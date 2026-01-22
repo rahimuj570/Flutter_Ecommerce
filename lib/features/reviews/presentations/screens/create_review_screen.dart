@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce/app/app_units.dart';
+import 'package:flutter_ecommerce/app/extensions/localization_extension.dart';
 import 'package:flutter_ecommerce/features/auth/data/models/user_model.dart';
 import 'package:flutter_ecommerce/features/auth/presentations/screens/signin_screen.dart';
 import 'package:flutter_ecommerce/features/auth/utils/auth_management.dart';
@@ -46,7 +47,7 @@ class _CreateReviewScreenState extends State<CreateReviewScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Create Review')),
+      appBar: AppBar(title: Text(context.localization.create_review)),
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.all(AppUnits.horizontalMainPadding),
@@ -73,9 +74,12 @@ class _CreateReviewScreenState extends State<CreateReviewScreen> {
                     TextFormField(
                       controller: _commentTEC,
                       maxLines: 5,
-                      decoration: InputDecoration(hintText: 'Write Review'),
-                      validator: (value) =>
-                          value!.isEmpty ? 'Need to write a review' : null,
+                      decoration: InputDecoration(
+                        hintText: context.localization.write_review,
+                      ),
+                      validator: (value) => value!.isEmpty
+                          ? context.localization.need_to_write_a_review
+                          : null,
                       autovalidateMode: AutovalidateMode.onUnfocus,
                     ),
                     StarRating(
@@ -95,7 +99,7 @@ class _CreateReviewScreenState extends State<CreateReviewScreen> {
                             value.getIsCreating ? null : onTapSubmit(value),
                         child: value.getIsCreating
                             ? Center(child: ButtonLoadingWidget())
-                            : Text('Submit'),
+                            : Text(context.localization.submit),
                       ),
                     ),
                   ],

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce/app/app_units.dart';
+import 'package:flutter_ecommerce/app/extensions/localization_extension.dart';
 import 'package:flutter_ecommerce/app/state_management/theme_provider.dart';
 import 'package:flutter_ecommerce/features/cart/presentations/widgets/cart_card_widget.dart';
 import 'package:flutter_ecommerce/features/commons/presentations/widgets/bottom_static_section_widget.dart';
@@ -47,7 +48,7 @@ class _CartScreenState extends State<CartScreen> {
           surfaceTintColor: Colors.transparent,
           elevation: 1,
           shadowColor: Colors.grey,
-          title: Text('Cart'),
+          title: Text(context.localization.cart),
         ),
         body: Consumer<CartProvider>(
           builder: (context, cartProvider, child) {
@@ -57,7 +58,7 @@ class _CartScreenState extends State<CartScreen> {
             if (cartProvider.getCartList.isEmpty) {
               return Center(
                 child: Text(
-                  'No Product Carted!',
+                  context.localization.no_more,
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
               );
@@ -85,10 +86,10 @@ class _CartScreenState extends State<CartScreen> {
                   ),
                 ),
                 BottomStaticSectionWidget(
-                  title: 'Total Price',
+                  title: context.localization.total_price,
                   amount: cartProvider.getTotalAmount(),
                   isTextButton: true,
-                  textButtonTitle: 'Checkout',
+                  textButtonTitle: context.localization.checkout,
                   buttonWidget: null,
                   textButtonOnTap: () {},
                 ),

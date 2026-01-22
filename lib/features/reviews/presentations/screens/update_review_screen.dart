@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce/app/app_units.dart';
+import 'package:flutter_ecommerce/app/extensions/localization_extension.dart';
 import 'package:flutter_ecommerce/features/auth/data/models/user_model.dart';
 import 'package:flutter_ecommerce/features/auth/presentations/screens/signin_screen.dart';
 import 'package:flutter_ecommerce/features/auth/utils/auth_management.dart';
@@ -53,7 +54,7 @@ class _UpdateReviewScreenState extends State<UpdateReviewScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Update Review')),
+      appBar: AppBar(title: Text(context.localization.update_review)),
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.all(AppUnits.horizontalMainPadding),
@@ -80,9 +81,12 @@ class _UpdateReviewScreenState extends State<UpdateReviewScreen> {
                     TextFormField(
                       controller: _commentTEC,
                       maxLines: 5,
-                      decoration: InputDecoration(hintText: 'Write Review'),
-                      validator: (value) =>
-                          value!.isEmpty ? 'Need to write a review' : null,
+                      decoration: InputDecoration(
+                        hintText: context.localization.write_review,
+                      ),
+                      validator: (value) => value!.isEmpty
+                          ? context.localization.need_to_write_a_review
+                          : null,
                       autovalidateMode: AutovalidateMode.onUnfocus,
                     ),
                     StarRating(
@@ -102,7 +106,7 @@ class _UpdateReviewScreenState extends State<UpdateReviewScreen> {
                             value.getIsUpdating ? null : onTapUpdate(value),
                         child: value.getIsUpdating
                             ? Center(child: ButtonLoadingWidget())
-                            : Text('Update'),
+                            : Text(context.localization.update),
                       ),
                     ),
                   ],
