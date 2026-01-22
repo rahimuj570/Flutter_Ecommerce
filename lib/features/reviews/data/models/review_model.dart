@@ -1,10 +1,10 @@
 class ReviewModel {
   final String reviewId;
   final String productId;
-  final String avatarUrl;
+  final String? avatarUrl;
   final String firstName;
   final String lastName;
-  double rating;
+  int rating;
   String comment;
 
   ReviewModel({
@@ -26,7 +26,7 @@ class ReviewModel {
     return ReviewModel(
       reviewId: body['_id'],
       productId: body['product']['_id'],
-      avatarUrl: user['_id'],
+      avatarUrl: user['avatar_url'],
       firstName: user['first_name'],
       lastName: user['last_name'],
       comment: body['comment'],
