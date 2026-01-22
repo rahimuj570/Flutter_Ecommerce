@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce/app/app_colors.dart';
 import 'package:flutter_ecommerce/app/app_units.dart';
+import 'package:flutter_ecommerce/features/auth/utils/auth_management.dart';
 import 'package:flutter_ecommerce/features/commons/presentations/widgets/bottom_static_section_widget.dart';
 import 'package:flutter_ecommerce/features/commons/presentations/widgets/full_page_circuar_loading_widget.dart';
+import 'package:flutter_ecommerce/features/commons/utils/show_snack_bar.dart';
 import 'package:flutter_ecommerce/features/reviews/data/models/review_model.dart';
 import 'package:flutter_ecommerce/features/reviews/presentations/screens/create_review_screen.dart';
 import 'package:flutter_ecommerce/features/reviews/presentations/widgets/review_card_widget.dart';
 import 'package:flutter_ecommerce/features/reviews/state_management/review_provider.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
 
 class ReviewsScreen extends StatefulWidget {
@@ -82,12 +85,50 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
                     itemBuilder: (context, index) {
                       if (index != reviewProvider.getReviewList.length) {
                         ReviewModel model = reviewProvider.getReviewList[index];
-                        return ReviewCardWidget(
-                          comment: model.comment,
-                          firstName: model.firstName,
-                          lastName: model.lastName,
-                          rating: model.rating,
-                          avatarUrl: model.avatarUrl,
+                        return Slidable(
+                          endActionPane: ActionPane(
+                            motion: ScrollMotion(),
+                            children: [
+                              SlidableAction(
+                                onPressed: (context) {
+                                  edit(reviewProvider, index);
+                                },
+
+                                backgroundColor: Colors.lightBlue,
+                                foregroundColor: Colors.white,
+                                icon: Icons.edit,
+                                label: 'Edit',
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(AppUnits.round),
+                                  bottomLeft: Radius.circular(AppUnits.round),
+                                ),
+                              ),
+                              Visibility(
+                                child: SlidableAction(
+                                  onPressed: (context) {
+                                    delete(reviewProvider, index);
+                                  },
+                                  backgroundColor: Color(0xFF0392CF),
+                                  foregroundColor: Colors.white,
+                                  icon: Icons.delete,
+                                  label: 'Delete',
+                                  borderRadius: BorderRadius.only(
+                                    topRight: Radius.circular(AppUnits.round),
+                                    bottomRight: Radius.circular(
+                                      AppUnits.round,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          child: ReviewCardWidget(
+                            comment: model.comment,
+                            firstName: model.firstName,
+                            lastName: model.lastName,
+                            rating: model.rating,
+                            avatarUrl: model.avatarUrl,
+                          ),
                         );
                       } else {
                         return Visibility(
@@ -134,10 +175,44 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
               builder: (context) =>
                   CreateReviewScreen(productId: widget.productId),
             ),
-          );
+          ).then((value) {
+            context.read<ReviewProvider>().fetchReviews(widget.productId);
+          });
         },
         child: Icon(Icons.add),
       ),
     );
+  }
+
+  void edit(ReviewProvider rp, int index) {
+    if (rp.getReviewList[index].userId == AuthManagement.getUserModel!.id) {
+    } else {
+      showSnackBar(
+        context: context,
+        message: 'Authorization Failed!',
+        isError: true,
+      );
+    }
+  }
+
+  void delete(ReviewProvider rp, int index) async {
+    if (rp.getReviewList[index].userId == AuthManagement.getUserModel!.id) {
+      await rp.deleteReview(rp.getReviewList[index].reviewId, index);
+      if (rp.getResponseModel.isSuccess) {
+        showSnackBar(context: context, message: rp.getResponseModel.message!);
+      } else {
+        showSnackBar(
+          context: context,
+          message: rp.getResponseModel.message!,
+          isError: true,
+        );
+      }
+    } else {
+      showSnackBar(
+        context: context,
+        message: 'Authorization Failed!',
+        isError: true,
+      );
+    }
   }
 }

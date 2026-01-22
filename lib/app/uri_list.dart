@@ -20,4 +20,6 @@ class UriList {
   static String getReview(String productId, int page) =>
       '$_baseUri/reviews?product=$productId&page=$page';
   static String createReview = '$_baseUri/review';
+
+  static String deleteReview(String reviewId) => '$_baseUri/reviews/$reviewId';
 }

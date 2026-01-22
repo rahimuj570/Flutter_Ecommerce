@@ -77,4 +77,18 @@ class ReviewProvider extends ChangeNotifier {
     _isCreating = false;
     notifyListeners();
   }
+
+  bool _isDeleting = false;
+  bool get getIsDeleting => _isDeleting;
+  Future<void> deleteReview(String reviewId, int index) async {
+    _responseModel = null;
+    _isDeleting = true;
+    notifyListeners();
+    _responseModel = await getNetworkCaller().deleteCall(
+      uri: UriList.deleteReview(reviewId),
+    );
+    _reviewList.removeAt(index);
+    _isDeleting = false;
+    notifyListeners();
+  }
 }

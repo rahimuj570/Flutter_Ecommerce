@@ -1,4 +1,5 @@
 class ReviewModel {
+  final String? userId;
   final String reviewId;
   final String productId;
   final String? avatarUrl;
@@ -15,6 +16,7 @@ class ReviewModel {
     required this.rating,
     required this.reviewId,
     required this.productId,
+    this.userId,
   });
 
   Map<String, dynamic> toJson() {
@@ -24,6 +26,7 @@ class ReviewModel {
   factory ReviewModel.fromJson(Map<String, dynamic> body) {
     Map<String, dynamic> user = body['user'];
     return ReviewModel(
+      userId: user['_id'],
       reviewId: body['_id'],
       productId: body['product']['_id'],
       avatarUrl: user['avatar_url'],
