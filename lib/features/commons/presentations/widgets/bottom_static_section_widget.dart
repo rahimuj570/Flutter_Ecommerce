@@ -13,6 +13,7 @@ class BottomStaticSectionWidget extends StatelessWidget {
     required this.textButtonTitle,
     required this.buttonWidget,
     required this.textButtonOnTap,
+    this.isReview,
   });
   final String title;
   final bool isTextButton;
@@ -20,6 +21,7 @@ class BottomStaticSectionWidget extends StatelessWidget {
   final String textButtonTitle;
   final Widget? buttonWidget;
   final VoidCallback textButtonOnTap;
+  final bool? isReview;
 
   @override
   Widget build(BuildContext context) {
@@ -41,11 +43,14 @@ class BottomStaticSectionWidget extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(title),
-                Text(
-                  '\$$amount',
-                  style: TextTheme.of(
-                    context,
-                  ).titleLarge!.copyWith(color: AppColors.themeColor),
+                Visibility(
+                  visible: isReview == null || isReview == false,
+                  child: Text(
+                    '\$$amount',
+                    style: TextTheme.of(
+                      context,
+                    ).titleLarge!.copyWith(color: AppColors.themeColor),
+                  ),
                 ),
               ],
             ),

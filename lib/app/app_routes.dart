@@ -8,6 +8,7 @@ import 'package:flutter_ecommerce/features/categories/presentations/screens/cate
 import 'package:flutter_ecommerce/features/commons/presentations/screens/main_nav_holder_screen.dart';
 import 'package:flutter_ecommerce/features/products/presentations/screens/product_details_screen.dart';
 import 'package:flutter_ecommerce/features/products/presentations/screens/product_list_by_category.dart';
+import 'package:flutter_ecommerce/features/reviews/presentations/screens/reviews_screen.dart';
 import 'package:flutter_ecommerce/features/wish_list/presentations/screens/product_list_by_wish.dart';
 
 class AppRoutes {
@@ -37,8 +38,11 @@ class AppRoutes {
     } else if (settings.name == ProductListByWish.name) {
       widget = ProductListByWish();
     } else if (settings.name == ProductDetailsScreen.name) {
-      String _productId = settings.arguments as String;
-      widget = ProductDetailsScreen(productId: _productId);
+      String productId = settings.arguments as String;
+      widget = ProductDetailsScreen(productId: productId);
+    } else if (settings.name == ReviewsScreen.name) {
+      String productId = settings.arguments as String;
+      widget = ReviewsScreen(productId: productId);
     }
 
     return MaterialPageRoute(builder: (context) => widget);

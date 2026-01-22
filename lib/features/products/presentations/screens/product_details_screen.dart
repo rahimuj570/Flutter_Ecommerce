@@ -13,6 +13,7 @@ import 'package:flutter_ecommerce/features/products/presentations/widgets/color_
 import 'package:flutter_ecommerce/features/products/presentations/widgets/product_details_carousel_widget.dart';
 import 'package:flutter_ecommerce/features/products/presentations/widgets/size_picker_widget.dart';
 import 'package:flutter_ecommerce/features/products/state_management/product_provider.dart';
+import 'package:flutter_ecommerce/features/reviews/presentations/screens/reviews_screen.dart';
 import 'package:flutter_ecommerce/features/wish_list/state_management/wish_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -98,7 +99,13 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                 Icon(Icons.star, size: 22, color: Colors.amber),
                                 Text('4.8', style: textTheme.bodyLarge),
                                 TextButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    Navigator.pushNamed(
+                                      context,
+                                      ReviewsScreen.name,
+                                      arguments: value.getProductById!.id,
+                                    );
+                                  },
                                   child: Text(
                                     'Reviews',
                                     style: textTheme.bodyLarge!.copyWith(
@@ -203,7 +210,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   void _addToWish(ProductProvider value) async {
     WishProvider wishProvider = context.read<WishProvider>();
     await wishProvider.addToWish(value.getProductById!.id, 'deatils', 0);
-    print('ssssssssssssssss');
+
     if (wishProvider.getResponseModel!.isSuccess) {
       showSnackBar(
         context: context,
