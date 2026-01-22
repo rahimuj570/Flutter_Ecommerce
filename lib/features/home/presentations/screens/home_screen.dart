@@ -94,28 +94,30 @@ class _HomeScreenState extends State<HomeScreen> with RouteAware {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                TextField(
-                  decoration: InputDecoration(
-                    hintText: 'Search',
-                    prefixIcon: Icon(Icons.search),
-                    fillColor: context.read<ThemeProvider>().isDark! == false
-                        ? Colors.white
-                        : null,
-                    filled: true,
-                    contentPadding: const EdgeInsets.symmetric(
-                      vertical: 12,
-                      horizontal: 8,
-                    ),
+                Consumer<ThemeProvider>(
+                  builder: (context, value, child) => TextField(
+                    decoration: InputDecoration(
+                      hintText: 'Search',
+                      prefixIcon: Icon(Icons.search),
+                      fillColor: value.isDark == false
+                          ? Colors.grey.shade100
+                          : null,
+                      filled: true,
+                      contentPadding: const EdgeInsets.symmetric(
+                        vertical: 12,
+                        horizontal: 8,
+                      ),
 
-                    prefixIconConstraints: BoxConstraints(
-                      minWidth: 40,
-                      maxWidth: 40,
-                    ),
-                    prefixStyle: TextStyle(),
-                    border: OutlineInputBorder(borderSide: BorderSide.none),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(AppUnits.round),
-                      borderSide: BorderSide.none,
+                      prefixIconConstraints: BoxConstraints(
+                        minWidth: 40,
+                        maxWidth: 40,
+                      ),
+                      prefixStyle: TextStyle(),
+                      border: OutlineInputBorder(borderSide: BorderSide.none),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(AppUnits.round),
+                        borderSide: BorderSide.none,
+                      ),
                     ),
                   ),
                 ),

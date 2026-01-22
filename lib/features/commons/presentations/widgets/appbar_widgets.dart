@@ -19,55 +19,55 @@ class AppbarWidgets extends StatefulWidget implements PreferredSizeWidget {
 class _AppbarWidgetsState extends State<AppbarWidgets> {
   @override
   Widget build(BuildContext context) {
-    return AppBar(
-      backgroundColor: context.read<ThemeProvider>().isDark! == false
-          ? Colors.white
-          : null,
-      actionsPadding: EdgeInsets.all(5),
-      toolbarHeight: 60,
-      title: SvgPicture.asset(AppAssetsPath.appbarLogo, width: 130),
-      actions: [
-        IconButton(
-          style: IconButton.styleFrom(
-            backgroundColor: Colors.grey.shade200,
-            foregroundColor: Colors.grey,
-          ),
-          onPressed: () {},
-          icon: Icon(Icons.person_2_outlined),
-        ),
-
-        IconButton(
-          style: IconButton.styleFrom(
-            foregroundColor: Colors.grey,
-            backgroundColor: Colors.grey.shade200,
-          ),
-          onPressed: () {},
-          icon: Icon(Icons.call_outlined),
-        ),
-
-        Consumer<ThemeProvider>(
-          builder: (context, themeProvider, child) => Switch(
-            value: themeProvider.isDark!,
-            onChanged: (value) {
-              if (value) {
-                themeProvider.changeThemeMode(ThemeMode.dark);
-              } else {
-                themeProvider.changeThemeMode(ThemeMode.light);
-              }
-            },
-            thumbIcon: WidgetStateProperty.all(
-              themeProvider.isDark == false
-                  ? Icon(Icons.sunny, color: Colors.black)
-                  : Icon(Icons.nightlight_round),
+    return Consumer<ThemeProvider>(
+      builder: (context, value, child) => AppBar(
+        backgroundColor: value.isDark == false ? Colors.white : null,
+        actionsPadding: EdgeInsets.all(5),
+        toolbarHeight: 60,
+        title: SvgPicture.asset(AppAssetsPath.appbarLogo, width: 130),
+        actions: [
+          IconButton(
+            style: IconButton.styleFrom(
+              backgroundColor: Colors.grey.shade200,
+              foregroundColor: Colors.grey,
             ),
-            thumbColor: WidgetStatePropertyAll(
-              themeProvider.isDark! == false ? Colors.orangeAccent : null,
-            ),
-
-            trackColor: WidgetStatePropertyAll(AppColors.themeColor),
+            onPressed: () {},
+            icon: Icon(Icons.person_2_outlined),
           ),
-        ),
-      ],
+
+          IconButton(
+            style: IconButton.styleFrom(
+              foregroundColor: Colors.grey,
+              backgroundColor: Colors.grey.shade200,
+            ),
+            onPressed: () {},
+            icon: Icon(Icons.call_outlined),
+          ),
+
+          Consumer<ThemeProvider>(
+            builder: (context, themeProvider, child) => Switch(
+              value: themeProvider.isDark!,
+              onChanged: (value) {
+                if (value) {
+                  themeProvider.changeThemeMode(ThemeMode.dark);
+                } else {
+                  themeProvider.changeThemeMode(ThemeMode.light);
+                }
+              },
+              thumbIcon: WidgetStateProperty.all(
+                themeProvider.isDark == false
+                    ? Icon(Icons.sunny, color: Colors.black)
+                    : Icon(Icons.nightlight_round),
+              ),
+              thumbColor: WidgetStatePropertyAll(
+                themeProvider.isDark! == false ? Colors.orangeAccent : null,
+              ),
+
+              trackColor: WidgetStatePropertyAll(AppColors.themeColor),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
