@@ -10,15 +10,20 @@ import 'package:flutter_ecommerce/features/reviews/state_management/review_provi
 import 'package:flutter_rating/flutter_rating.dart';
 import 'package:provider/provider.dart';
 
-class CreateReviewScreen extends StatefulWidget {
-  final String productId;
-  const CreateReviewScreen({super.key, required this.productId});
+class UpdateReviewScreen extends StatefulWidget {
+  final ReviewModel model;
+  final int index;
+  const UpdateReviewScreen({
+    super.key,
+    required this.model,
+    required this.index,
+  });
 
   @override
-  State<CreateReviewScreen> createState() => _CreateReviewScreenState();
+  State<UpdateReviewScreen> createState() => _UpdateReviewScreenState();
 }
 
-class _CreateReviewScreenState extends State<CreateReviewScreen> {
+class _UpdateReviewScreenState extends State<UpdateReviewScreen> {
   double rating = 0;
   final TextEditingController _commentTEC = TextEditingController();
   final GlobalKey<FormState> _fKey = GlobalKey<FormState>();
@@ -35,6 +40,8 @@ class _CreateReviewScreenState extends State<CreateReviewScreen> {
     // TODO: implement initState
     super.initState();
     checkLogin();
+    _commentTEC.text = widget.model.comment;
+    rating = widget.model.rating.toDouble();
   }
 
   void checkLogin() async {
@@ -46,7 +53,7 @@ class _CreateReviewScreenState extends State<CreateReviewScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Create Review')),
+      appBar: AppBar(title: Text('Update Review')),
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.all(AppUnits.horizontalMainPadding),
@@ -92,10 +99,10 @@ class _CreateReviewScreenState extends State<CreateReviewScreen> {
                     Consumer<ReviewProvider>(
                       builder: (context, value, child) => FilledButton(
                         onPressed: () =>
-                            value.getIsCreating ? null : onTapSubmit(value),
-                        child: value.getIsCreating
+                            value.getIsUpdating ? null : onTapUpdate(value),
+                        child: value.getIsUpdating
                             ? Center(child: ButtonLoadingWidget())
-                            : Text('Submit'),
+                            : Text('Update'),
                       ),
                     ),
                   ],
@@ -108,7 +115,7 @@ class _CreateReviewScreenState extends State<CreateReviewScreen> {
     );
   }
 
-  void onTapSubmit(ReviewProvider rp) async {
+  void onTapUpdate(ReviewProvider rp) async {
     if (_fKey.currentState!.validate()) {
       if (rating == 0) {
         showSnackBar(
@@ -118,16 +125,17 @@ class _CreateReviewScreenState extends State<CreateReviewScreen> {
         );
       } else {
         UserModel user = AuthManagement.getUserModel!;
-        await rp.createReview(
+        await rp.updateReview(
           ReviewModel(
             avatarUrl: user.avatarUrl,
             firstName: user.firstName,
             lastName: user.lastName,
             comment: _commentTEC.text,
             rating: rating.toInt(),
-            reviewId: '',
-            productId: widget.productId,
+            reviewId: widget.model.reviewId,
+            productId: widget.model.productId,
           ),
+          widget.index,
         );
 
         if (rp.getResponseModel.isSuccess) {

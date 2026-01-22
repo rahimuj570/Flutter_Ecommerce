@@ -7,6 +7,7 @@ import 'package:flutter_ecommerce/features/commons/presentations/widgets/full_pa
 import 'package:flutter_ecommerce/features/commons/utils/show_snack_bar.dart';
 import 'package:flutter_ecommerce/features/reviews/data/models/review_model.dart';
 import 'package:flutter_ecommerce/features/reviews/presentations/screens/create_review_screen.dart';
+import 'package:flutter_ecommerce/features/reviews/presentations/screens/update_review_screen.dart';
 import 'package:flutter_ecommerce/features/reviews/presentations/widgets/review_card_widget.dart';
 import 'package:flutter_ecommerce/features/reviews/state_management/review_provider.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -186,6 +187,13 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
 
   void edit(ReviewProvider rp, int index) {
     if (rp.getReviewList[index].userId == AuthManagement.getUserModel!.id) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) =>
+              UpdateReviewScreen(model: rp.getReviewList[index], index: index),
+        ),
+      );
     } else {
       showSnackBar(
         context: context,

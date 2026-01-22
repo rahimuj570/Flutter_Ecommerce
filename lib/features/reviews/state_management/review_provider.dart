@@ -91,4 +91,23 @@ class ReviewProvider extends ChangeNotifier {
     _isDeleting = false;
     notifyListeners();
   }
+
+  bool _isUpdating = false;
+  bool get getIsUpdating => _isUpdating;
+  Future<void> updateReview(ReviewModel model, int index) async {
+    _responseModel = null;
+    _isUpdating = true;
+    notifyListeners();
+
+    _responseModel = await getNetworkCaller().patchCall(
+      uri: UriList.deleteReview(model.reviewId),
+      body: {"comment": model.comment, "rating": model.rating},
+    );
+    if (_responseModel!.isSuccess) {
+      _reviewList[index].comment = model.comment;
+      _reviewList[index].rating = model.rating;
+    }
+    _isUpdating = false;
+    notifyListeners();
+  }
 }
