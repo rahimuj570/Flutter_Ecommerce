@@ -30,7 +30,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (_scrollController.hasClients) {
         _scrollController.addListener(() async {
-          if (_scrollController.position.extentBefore < 300) {
+          if (_scrollController.position.extentAfter < 300) {
             if (!provider.getIsLoadingMore) {
               final temp = provider.fetchMore();
               _categoryList.addAll(await temp);

@@ -20,14 +20,24 @@ class ReviewsScreen extends StatefulWidget {
 }
 
 class _ReviewsScreenState extends State<ReviewsScreen> {
+  ScrollController scrollController = ScrollController();
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    ReviewProvider rp = context.read<ReviewProvider>();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      ReviewProvider rp = context.read<ReviewProvider>();
-      WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-        await rp.fetchReviews(widget.productId);
+      if (rp.prevPage == null) {
+        WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+          await rp.fetchReviews(widget.productId);
+        });
+      }
+
+      scrollController.addListener(() async {
+        if (scrollController.position.extentAfter < 300 &&
+            rp.getIsFetchingMore == false) {
+          await rp.fetchMoreReviews(widget.productId);
+        }
       });
     });
   }
@@ -66,6 +76,7 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
                     right: AppUnits.horizontalMainPadding,
                   ),
                   child: ListView.builder(
+                    controller: scrollController,
                     itemCount: reviewProvider.getReviewList.length + 1,
                     itemBuilder: (context, index) {
                       if (index != reviewProvider.getReviewList.length) {
@@ -78,7 +89,21 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
                           avatarUrl: model.avatarUrl,
                         );
                       } else {
-                        return SizedBox(height: 80);
+                        return Visibility(
+                          visible: reviewProvider.getIsFetchingMore == false,
+                          replacement: Column(
+                            children: [
+                              SizedBox(height: 10),
+                              Center(child: CircularProgressIndicator()),
+                            ],
+                          ),
+                          child: Column(
+                            children: [
+                              SizedBox(height: 80),
+                              Text('No more data'),
+                            ],
+                          ),
+                        );
                       }
                     },
                   ),

@@ -10,6 +10,9 @@ class ReviewProvider extends ChangeNotifier {
   final List<ReviewModel> _reviewList = [];
   int _totalReview = 0;
 
+  int? nextPage;
+  int? prevPage;
+
   int get getReviewCount => _totalReview;
   bool get getIsCartFetching => _isFeching;
   NetworkResponseModel get getResponseModel => _responseModel!;
@@ -22,14 +25,36 @@ class ReviewProvider extends ChangeNotifier {
     notifyListeners();
 
     _responseModel = await getNetworkCaller().getCall(
-      uri: UriList.getReview(productId),
+      uri: UriList.getReview(productId, 1),
+    );
+    List<dynamic> jsonList = _responseModel!.responseData['results'];
+    for (Map<String, dynamic> json in jsonList) {
+      _reviewList.add(ReviewModel.fromJson(json));
+    }
+
+    nextPage = _responseModel!.responseData['next'];
+    prevPage = _responseModel!.responseData['previous'];
+    _totalReview = _responseModel!.responseData['total'];
+    _isFeching = false;
+    notifyListeners();
+  }
+
+  bool _isFetchingMore = false;
+  bool get getIsFetchingMore => _isFetchingMore;
+  Future<void> fetchMoreReviews(String productId) async {
+    _responseModel = null;
+    _isFetchingMore = true;
+    notifyListeners();
+
+    _responseModel = await getNetworkCaller().getCall(
+      uri: UriList.getReview(productId, nextPage!),
     );
     List<dynamic> jsonList = _responseModel!.responseData['results'];
     for (Map<String, dynamic> json in jsonList) {
       _reviewList.add(ReviewModel.fromJson(json));
     }
     _totalReview = _responseModel!.responseData['total'];
-    _isFeching = false;
+    _isFetchingMore = false;
     notifyListeners();
   }
 }
