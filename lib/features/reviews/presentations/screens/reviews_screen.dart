@@ -4,6 +4,7 @@ import 'package:flutter_ecommerce/app/app_units.dart';
 import 'package:flutter_ecommerce/features/commons/presentations/widgets/bottom_static_section_widget.dart';
 import 'package:flutter_ecommerce/features/commons/presentations/widgets/full_page_circuar_loading_widget.dart';
 import 'package:flutter_ecommerce/features/reviews/data/models/review_model.dart';
+import 'package:flutter_ecommerce/features/reviews/presentations/screens/create_review_screen.dart';
 import 'package:flutter_ecommerce/features/reviews/presentations/widgets/review_card_widget.dart';
 import 'package:flutter_ecommerce/features/reviews/state_management/review_provider.dart';
 import 'package:provider/provider.dart';
@@ -110,7 +111,7 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
                 ),
               ),
               BottomStaticSectionWidget(
-                title: 'Total Reviews (${2 + 2})',
+                title: 'Total Reviews (${reviewProvider.getReviewCount})',
                 amount: reviewProvider.getReviewCount,
                 isTextButton: false,
                 textButtonTitle: '',
@@ -126,7 +127,15 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
         shape: CircleBorder(),
         backgroundColor: AppColors.themeColor,
         foregroundColor: Colors.white,
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) =>
+                  CreateReviewScreen(productId: widget.productId),
+            ),
+          );
+        },
         child: Icon(Icons.add),
       ),
     );

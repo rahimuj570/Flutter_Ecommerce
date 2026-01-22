@@ -57,4 +57,24 @@ class ReviewProvider extends ChangeNotifier {
     _isFetchingMore = false;
     notifyListeners();
   }
+
+  bool _isCreating = false;
+  bool get getIsCreating => _isCreating;
+  Future<void> createReview(ReviewModel model) async {
+    _responseModel = null;
+    _isCreating = true;
+    notifyListeners();
+
+    _responseModel = await getNetworkCaller().postCall(
+      uri: UriList.createReview,
+      body: {
+        "product": model.productId,
+        "comment": model.comment,
+        "rating": model.rating,
+      },
+    );
+
+    _isCreating = false;
+    notifyListeners();
+  }
 }
