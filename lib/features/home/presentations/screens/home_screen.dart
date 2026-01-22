@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce/app/app.dart';
 import 'package:flutter_ecommerce/app/app_units.dart';
+import 'package:flutter_ecommerce/app/state_management/theme_provider.dart';
 import 'package:flutter_ecommerce/features/categories/data/models/category_model.dart';
 import 'package:flutter_ecommerce/features/categories/presentations/widgets/category_card_widget.dart';
 import 'package:flutter_ecommerce/features/categories/state_management/category_provider.dart';
@@ -97,7 +98,9 @@ class _HomeScreenState extends State<HomeScreen> with RouteAware {
                   decoration: InputDecoration(
                     hintText: 'Search',
                     prefixIcon: Icon(Icons.search),
-                    fillColor: const Color.fromRGBO(238, 238, 238, 1),
+                    fillColor: context.read<ThemeProvider>().isDark! == false
+                        ? Colors.white
+                        : null,
                     filled: true,
                     contentPadding: const EdgeInsets.symmetric(
                       vertical: 12,

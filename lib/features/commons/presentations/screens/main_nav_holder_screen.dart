@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce/app/app_colors.dart';
+import 'package:flutter_ecommerce/app/state_management/theme_provider.dart';
 import 'package:flutter_ecommerce/features/auth/presentations/screens/signin_screen.dart';
 import 'package:flutter_ecommerce/features/auth/utils/auth_management.dart';
 import 'package:flutter_ecommerce/features/cart/presentations/screens/cart_screen.dart';
@@ -32,11 +33,18 @@ class _MainNavHolderScreenState extends State<MainNavHolderScreen> {
       child: Scaffold(
         body: _screens[mainNavBarProvider.getSelectedIndex],
         bottomNavigationBar: Container(
-          decoration: const BoxDecoration(
+          decoration: BoxDecoration(
             color: Colors.white,
             border: Border(
               top: BorderSide(
-                color: Color(0xFFE0E0E0), // light grey top border
+                color: context.read<ThemeProvider>().isDark! == false
+                    ? const Color(0xFFE0E0E0)
+                    : const Color.fromARGB(
+                        255,
+                        104,
+                        102,
+                        102,
+                      ), // light grey top border
                 width: 1,
               ),
             ),
@@ -44,7 +52,9 @@ class _MainNavHolderScreenState extends State<MainNavHolderScreen> {
           child: BottomNavigationBar(
             onTap: (value) => _onTapNavButton(value, mainNavBarProvider),
             type: BottomNavigationBarType.fixed,
-            backgroundColor: Colors.white,
+            backgroundColor: context.read<ThemeProvider>().isDark! == false
+                ? Colors.white
+                : null,
             elevation: 0,
             currentIndex: mainNavBarProvider.getSelectedIndex,
             selectedItemColor: AppColors.themeColor,

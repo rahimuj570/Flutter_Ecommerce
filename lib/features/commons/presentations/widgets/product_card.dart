@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce/app/app_colors.dart';
 import 'package:flutter_ecommerce/app/app_units.dart';
+import 'package:flutter_ecommerce/app/state_management/theme_provider.dart';
 import 'package:flutter_ecommerce/features/commons/utils/show_snack_bar.dart';
 import 'package:flutter_ecommerce/features/products/data/models/product_card_model.dart';
 import 'package:flutter_ecommerce/features/wish_list/state_management/wish_provider.dart';
@@ -39,7 +40,9 @@ class ProductCard extends StatelessWidget {
             SizedBox(height: 5),
             Container(
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: context.read<ThemeProvider>().isDark! == false
+                    ? Colors.white
+                    : null,
                 borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(AppUnits.round),
                   bottomRight: Radius.circular(AppUnits.round),

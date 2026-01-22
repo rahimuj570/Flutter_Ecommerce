@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce/app/app_colors.dart';
 import 'package:flutter_ecommerce/app/app_units.dart';
+import 'package:flutter_ecommerce/app/state_management/theme_provider.dart';
 import 'package:flutter_ecommerce/core/models/network_response_model.dart';
 import 'package:flutter_ecommerce/features/cart/data/models/cart_card_model.dart';
 import 'package:flutter_ecommerce/features/cart/state_management/cart_provider.dart';
@@ -26,7 +27,9 @@ class _CartCardWidgetState extends State<CartCardWidget> {
   Widget build(BuildContext context) {
     TextTheme th = TextTheme.of(context);
     return Card(
-      color: Colors.white,
+      color: context.read<ThemeProvider>().isDark! == false
+          ? Colors.white
+          : null,
       child: Padding(
         padding: const EdgeInsets.all(10.0),
         child: Row(

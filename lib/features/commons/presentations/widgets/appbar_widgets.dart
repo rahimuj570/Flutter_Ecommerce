@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce/app/app_assets_path.dart';
+import 'package:flutter_ecommerce/app/app_colors.dart';
+import 'package:flutter_ecommerce/app/state_management/theme_provider.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:provider/provider.dart';
 
 class AppbarWidgets extends StatefulWidget implements PreferredSizeWidget {
   const AppbarWidgets({super.key});
@@ -17,7 +20,9 @@ class _AppbarWidgetsState extends State<AppbarWidgets> {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: Colors.white,
+      backgroundColor: context.read<ThemeProvider>().isDark! == false
+          ? Colors.white
+          : null,
       actionsPadding: EdgeInsets.all(5),
       toolbarHeight: 60,
       title: SvgPicture.asset(AppAssetsPath.appbarLogo, width: 130),
@@ -39,13 +44,28 @@ class _AppbarWidgetsState extends State<AppbarWidgets> {
           onPressed: () {},
           icon: Icon(Icons.call_outlined),
         ),
-        IconButton(
-          style: IconButton.styleFrom(
-            foregroundColor: Colors.grey,
-            backgroundColor: Colors.grey.shade200,
+
+        Consumer<ThemeProvider>(
+          builder: (context, themeProvider, child) => Switch(
+            value: themeProvider.isDark!,
+            onChanged: (value) {
+              if (value) {
+                themeProvider.changeThemeMode(ThemeMode.dark);
+              } else {
+                themeProvider.changeThemeMode(ThemeMode.light);
+              }
+            },
+            thumbIcon: WidgetStateProperty.all(
+              themeProvider.isDark == false
+                  ? Icon(Icons.sunny, color: Colors.black)
+                  : Icon(Icons.nightlight_round),
+            ),
+            thumbColor: WidgetStatePropertyAll(
+              themeProvider.isDark! == false ? Colors.orangeAccent : null,
+            ),
+
+            trackColor: WidgetStatePropertyAll(AppColors.themeColor),
           ),
-          onPressed: () {},
-          icon: Icon(Icons.notifications_outlined),
         ),
       ],
     );

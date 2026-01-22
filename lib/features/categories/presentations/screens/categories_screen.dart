@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce/app/app_units.dart';
+import 'package:flutter_ecommerce/app/state_management/theme_provider.dart';
 import 'package:flutter_ecommerce/features/categories/data/models/category_model.dart';
 import 'package:flutter_ecommerce/features/categories/presentations/widgets/category_card_widget.dart';
 import 'package:flutter_ecommerce/features/categories/state_management/category_provider.dart';
@@ -57,7 +58,9 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
       child: SafeArea(
         child: Scaffold(
           appBar: AppBar(
-            backgroundColor: Colors.white,
+            backgroundColor: context.read<ThemeProvider>().isDark! == false
+                ? Colors.white
+                : null,
             elevation: 1,
             shadowColor: Colors.grey,
             surfaceTintColor: Colors.transparent,
