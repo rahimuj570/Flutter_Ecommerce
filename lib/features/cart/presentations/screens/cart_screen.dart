@@ -3,6 +3,7 @@ import 'package:flutter_ecommerce/app/app_units.dart';
 import 'package:flutter_ecommerce/app/extensions/localization_extension.dart';
 import 'package:flutter_ecommerce/app/state_management/theme_provider.dart';
 import 'package:flutter_ecommerce/features/cart/presentations/widgets/cart_card_widget.dart';
+import 'package:flutter_ecommerce/features/cart/utils/sslcomerz_initializer.dart';
 import 'package:flutter_ecommerce/features/commons/presentations/widgets/bottom_static_section_widget.dart';
 import 'package:flutter_ecommerce/features/commons/presentations/widgets/full_page_circuar_loading_widget.dart';
 import 'package:flutter_ecommerce/features/commons/state_management/main_nav_bar_provider.dart';
@@ -91,7 +92,11 @@ class _CartScreenState extends State<CartScreen> {
                   isTextButton: true,
                   textButtonTitle: context.localization.checkout,
                   buttonWidget: null,
-                  textButtonOnTap: () {},
+                  textButtonOnTap: () {
+                    SslcomerzInitializer().initSSL(
+                      cartProvider.getTotalAmount().toDouble(),
+                    );
+                  },
                 ),
               ],
             );
