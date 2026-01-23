@@ -18,6 +18,7 @@ class UserModel {
   final String phone;
   final String? avatarUrl;
   final String city;
+  final String? password;
 
   UserModel({
     required this.firstName,
@@ -27,6 +28,7 @@ class UserModel {
     required this.avatarUrl,
     required this.city,
     required this.id,
+    this.password,
   });
 
   Map<String, dynamic> toJson() {
@@ -38,6 +40,7 @@ class UserModel {
       "phone": phone,
       "avatar_url": avatarUrl,
       "city": city,
+      "password": password,
     };
   }
 

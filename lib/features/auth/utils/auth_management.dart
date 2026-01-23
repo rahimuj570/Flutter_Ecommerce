@@ -1,5 +1,8 @@
 import 'dart:convert';
 
+import 'package:flutter_ecommerce/app/setup_network_caller.dart';
+import 'package:flutter_ecommerce/app/uri_list.dart';
+import 'package:flutter_ecommerce/core/models/network_response_model.dart';
 import 'package:flutter_ecommerce/features/auth/data/models/user_model.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -36,5 +39,12 @@ class AuthManagement {
   static Future<void> cleatUser() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     preferences.clear();
+  }
+
+  static Future<void> refetchUser() async {
+    NetworkResponseModel responseModel = await getNetworkCaller().getCall(
+      uri: UriList.userUpdate,
+    );
+    AuthManagement._model = UserModel.fromJson(responseModel.responseData);
   }
 }

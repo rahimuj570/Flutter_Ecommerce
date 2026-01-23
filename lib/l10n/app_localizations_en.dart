@@ -160,4 +160,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get phone => 'Phone';
+
+  @override
+  String get update_profile_if_you_need => 'Update Profile If Required';
+
+  @override
+  String get avater_url => 'Avater Url';
+
+  @override
+  String get insert_avatar_url => 'Insert Avater Url';
 }

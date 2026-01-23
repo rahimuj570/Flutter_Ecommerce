@@ -3,6 +3,7 @@ import 'package:flutter_ecommerce/app/app_assets_path.dart';
 import 'package:flutter_ecommerce/app/app_colors.dart';
 import 'package:flutter_ecommerce/app/state_management/language_provider.dart';
 import 'package:flutter_ecommerce/app/state_management/theme_provider.dart';
+import 'package:flutter_ecommerce/features/auth/presentations/screens/profile_screen.dart';
 import 'package:flutter_ecommerce/features/auth/utils/auth_management.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
@@ -87,7 +88,16 @@ class _AppbarWidgetsState extends State<AppbarWidgets> {
               ),
             ),
             itemBuilder: (context) => [
-              PopupMenuItem(value: 'profile', child: Text('Profile')),
+              PopupMenuItem(
+                value: 'profile',
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => ProfileScreen()),
+                  );
+                },
+                child: Text('Profile'),
+              ),
               PopupMenuItem(
                 value: 'logout',
                 onTap: () {

@@ -49,6 +49,9 @@
   "get_started" :"Get started with us with profile details",
   "insert_last_name" : "Insert Last Name",
   "insert_first_name" : "Insert First Name",
-  "phone" : "Phone"
+  "phone" : "Phone",
+  "update_profile_if_you_need" : "Update Profile If Required",
+  "avater_url": "Avater Url",
+  "insert_avatar_url": "Insert Avater Url"
 
 }

@@ -400,6 +400,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Phone'**
   String get phone;
+
+  /// No description provided for @update_profile_if_you_need.
+  ///
+  /// In en, this message translates to:
+  /// **'Update Profile If Required'**
+  String get update_profile_if_you_need;
+
+  /// No description provided for @avater_url.
+  ///
+  /// In en, this message translates to:
+  /// **'Avater Url'**
+  String get avater_url;
+
+  /// No description provided for @insert_avatar_url.
+  ///
+  /// In en, this message translates to:
+  /// **'Insert Avater Url'**
+  String get insert_avatar_url;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

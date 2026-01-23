@@ -22,4 +22,5 @@ class UriList {
   static String createReview = '$_baseUri/review';
 
   static String deleteReview(String reviewId) => '$_baseUri/reviews/$reviewId';
+  static String userUpdate = '$_baseUri/auth/profile';
 }

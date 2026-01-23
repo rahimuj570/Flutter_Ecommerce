@@ -3,6 +3,7 @@ import 'package:flutter_ecommerce/app/app_routes.dart';
 import 'package:flutter_ecommerce/app/app_themes.dart';
 import 'package:flutter_ecommerce/app/state_management/language_provider.dart';
 import 'package:flutter_ecommerce/app/state_management/theme_provider.dart';
+import 'package:flutter_ecommerce/features/auth/state_management/profile_provider.dart';
 import 'package:flutter_ecommerce/features/categories/state_management/category_provider.dart';
 import 'package:flutter_ecommerce/features/commons/state_management/main_nav_bar_provider.dart';
 import 'package:flutter_ecommerce/features/home/state_management/slider_provider.dart';
@@ -38,6 +39,7 @@ class _FlutterEcommerceState extends State<FlutterEcommerce> {
         ChangeNotifierProvider(create: (context) => CartProvider()),
         ChangeNotifierProvider(create: (context) => WishProvider()),
         ChangeNotifierProvider(create: (context) => ReviewProvider()),
+        ChangeNotifierProvider(create: (context) => ProfileProvider()),
       ],
       child: Consumer3<LanguageProvider, ThemeProvider, MainNavBarProvider>(
         builder:

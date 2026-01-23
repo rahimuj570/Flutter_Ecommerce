@@ -160,4 +160,13 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get phone => 'ফোন নম্বর';
+
+  @override
+  String get update_profile_if_you_need => 'প্রয়োজন হলে প্রোফাইল আপডেট করুন';
+
+  @override
+  String get avater_url => 'অ্যাভাটার ইউআরএল';
+
+  @override
+  String get insert_avatar_url => 'অ্যাভাটার ইউআরএল লিখুন';
 }
