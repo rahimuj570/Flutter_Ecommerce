@@ -39,21 +39,41 @@ The app is highly customizable and built using popular Flutter packages (`Provid
 ---
 
 ## 📸 Screenshots / UI Preview
+ ### Splash / Welcome
+  <img src="assets/screenshots/ss.png" width="200" />
 
-| Screen | Preview |
-|--------|---------|
-| 🏁 **Splash / Welcome** | ![Splash](assets/screenshots/ss.png) |
-| 🔐 **Login Screen EN** | ![Login](assets/screenshots/login_en.png) |
-| 🔐 **Login Screen BN** | ![Login](assets/screenshots/login_bn.png) |
-| 🏠 **Home Screen EN** | ![Register](assets/screenshots/home_en.png) |
-| 🏠 **Home Screen BN+Dark** | ![Home](assets/screenshots/home_bn_dark.png) |
-| 🏠 **Product List By Category EN** | ![Home](assets/screenshots/book_light_en.png) |
-| 🏠 **Product List By Category EN+DARK** | ![Home](assets/screenshots/book_dark_en.png) |
-| 🛍️ **Product Detail EN+DARK** | ![Product Detail](assets/screenshots/product_details_dark.png) |
-| 🛍️ **Product Detail BN** | ![Product Detail](assets/screenshots/product_details_light_bn.png) |
-| 🛒 **Cart Screen** | ![Cart](assets/screenshots/cart_light.png) |
-| 🛒 **Cart Screen DARK** | ![Cart](assets/screenshots/cart_dark.png) |
-| 🧾 **Checkout Screen** | ![Checkout](assets/screenshots/ssl.png) |
+### 🔐 Login Screen
+<p>
+  <img src="assets/screenshots/login_en.png" width="200" />
+  <img src="assets/screenshots/login_bn.png" width="200" />
+</p>
+
+### 🔐 Home Screen
+<p>
+  <img src="assets/screenshots/home_en.png" width="200" />
+  <img src="assets/screenshots/home_bn_dark.png" width="200" />
+</p>
+
+### 🔐 Product List Screen
+<p>
+  <img src="assets/screenshots/book_light_en.png" width="200" />
+  <img src="assets/screenshots/book_dark_en.png" width="200" />
+</p>
+
+### 🔐 Product Details Screen
+<p>
+  <img src="assets/screenshots/product_details_dark.png" width="200" />
+  <img src="assets/screenshots/product_details_light_bn.png" width="200" />
+</p>
+
+### 🔐 Cart Screen
+<p>
+  <img src="assets/screenshots/cart_light.png" width="200" />
+  <img src="assets/screenshots/cart_dark.png" width="200" />
+</p>
+
+### 🔐 Checkout Screen
+<img src="assets/screenshots/ssl.png" width="200" />
 
 ---
 
